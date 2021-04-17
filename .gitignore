@@ -1,0 +1,12 @@
+/.vscode/
+/__pycache__/
+*.pyc
+.idea
+.env
+/media/
+envs/.env.dev
+envs/.env.prod
+envs/.env.dev.db
+envs/.env.prod.db
+.pytest_cache
+.coverage

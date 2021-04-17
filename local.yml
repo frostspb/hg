@@ -1,0 +1,59 @@
+version: '3.8'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  web: &web
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.local
+    image: hourglass_django
+    container_name: web
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    env_file:
+      - ./envs/.env.dev
+      - ./envs/.env.dev.db
+    ports:
+      - "8000:8000"
+    command: /start
+
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./envs/.env.dev.db
+
+  redis:
+    image: redis:alpine
+
+  celeryworker:
+    <<: *web
+    image: hourglass_celeryworker
+    container_name: hourglass_celeryworker
+    depends_on:
+      - redis
+      - db
+    #network_mode: "host"
+    #links:
+    #  - rabbitmq
+    ports: [ ]
+    command: celery -A config worker -l info
+
+  celerybeat:
+    <<: *web
+    image: hourglass_celerybeat
+    container_name: hourglass_celerybeat
+    depends_on:
+      - redis
+      - db
+
+    ports: [ ]
+    command: celery -A config.celery beat -l INFO
+
