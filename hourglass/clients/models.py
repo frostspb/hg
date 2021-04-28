@@ -9,7 +9,7 @@ class Client(TimeStampedModel):
         PROSPECTIVE = 'prospective', 'Prospective client'
         CONTRACT = 'contract', 'Contract client'
 
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=50, unique=True)
     client_type = models.CharField(max_length=16, choices=ClientTypes.choices, default=ClientTypes.STANDARD)
     total_campaigns = models.IntegerField("Total Campaigns", default=0)
     leads_generated = models.IntegerField("Leads Generated Totally", default=0)

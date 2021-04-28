@@ -29,6 +29,7 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 SITE_ORIGIN = os.environ.get('SITE_ORIGIN')
 SITE_ADDR = os.environ.get('SITE_ADDR')
+FRONT_ADDR = os.environ.get('FRONT_ADDR')
 
 
 # Application definition
@@ -44,9 +45,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_celery_beat',
-
+    'django_filters',
+    'hourglass.references',
     'hourglass.clients',
     'hourglass.campaigns',
+
 
 ]
 
@@ -93,6 +96,10 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'PAGE_SIZE': 100,
 
 }
 
@@ -158,9 +165,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
     'http://127.0.0.1:8081',
+    'http://127.0.0.1:8083',
+    'http://localhost:8083',
     'http://localhost:8080',
     'http://127.0.0.1:8080',
-    SITE_ADDR
+    SITE_ADDR,
+    FRONT_ADDR,
 
 )
 

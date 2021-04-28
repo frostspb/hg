@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from ..models import CampaignTemplate, CampaignTemplatePos, CampaignTypes
+from ..models import Campaign, CampaignsSection
+from hourglass.references.models import CampaignTypes
 
 
 class CampaignTypesSerializer(serializers.ModelSerializer):
@@ -11,27 +12,47 @@ class CampaignTypesSerializer(serializers.ModelSerializer):
         )
 
 
-class CampaignTemplatePosSerializer(serializers.ModelSerializer):
+class CampaignCopySerializer(serializers.Serializer):
+    source_id = serializers.IntegerField(required=True)
+
     class Meta:
-        model = CampaignTemplatePos
         fields = (
-            'campaign_type', 'integration', 'pacing', 'leads_goal', 'leads_generated', 'velocity'
+            'source_id',
+        )
+
+    def save(self, **kwargs):
+        source_id = self.validated_data.get('source_id')
+        campaign = Campaign.objects.filter(id=source_id).first()
+        if not campaign:
+            return
+        return Campaign.objects.copy(campaign)
+
+
+class CampaignsSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CampaignsSection
+        fields = (
+            #'campaign_pos_type__name',
+            'integration', 'pacing', 'leads_goal', 'leads_generated', 'velocity'
         )
 
 
-class CampaignTemplateSerializer(serializers.ModelSerializer):
-    start_date = serializers.SerializerMethodField()
-    end_date = serializers.SerializerMethodField()
-    pos = CampaignTemplatePosSerializer(source='campaigntemplatepos_set', many=True)
+class CampaignSerializer(serializers.ModelSerializer):
+    #start_date = serializers.SerializerMethodField()
+    #end_date = serializers.SerializerMethodField()
+    #pos = CampaignsSectionSerializer(source='campaignpos_set', many=True)
 
     class Meta:
-        model = CampaignTemplate
+        model = Campaign
         fields = (
-            'id', 'client', 'start_date', 'end_date', 'audience_targeted', 'pos',
+            "id", "client", "created", "active", "customer_information", "contact_name", "email", "note",
+            "start_offset", "end_offset", "audience_targeted",
+            "start_date", "end_date", "kind", "state", #"pos"
         )
 
-    def get_start_date(self, instance):
-        return instance.start_date
-
-    def get_end_date(self, instance):
-        return instance.end_date
+    # def get_start_date(self, instance):
+    #     return instance.start_date
+    #
+    # def get_end_date(self, instance):
+    #     return instance.end_date

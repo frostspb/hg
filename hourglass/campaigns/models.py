@@ -1,57 +1,63 @@
 from datetime import timedelta
 from django.db import models
-
+from django.contrib.postgres.fields import JSONField
 from django.utils.timezone import now
 from django_extensions.db.models import TimeStampedModel
-
+from django_fsm import FSMField
+from model_clone import CloneMixin
 from hourglass.clients.models import Client
 
+from .base import BaseStateItem, BaseReportPercentItem
 
-class CampaignTypes(models.Model):
-    name = models.CharField("Type", max_length=64)
-    active = models.BooleanField(default=True)
+from hourglass.references.models import CampaignTypes, Geolocations, JobTitles
 
-    class Meta:
-        verbose_name = "Campaign Type"
-        verbose_name_plural = "Campaigns Types"
-
-    def __str__(self):
-        return self.name
+from .managers import  CampaignsManager
 
 
-class CampaignBase(TimeStampedModel):
-    name = models.CharField("Name", max_length=64)
+def campaign_default_settings():
+    return {
+        "title": True,
+        "assets": True,
+        "intent": True,
+        "abm": True,
+        "suppression": True,
+        "job_titles": True,
+        "industries": True,
+        "geo": True,
+        "revenue": True,
+        "company_size": True,
+        "bant": True,
+        "cq": True,
+        "install_base": True,
+        "cn": True,
+        "tactics": True,
+    }
+
+
+class Campaign(CloneMixin, BaseStateItem):
+    class CampaignKinds(models.TextChoices):
+        STANDARD = 'standard', 'Standard'
+        USER = 'copy', 'Copy'
+        CONTRACT = 'contract', 'Contract'
+
+    customer_information = models.CharField("Customer information", max_length=250)
+    contact_name = models.CharField("Contact Name", max_length=250)
+    email = models.EmailField("Email")
+    note = models.TextField("Notes", null=True, blank=True)
+    name = models.CharField("Campaign Name", max_length=250)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     start_offset = models.PositiveSmallIntegerField("Start Date offset in days")
     end_offset = models.PositiveSmallIntegerField("End Date offset in days")
     audience_targeted = models.IntegerField("Audience Targeted")
+    kind = models.CharField(max_length=16, choices=CampaignKinds.choices, default=CampaignKinds.STANDARD)
+    start_date = models.DateField("Start Date")
+    end_date = models.DateField("End Date")
+    settings = JSONField(null=True, verbose_name='JSON settings', default=campaign_default_settings)
 
-    class Meta:
-        abstract = True
-
-    @property
-    def start_date(self):
-        return now() - timedelta(days=self.start_offset)
-
-    @property
-    def end_date(self):
-        return now() + timedelta(days=self.end_offset)
-
-
-class CampaignTemplate(CampaignBase):
-
-    class Meta:
-        verbose_name = "Campaign Template"
-        verbose_name_plural = "Campaigns Templates"
-
-    def __str__(self):
-        return f"Template{self.id}"
-
-
-class CampaignStandard(CampaignBase):
-    template = models.ForeignKey(CampaignTemplate, on_delete=models.CASCADE)
-
+    objects = CampaignsManager()
+    _clone_m2o_or_o2m_fields = ["bants", "cqs", "geolocations", "companies", "revenues", "industries",
+    "intents", "titles", "assets", "campaigns",]
     class Meta:
         verbose_name = "Campaign"
         verbose_name_plural = "Campaigns"
@@ -59,8 +65,16 @@ class CampaignStandard(CampaignBase):
     def __str__(self):
         return f"Campaign{self.id}"
 
+    @property
+    def initial_start_date(self):
+        return now() - timedelta(days=self.start_offset)
 
-class CampaignPosBase(models.Model):
+    @property
+    def initial_end_date(self):
+        return now() + timedelta(days=self.end_offset)
+
+
+class CampaignsSection(CloneMixin, BaseStateItem):
     class IntegrationTypes(models.TextChoices):
         SALESFORCE = 'salesforce', 'Salesforce'
         MARKETO = 'marketo', 'Marketo'
@@ -77,10 +91,8 @@ class CampaignPosBase(models.Model):
     leads_goal = models.PositiveIntegerField('Leads goal')
     leads_generated = models.PositiveIntegerField('Leads Generated')
     velocity = models.PositiveSmallIntegerField("Velocity")
-    campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
+    campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="campaigns")
 
     @property
     def remaining_leads(self):
@@ -94,9 +106,108 @@ class CampaignPosBase(models.Model):
         return f"{self.id}"
 
 
-class CampaignTemplatePos(CampaignPosBase):
-    campaign = models.ForeignKey(CampaignTemplate, on_delete=models.CASCADE)
+class AssetsSection(CloneMixin,BaseReportPercentItem):
+    name = models.CharField("Asset Name", max_length=200)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="assets")
+    landing_page = models.FileField("Landing Page")
+    titles = models.ManyToManyField(JobTitles, blank=True)
+    velocity_koeff = models.FloatField(default=1.0)
+
+    class Meta:
+        verbose_name = "Asset"
+        verbose_name_plural = "Assets"
+
+    def __str__(self):
+        return f"{self.id}"
 
 
-class CampaignPos(CampaignPosBase):
-    campaign = models.ForeignKey(CampaignStandard, on_delete=models.CASCADE)
+class IntentFeedsSection(CloneMixin,BaseReportPercentItem):
+    name = models.CharField("Intent topic", max_length=200)
+    generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
+
+    class Meta:
+        verbose_name = "Intent Feed"
+        verbose_name_plural = "Intent Feeds"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class JobTitlesSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("Job Titles", max_length=200)
+    generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="titles")
+
+    class Meta:
+        verbose_name = "Job Title"
+        verbose_name_plural = "Job Titles"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class IndustriesSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("Industry", max_length=200)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="industries")
+
+    class Meta:
+        verbose_name = "Industry"
+        verbose_name_plural = "Industries"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class RevenueSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("Revenue", max_length=200)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="revenues")
+
+    class Meta:
+        verbose_name = "Revenue"
+        verbose_name_plural = "Revenue"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class CompanySizeSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("Company Size", max_length=200)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="companies")
+
+    class Meta:
+        verbose_name = "Company Size"
+        verbose_name_plural = "Companies Sizes"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class GeolocationsSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("Geolocation title", max_length=200)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="geolocations")
+    geolocation = models.ForeignKey(Geolocations, on_delete=models.CASCADE)
+    goal_per_geo = models.FloatField("Goal per Geo", default=0)
+
+    class Meta:
+        verbose_name = "Geolocation"
+        verbose_name_plural = "Geolocations"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class BANTQuestionsSection(CloneMixin, models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="bants")
+    answer = models.TextField("Answer")
+
+
+class CustomQuestionsSection(CloneMixin, BaseStateItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="cqs")
+    answer = models.TextField("Answer")
+
+
+
+
+
+

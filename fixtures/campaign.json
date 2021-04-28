@@ -1,0 +1,153 @@
+[
+{
+    "model": "references.CampaignTypes",
+    "pk": 1,
+    "fields": {
+        "name": "Single Touch",
+        "active": true
+    }
+},
+{
+    "model": "references.CampaignTypes",
+    "pk": 2,
+    "fields": {
+        "name": "Double Touch",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.CampaignTypes",
+    "pk": 3,
+    "fields": {
+        "name": "Tripple Touch",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.CampaignTypes",
+    "pk": 4,
+    "fields": {
+        "name": "BANT",
+        "active": true
+        
+    }
+},
+    {
+    "model": "references.CampaignTypes",
+    "pk": 5,
+    "fields": {
+        "name": "Custom Questions",
+        "active": true
+        
+    }
+},
+    {
+    "model": "references.CampaignTypes",
+    "pk": 6,
+    "fields": {
+        "name": "Impressions",
+        "active": true
+        
+    }
+},
+    {
+    "model": "references.CampaignTypes",
+    "pk": 7,
+    "fields": {
+        "name": "Live Event",
+        "active": true
+        
+    }
+},
+    {
+    "model": "references.CampaignTypes",
+    "pk": 8,
+    "fields": {
+        "name": "Live Webinar",
+        "active": true
+        
+    }
+},
+    {
+    "model": "references.CampaignTypes",
+    "pk": 9,
+    "fields": {
+        "name": "BANT plus",
+        "active": true
+        
+    }
+},
+
+  {
+    "model": "references.JobTitles",
+    "pk": 1,
+    "fields": {
+        "name": "IT Manager",
+        "active": true
+        
+    }
+},
+    {
+    "model": "references.JobTitles",
+    "pk": 2,
+    "fields": {
+        "name": "IT Director",
+        "active": true
+    }
+},
+    {
+    "model": "references.JobTitles",
+    "pk": 3,
+    "fields": {
+        "name": "CIO",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.JobTitles",
+    "pk": 4,
+    "fields": {
+        "name": "IT Security Manager",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.JobTitles",
+    "pk": 5,
+    "fields": {
+        "name": "CISO",
+        "active": true
+
+    }
+},{
+    "model": "references.JobTitles",
+    "pk": 6,
+    "fields": {
+        "name": "IT VP",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.JobTitles",
+    "pk": 7,
+    "fields": {
+        "name": "IT Security Director",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.JobTitles",
+    "pk": 8,
+    "fields": {
+        "name": "IT Security VP",
+        "active": true
+
+    }
+}
+]
