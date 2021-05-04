@@ -1,0 +1,46 @@
+[
+  {
+      "model": "clients.Client",
+      "pk": 1,
+      "fields": {
+          "name": "Vasya",
+          "active": true,
+          "client_type": "standard",
+          "total_campaigns": 10,
+          "leads_generated": 5000000,
+          "created": "2018-10-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client_since": "2018-10-01T14:46:56.090Z"
+      }
+  },
+
+  {
+      "model": "clients.Client",
+      "pk": 2,
+      "fields": {
+          "name": "Vova",
+          "active": true,
+          "client_type": "prospective",
+          "total_campaigns": 0,
+          "leads_generated": 0,
+          "created": "2021-01-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client_since": "2021-01-01T14:46:56.090Z"
+      }
+  },
+
+  {
+      "model": "clients.Client",
+      "pk": 3,
+      "fields": {
+          "name": "Vitya",
+          "active": true,
+          "client_type": "contract",
+          "total_campaigns": 0,
+          "leads_generated": 0,
+          "created": "2021-03-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client_since": "2021-01-01T14:46:56.090Z"
+      }
+  }
+]

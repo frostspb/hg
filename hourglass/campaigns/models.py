@@ -47,17 +47,24 @@ class Campaign(CloneMixin, BaseStateItem):
     name = models.CharField("Campaign Name", max_length=250)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
-    start_offset = models.PositiveSmallIntegerField("Start Date offset in days")
-    end_offset = models.PositiveSmallIntegerField("End Date offset in days")
-    audience_targeted = models.IntegerField("Audience Targeted")
+    start_offset = models.PositiveSmallIntegerField("Start Date offset in days", default=0)
+    end_offset = models.PositiveSmallIntegerField("End Date offset in days", default=0)
+    audience_targeted = models.IntegerField("Audience Targeted", default=0)
     kind = models.CharField(max_length=16, choices=CampaignKinds.choices, default=CampaignKinds.STANDARD)
     start_date = models.DateField("Start Date")
     end_date = models.DateField("End Date")
     settings = JSONField(null=True, verbose_name='JSON settings', default=campaign_default_settings)
+    order = models.IntegerField("Purchase Order", null=True)
+    campaign_type = models.CharField("Campaign Type", max_length=128, null=True, blank=True)
+    details = models.TextField("Campaign Details", null=True, blank=True)
+    guarantees = models.TextField("Campaign Guarantees", null=True, blank=True)
 
     objects = CampaignsManager()
-    _clone_m2o_or_o2m_fields = ["bants", "cqs", "geolocations", "companies", "revenues", "industries",
-    "intents", "titles", "assets", "campaigns",]
+    _clone_m2o_or_o2m_fields = [
+        "bants", "cqs", "geolocations", "companies", "revenues", "industries",
+        "intents", "titles", "assets", "campaigns",
+    ]
+
     class Meta:
         verbose_name = "Campaign"
         verbose_name_plural = "Campaigns"
@@ -72,6 +79,10 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def initial_end_date(self):
         return now() + timedelta(days=self.end_offset)
+
+    @property
+    def is_standard(self):
+        return self.kind == self.CampaignKinds.STANDARD
 
 
 class CampaignsSection(CloneMixin, BaseStateItem):
@@ -205,9 +216,3 @@ class BANTQuestionsSection(CloneMixin, models.Model):
 class CustomQuestionsSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="cqs")
     answer = models.TextField("Answer")
-
-
-
-
-
-

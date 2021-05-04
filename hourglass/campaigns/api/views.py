@@ -5,6 +5,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from hourglass.references.models import CampaignTypes
+from hourglass.settings.api.serializers import HourglassSettingsSerializer
+from hourglass.settings.models import HourglassSettings
 from .serializers import CampaignsSectionSerializer,CampaignSerializer, CampaignTypesSerializer, CampaignCopySerializer
 from ..models import Campaign
 
@@ -26,11 +28,8 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             serializer.save()
             return Response({}, status=201)
 
-
-
-
-
-
-
-
-
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated]
+            )
+    def active_count(self, request, *args, **kwargs):
+        serializer = HourglassSettingsSerializer(HourglassSettings.get_solo())
+        return Response(data=serializer.data)
