@@ -12,4 +12,4 @@ class SettingsAdmin(SingletonModelAdmin):
     fields = ["base_campaigns_count", "min_delta_val", "max_delta_val",]
 
 
-config = HourglassSettings.get_solo()
+#config = HourglassSettings.get_solo()

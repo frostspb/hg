@@ -25,25 +25,36 @@ class BaseStateItem(TimeStampedModel):
 
         )
     state = FSMField(default=StateMixin.States.STATE_NEW, choices=StateMixin.States.STATE_CHOICES)
+    started_at = models.DateTimeField(null=True, blank=True)
+    execution_time = models.IntegerField(default=0)
 
     class Meta:
         abstract = True
 
+    @property
+    def duration(self):
+        if self.state == self.States.STATE_RUNNING:
+            return self.execution_time + (now() - self.started_at).seconds
+        else:
+            return self.execution_time
+
     @transition(field='state', source=[States.STATE_NEW, States.STATE_PAUSE], target=States.STATE_RUNNING)
     def start(self):
-        pass
+        self.started_at = now()
 
     @transition(field='state', source=States.STATE_RUNNING, target=States.STATE_PAUSE)
     def pause(self):
-        pass
+        self.execution_time += (now() - self.started_at).seconds
+        self.started_at = None
 
     @transition(field='state', source=[States.STATE_RUNNING, States.STATE_PAUSE], target=States.STATE_STOPPED)
     def stop(self):
-        pass
+        self.execution_time += (now() - self.started_at).seconds
+        self.started_at = None
 
     @transition(field='state', source=States.STATE_PAUSE, target=States.STATE_RUNNING)
     def resume(self):
-        pass
+        self.started_at = now()
 
 
 class BaseReportPercentItem(BaseStateItem):

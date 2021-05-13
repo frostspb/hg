@@ -28,8 +28,22 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             serializer.save()
             return Response({}, status=201)
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated]
-            )
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def active_count(self, request, *args, **kwargs):
         serializer = HourglassSettingsSerializer(HourglassSettings.get_solo())
         return Response(data=serializer.data)
+
+    @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated])
+    def hourglass(self, request, *args, **kwargs):
+        c = self.get_object()
+        res = {
+            'TA': c.ta,
+            'duration': c.duration,
+            'state': c.state,
+            'velocity': c.velocity,
+            'total_goal': c.total_goal,
+            'generated': c.generated,
+            'generated_pos': c.generated_pos,
+        }
+        return Response(data=res)
+

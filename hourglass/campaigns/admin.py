@@ -1,13 +1,20 @@
 from django.http import Http404
 from model_clone import CloneModelAdmin
 from django.contrib import admin, messages
-from .models import Campaign, CampaignsSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
+from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
-    CustomQuestionsSection
+    CustomQuestionsSection, SectionSettings
 
 
-class CampaignsSectionAdmin(admin.TabularInline):
-    model = CampaignsSection
+
+class SectionSettingsAdmin(admin.TabularInline):
+    model = SectionSettings
+    extra = 0
+    fields = ['enabled', 'can_enabled', 'delta_ta_sector', 'delta_ta_per_row', 'delta_v_sector', 'delta_v_per_row']
+
+
+class TargetSectionAdmin(admin.TabularInline):
+    model = TargetSection
     extra = 0
 
 
@@ -59,19 +66,27 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 @admin.register(Campaign)
 class CampaignAdmin(CloneModelAdmin):
     list_display = [
-        "id", "client", "created", "active",  "kind", "customer_information", "state",
+        "id", "client", "created", "active",  "kind", "customer_information", "state", "ta", "velocity", "duration",
+        "total_goal", "generated",
     ]
     search_fields = ["client__name", "id"]
-    fields = [
-        "id", "client", "created", "active", "customer_information", "contact_name", "email", "note",
-        "start_offset", "end_offset", "audience_targeted",
-        "start_date", "end_date", "kind", "state", "settings"
-    ]
+
+    fieldsets = (
+        ("Customer", {"fields": ("customer_information", "contact_name", "email", "note")}),
+        ("Campaign admin settings", {
+            "fields": (
+                "start_offset", "end_offset", "audience_targeted", "start_date", "end_date", "kind", "state",
+                "base_velocity", "top_percent", "middle_percent", "bottom_percent"
+            )
+        })
+
+    )
     readonly_fields = ["id", "created", ]
     ordering = ("-created",)
-
+    actions = ["start", "stop", "pause", "resume",]
     inlines = [
-        CampaignsSectionAdmin,
+        SectionSettingsAdmin,
+        TargetSectionAdmin,
         AssetsSectionAdmin,
         IntentFeedsSectionAdmin,
         JobTitlesSectionAdmin,
@@ -82,3 +97,50 @@ class CampaignAdmin(CloneModelAdmin):
         BANTQuestionsSectionAdmin,
         CustomQuestionsSectionAdmin,
     ]
+
+    def ta(self, obj):
+        return obj.ta
+
+    def velocity(self, obj):
+        return obj.velocity
+
+    def duration(self, obj):
+        return obj.duration
+
+    def total_goal(self, obj):
+        return obj.total_goal
+
+    def generated(self, obj):
+        return obj.generated
+
+    def pause(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+
+        for i in qs:
+            i.pause()
+            i.save()
+
+    def resume(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+
+        for i in qs:
+            i.resume()
+            i.save()
+
+    def stop(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+
+        for i in qs:
+            i.stop()
+            i.save()
+
+    def start(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+        for i in qs:
+            i.start()
+            i.save()
+

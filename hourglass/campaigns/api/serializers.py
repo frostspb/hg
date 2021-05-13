@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Campaign, CampaignsSection
+from ..models import Campaign, TargetSection
 from hourglass.references.models import CampaignTypes
 
 
@@ -31,7 +31,7 @@ class CampaignCopySerializer(serializers.Serializer):
 class CampaignsSectionSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CampaignsSection
+        model = TargetSection
         fields = (
             #'campaign_pos_type__name',
             'integration', 'pacing', 'leads_goal', 'leads_generated', 'velocity'
@@ -42,7 +42,8 @@ class CampaignSerializer(serializers.ModelSerializer):
     # start_date = serializers.SerializerMethodField()
     # end_date = serializers.SerializerMethodField()
     #pos = CampaignsSectionSerializer(source='campaignpos_set', many=True)
-
+    from django.db import models
+    #start_date = serializers.DateField(format='%d-%m-%Y')
     class Meta:
         model = Campaign
         fields = (

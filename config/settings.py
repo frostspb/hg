@@ -47,10 +47,11 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_filters',
     'solo.apps.SoloAppConfig',
+    'hourglass.settings',
     'hourglass.references',
     'hourglass.clients',
     'hourglass.campaigns',
-    'hourglass.settings',
+
 
 
 ]
@@ -102,6 +103,9 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'PAGE_SIZE': 100,
+    'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S",
+    'DATE_FORMAT': "%d-%m-%Y",
+    'DATE_INPUT_FORMATS': ["%d-%m-%Y"],
 
 }
 
@@ -148,9 +152,11 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
+
+DATE_FORMAT = "DD-MM-YYYY"
 
 
 # Static files (CSS, JavaScript, Images)
