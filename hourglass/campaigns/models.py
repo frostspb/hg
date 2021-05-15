@@ -322,6 +322,7 @@ def create_settings(sender, instance, created, **kwargs):
         CN,
         TACTICS,
     ]
+    
     if created:
         for_create = [SectionSettings(name=i, campaign=instance) for i in sections]
         SectionSettings.objects.bulk_create(for_create)
