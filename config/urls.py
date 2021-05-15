@@ -35,5 +35,5 @@ urlpatterns = [
     path('api/auth/user/', CurrentUserView.as_view()),
 ]
 
-admin.site.site_header = 'Hourglass Admin Panel'
-admin.site.site_title = 'Hourglass Admin Panel'
+admin.site.site_header = 'Hourglass Test Admin Panel'
+admin.site.site_title = 'Hourglass Test Admin Panel'
