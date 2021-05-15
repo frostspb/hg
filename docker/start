@@ -2,7 +2,7 @@
 
 while true; do
     echo "Re-starting Django runserver!"
-    #python manage.py migrate 0.0.0.0:8000
+    python manage.py migrate 0.0.0.0:8000
     python manage.py loaddata fixtures/*.json
     python manage.py runserver 0.0.0.0:8000
     sleep 2

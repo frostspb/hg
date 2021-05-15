@@ -11,3 +11,4 @@ deploy:
   script:
     - ssh-add <(echo "$SSH_PRV_KEY" | tr -d '\r')
     - ssh $DEV_SRV "ls -al"
+    - rsync -av -e ssh --exclude=*.pyc --exclude=envs/* --exclude=.git/* --exclude=mediafiles/* . $DEV_PATH
