@@ -12,5 +12,7 @@ deploy:
     #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - ssh-add <(echo "$SSH_PRV_KEY" | tr -d '\r')
-    - ssh $DEV_SRV "ls -al"
     - rsync -av -e ssh --exclude=*.pyc --exclude=envs/* --exclude=.git/* --exclude=mediafiles/* . $DEV_PATH
+    - ssh $DEV_SRV "cd hourglass; docker-compose -f production.yml down"
+    - ssh $DEV_SRV "cd hourglass; docker-compose -f production.yml build"
+    - ssh $DEV_SRV "cd hourglass; docker-compose -f production.yml up -d"
