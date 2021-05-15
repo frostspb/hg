@@ -9,5 +9,5 @@ deploy:
     - eval $(ssh-agent -s)
     #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - ssh-add <(echo "$SSH_PRIVATE_KEY" | tr -d '\r')
+    - ssh-add <(echo "$SSH_PRV_KEY" | tr -d '\r')
     - ssh $DEV_SRV "ls -al"
