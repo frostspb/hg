@@ -1,0 +1,7 @@
+stages:
+  - transfer_dev
+
+transfer_dev:
+  stage: transfer_dev
+  script:
+    - ssh $DEV_SRV "ls"
