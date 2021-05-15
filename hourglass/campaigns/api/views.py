@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from hourglass.references.models import CampaignTypes
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
-from .serializers import CampaignsSectionSerializer,CampaignSerializer, CampaignTypesSerializer, CampaignCopySerializer
+from .serializers import TargetSectionSerializer,CampaignSerializer,\
+    CampaignTypesSerializer, CampaignCopySerializer, SectionsSettingsSerializer, HourglassSerializer
 from ..models import Campaign
 
 
@@ -21,9 +22,9 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     def types(self, request):
         return Response(data=CampaignTypesSerializer(CampaignTypes.objects.filter(active=True), many=True).data)
 
-    @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def copy(self, request, *args, **kwargs):
-        serializer = CampaignCopySerializer(data=request.data)
+        serializer = CampaignCopySerializer(data={}, context={'campaign': self.get_object()})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({}, status=201)
@@ -35,15 +36,5 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated])
     def hourglass(self, request, *args, **kwargs):
-        c = self.get_object()
-        res = {
-            'TA': c.ta,
-            'duration': c.duration,
-            'state': c.state,
-            'velocity': c.velocity,
-            'total_goal': c.total_goal,
-            'generated': c.generated,
-            'generated_pos': c.generated_pos,
-        }
-        return Response(data=res)
+        return Response(data=HourglassSerializer(self.get_object()).data)
 

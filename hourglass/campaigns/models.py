@@ -153,7 +153,7 @@ class Campaign(CloneMixin, BaseStateItem):
         return self.kind == self.CampaignKinds.STANDARD
 
 
-class SectionSettings(models.Model):
+class SectionSettings(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sections")
     name = models.CharField("Section", max_length=32)
     enabled = models.BooleanField(default=True)

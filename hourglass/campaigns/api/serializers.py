@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Campaign, TargetSection
+from ..models import Campaign, TargetSection, SectionSettings
 from hourglass.references.models import CampaignTypes
 
 
@@ -13,22 +13,13 @@ class CampaignTypesSerializer(serializers.ModelSerializer):
 
 
 class CampaignCopySerializer(serializers.Serializer):
-    source_id = serializers.IntegerField(required=True)
-
-    class Meta:
-        fields = (
-            'source_id',
-        )
 
     def save(self, **kwargs):
-        source_id = self.validated_data.get('source_id')
-        campaign = Campaign.objects.filter(id=source_id).first()
-        if not campaign:
-            return
+        campaign = self.context.get('campaign')
         return Campaign.objects.copy(campaign)
 
 
-class CampaignsSectionSerializer(serializers.ModelSerializer):
+class TargetSectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TargetSection
@@ -61,3 +52,54 @@ class CampaignSerializer(serializers.ModelSerializer):
     #     if instance.is_standard:
     #         return instance.initial_end_date
     #     return instance.end_date
+
+
+class SectionsSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SectionSettings
+        fields = (
+            "id", "name", "enabled",
+        )
+
+
+class HourglassSerializer(serializers.ModelSerializer):
+    end_date = serializers.SerializerMethodField()
+    TA = serializers.SerializerMethodField()
+    duration = serializers.SerializerMethodField()
+    state = serializers.SerializerMethodField()
+    velocity = serializers.SerializerMethodField()
+    total_goal = serializers.SerializerMethodField()
+    generated = serializers.SerializerMethodField()
+    generated_pos = serializers.SerializerMethodField()
+    sections = SectionsSettingsSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Campaign
+        fields = (
+            "end_date", "TA", "duration", "state", "velocity",
+            "total_goal", "generated", "generated_pos", "sections",
+        )
+
+    def get_end_date(self, instance):
+        return instance.end_date
+
+    def get_TA(self, instance):
+        return instance.ta
+
+    def get_duration(self, instance):
+        return instance.duration
+
+    def get_state(self, instance):
+        return instance.state
+
+    def get_velocity(self, instance):
+        return instance.velocity
+
+    def get_total_goal(self, instance):
+        return instance.total_goal
+
+    def get_generated(self, instance):
+        return instance.generated
+
+    def get_generated_pos(self, instance):
+        return instance.generated_pos

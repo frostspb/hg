@@ -72,7 +72,7 @@ class CampaignAdmin(CloneModelAdmin):
     search_fields = ["client__name", "id"]
 
     fieldsets = (
-        ("Customer", {"fields": ("customer_information", "contact_name", "email", "note")}),
+        ("Customer", {"fields": ("customer_information", "contact_name", "email", "note", "client")}),
         ("Campaign admin settings", {
             "fields": (
                 "start_offset", "end_offset", "audience_targeted", "start_date", "end_date", "kind", "state",
