@@ -12,7 +12,7 @@ from hourglass.clients.models import Client
 
 from .base import BaseStateItem, BaseReportPercentItem
 
-from hourglass.references.models import CampaignTypes, Geolocations, JobTitles
+from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics
 
 from .managers import CampaignsManager
 
@@ -54,6 +54,7 @@ class Campaign(CloneMixin, BaseStateItem):
     end_date = models.DateField("End Date")
     order = models.IntegerField("Purchase Order", null=True)
     campaign_type = models.CharField("Campaign Type", max_length=128, null=True, blank=True)
+    tactics = models.ManyToManyField(Tactics, null=True, blank=True)
     details = models.TextField("Campaign Details", null=True, blank=True)
     guarantees = models.TextField("Campaign Guarantees", null=True, blank=True)
     base_velocity = models.IntegerField("Base Velocity", default=0)
@@ -66,6 +67,8 @@ class Campaign(CloneMixin, BaseStateItem):
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
         "intents", "titles", "assets", "targets", "sections",
     ]
+
+    _clone_m2m_fields = ["tactics"]
 
     class Meta:
         verbose_name = "Campaign"

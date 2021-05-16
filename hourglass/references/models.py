@@ -39,3 +39,14 @@ class JobTitles(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Tactics(models.Model):
+    name = models.CharField(max_length=256)
+
+    class Meta:
+        verbose_name = "Tactic"
+        verbose_name_plural = "Tactics"
+
+    def __str__(self):
+        return self.name

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ..models import Campaign, TargetSection, SectionSettings
-from hourglass.references.models import CampaignTypes
+from hourglass.references.models import CampaignTypes, Tactics
 
 
 class CampaignTypesSerializer(serializers.ModelSerializer):
@@ -62,6 +62,14 @@ class SectionsSettingsSerializer(serializers.ModelSerializer):
         )
 
 
+class TacticsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tactics
+        fields = (
+            "id", "name",
+        )
+
+
 class HourglassSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
     TA = serializers.SerializerMethodField()
@@ -72,12 +80,14 @@ class HourglassSerializer(serializers.ModelSerializer):
     generated = serializers.SerializerMethodField()
     generated_pos = serializers.SerializerMethodField()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
+    #tactics = TacticsSerializer(read_only=True, many=True)
+    tactics = serializers.SerializerMethodField()
 
     class Meta:
         model = Campaign
         fields = (
             "end_date", "TA", "duration", "state", "velocity",
-            "total_goal", "generated", "generated_pos", "sections",
+            "total_goal", "generated", "generated_pos", "sections", "tactics",
         )
 
     def get_end_date(self, instance):
@@ -103,3 +113,10 @@ class HourglassSerializer(serializers.ModelSerializer):
 
     def get_generated_pos(self, instance):
         return instance.generated_pos
+
+    def get_tactics(self, instance):
+        model_tactics = instance.tactics.values_list('id', flat=True)
+        t = Tactics.objects.all().values()
+        for i in t:
+            i['active'] = True if i.get('id') in model_tactics else False
+        return t
