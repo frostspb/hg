@@ -20,5 +20,16 @@ class Client(TimeStampedModel):
         verbose_name = "Client"
         verbose_name_plural = "Clients"
 
+    @property
+    def current_campaigns(self):
+        return self.campaign_set.all().count()
+
+    @property
+    def current_leads_goals(self):
+        s = 0
+        for i in self.campaign_set.all():
+            s += i.total_goal
+        return s
+
     def __str__(self):
         return f"{self.name}"

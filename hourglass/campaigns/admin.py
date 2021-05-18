@@ -76,7 +76,7 @@ class CampaignAdmin(CloneModelAdmin):
         ("Campaign admin settings", {
             "fields": (
                 "start_offset", "end_offset", "audience_targeted", "start_date", "end_date", "kind", "state",
-                "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics",
+                "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
             )
         })
 

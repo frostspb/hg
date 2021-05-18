@@ -39,6 +39,17 @@ class Campaign(CloneMixin, BaseStateItem):
         USER = 'copy', 'Copy'
         CONTRACT = 'contract', 'Contract'
 
+    class IntegrationTypes(models.TextChoices):
+        SALESFORCE = 'salesforce', 'Salesforce'
+        MARKETO = 'marketo', 'Marketo'
+        HUB_SPOT = 'hub_spot', 'HubSpot'
+        INTEGRATE = 'integrate', 'Integrate'
+        LOLAGROVE = 'lolagrove', 'Lolagrove'
+
+    class PacingTypes(models.TextChoices):
+        EVEN = 'even', 'Even'
+        FRONT_LOAD = 'front-load', 'Front-Load'
+
     customer_information = models.CharField("Customer information", max_length=250)
     contact_name = models.CharField("Contact Name", max_length=250)
     email = models.EmailField("Email")
@@ -53,6 +64,8 @@ class Campaign(CloneMixin, BaseStateItem):
     start_date = models.DateField("Start Date")
     end_date = models.DateField("End Date")
     order = models.IntegerField("Purchase Order", null=True)
+    integration = models.CharField(max_length=16, choices=IntegrationTypes.choices, default=IntegrationTypes.SALESFORCE)
+    pacing = models.CharField(max_length=16, choices=PacingTypes.choices, default=PacingTypes.EVEN)
     campaign_type = models.CharField("Campaign Type", max_length=128, null=True, blank=True)
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
     details = models.TextField("Campaign Details", null=True, blank=True)
@@ -171,19 +184,6 @@ class SectionSettings(CloneMixin, models.Model):
 
 
 class TargetSection(CloneMixin, BaseStateItem):
-    class IntegrationTypes(models.TextChoices):
-        SALESFORCE = 'salesforce', 'Salesforce'
-        MARKETO = 'marketo', 'Marketo'
-        HUB_SPOT = 'hub_spot', 'HubSpot'
-        INTEGRATE = 'integrate', 'Integrate'
-        LOLAGROVE = 'lolagrove', 'Lolagrove'
-
-    class PacingTypes(models.TextChoices):
-        EVEN = 'even', 'Even'
-        FRONT_LOAD = 'front-load', 'Front-Load'
-
-    integration = models.CharField(max_length=16, choices=IntegrationTypes.choices, default=IntegrationTypes.SALESFORCE)
-    pacing = models.CharField(max_length=16, choices=PacingTypes.choices, default=PacingTypes.EVEN)
     leads_goal = models.PositiveIntegerField('Leads goal')
     leads_generated = models.PositiveIntegerField('Leads Generated', default=0)
     velocity = models.PositiveSmallIntegerField("Velocity", default=0)

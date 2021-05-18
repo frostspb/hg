@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-from ..models import Campaign, TargetSection, SectionSettings
+from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection
 from hourglass.references.models import CampaignTypes, Tactics
+from hourglass.clients.api.serializers import ClientSerializer
 
 
 class CampaignTypesSerializer(serializers.ModelSerializer):
@@ -20,27 +21,37 @@ class CampaignCopySerializer(serializers.Serializer):
 
 
 class TargetSectionSerializer(serializers.ModelSerializer):
+    remaining_leads = serializers.SerializerMethodField()
+    percent_completion = serializers.SerializerMethodField()
+    type_name = serializers.CharField(source='campaign_pos_type')
 
     class Meta:
         model = TargetSection
         fields = (
-            #'campaign_pos_type__name',
-            'integration', 'pacing', 'leads_goal', 'leads_generated', 'velocity'
+            'type_name',
+            'leads_goal', 'leads_generated', 'velocity', 'percent_completion', 'remaining_leads'
         )
+
+    def get_percent_completion(self, instance):
+        return instance.percent_completion
+
+    def get_remaining_leads(self, instance):
+        return instance.remaining_leads
 
 
 class CampaignSerializer(serializers.ModelSerializer):
     # start_date = serializers.SerializerMethodField()
     # end_date = serializers.SerializerMethodField()
     #pos = CampaignsSectionSerializer(source='campaignpos_set', many=True)
-    from django.db import models
+
     #start_date = serializers.DateField(format='%d-%m-%Y')
+
     class Meta:
         model = Campaign
         fields = (
             "id", "client", "created", "active", "customer_information", "contact_name", "email", "note",
             "start_offset", "end_offset", "audience_targeted", "name", "campaign_type", "order",
-            "start_date", "end_date", "kind", "state",  "details",   "guarantees"
+            "start_date", "end_date", "kind", "state",  "details",   "guarantees", "integration", "pacing"
         )
 
     # def get_start_date(self, instance):
@@ -70,6 +81,14 @@ class TacticsSerializer(serializers.ModelSerializer):
         )
 
 
+class AssetsSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssetsSection
+        fields = (
+            "id", "name", "landing_page",  "percent"
+        )
+
+
 class HourglassSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
     TA = serializers.SerializerMethodField()
@@ -86,7 +105,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "duration", "state", "velocity",
+            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration"
             "total_goal", "generated", "generated_pos", "sections", "tactics",
         )
 
@@ -113,6 +132,25 @@ class HourglassSerializer(serializers.ModelSerializer):
 
     def get_generated_pos(self, instance):
         return instance.generated_pos
+
+    def get_tactics(self, instance):
+        model_tactics = instance.tactics.values_list('id', flat=True)
+        t = Tactics.objects.all().values()
+        for i in t:
+            i['active'] = True if i.get('id') in model_tactics else False
+        return t
+
+
+class CampaignSettingsSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(read_only=True, many=False)
+    targets = TargetSectionSerializer(read_only=True, many=True)
+    tactics = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Campaign
+        fields = (
+            "client", "start_date", "end_date", "name", "integration",  "pacing", "targets", "tactics"
+        )
 
     def get_tactics(self, instance):
         model_tactics = instance.tactics.values_list('id', flat=True)

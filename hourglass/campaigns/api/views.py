@@ -8,7 +8,8 @@ from hourglass.references.models import CampaignTypes
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
 from .serializers import TargetSectionSerializer,CampaignSerializer,\
-    CampaignTypesSerializer, CampaignCopySerializer, SectionsSettingsSerializer, HourglassSerializer
+    CampaignTypesSerializer, CampaignCopySerializer, SectionsSettingsSerializer, HourglassSerializer,\
+    CampaignSettingsSerializer
 from ..models import Campaign
 
 
@@ -37,4 +38,8 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated])
     def hourglass(self, request, *args, **kwargs):
         return Response(data=HourglassSerializer(self.get_object()).data)
+
+    @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated])
+    def settings_campaign(self, request, *args, **kwargs):
+        return Response(data=CampaignSettingsSerializer(self.get_object()).data)
 
