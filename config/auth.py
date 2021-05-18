@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'id', 'groups', 'first_name', 'last_name', 'email', 'photo_url', 'phone')
 
-    def get_photo(self, instance):
+    def get_photo_url(self, instance):
         return instance.photo_url
 
 class CurrentUserView(views.APIView):
