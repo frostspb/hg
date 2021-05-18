@@ -20,11 +20,14 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
+    photo = serializers.SerializerMethodField(allow_null=True)
 
     class Meta:
         model = User
         fields = ('username', 'id', 'groups', 'first_name', 'last_name', 'email', 'photo', 'phone')
 
+    def get_photo(self, instance):
+        return instance.photo_url
 
 class CurrentUserView(views.APIView):
     def get(self, request):

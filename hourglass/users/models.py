@@ -7,3 +7,8 @@ class User(AbstractUser):
     phone = models.CharField(max_length=21, null=True, blank=True)
     location = models.CharField(max_length=32, null=True, blank=True)
     photo = models.FileField(null=True, blank=True)
+
+    @property
+    def photo_url(self):
+        if self.photo:
+            return self.photo.url
