@@ -6,3 +6,4 @@ class User(AbstractUser):
     note = models.TextField(max_length=250, null=True, blank=True)
     phone = models.CharField(max_length=21, null=True, blank=True)
     location = models.CharField(max_length=32, null=True, blank=True)
+    photo = models.FileField(null=True, blank=True)

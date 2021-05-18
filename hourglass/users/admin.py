@@ -15,7 +15,7 @@ class UserAdmin(auth_admin.UserAdmin):
 
     fieldsets = auth_admin.UserAdmin.fieldsets + (
         (
-            "User", {"fields": ("note", "phone",)}
+            "User", {"fields": ("note", "phone", "photo")}
         ),
     )
     list_display = ["username", "is_superuser", "is_active", "date_joined", "last_login", "phone"]

@@ -105,7 +105,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration"
+            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration",
             "total_goal", "generated", "generated_pos", "sections", "tactics",
         )
 
