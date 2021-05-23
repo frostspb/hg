@@ -4,12 +4,12 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from hourglass.references.models import CampaignTypes
+from hourglass.references.models import CampaignTypes, JobTitles, Geolocations
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
-from .serializers import TargetSectionSerializer,CampaignSerializer,\
+from .serializers import TargetSectionSerializer, CampaignSerializer,\
     CampaignTypesSerializer, CampaignCopySerializer, SectionsSettingsSerializer, HourglassSerializer,\
-    CampaignSettingsSerializer
+    CampaignSettingsSerializer, GeolocationsSerializer, JobTitlesSerializer
 from ..models import Campaign
 
 
@@ -22,6 +22,26 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def types(self, request):
         return Response(data=CampaignTypesSerializer(CampaignTypes.objects.filter(active=True), many=True).data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def integration_types(self, request):
+        return Response(data=Campaign.IntegrationTypes.choices)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def pacing(self, request):
+        return Response(data=Campaign.PacingTypes.choices)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def kinds(self, request):
+        return Response(data=Campaign.CampaignKinds.choices)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def titles(self, request):
+        return Response(data=JobTitlesSerializer(JobTitles.objects.all(), many=True).data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def geolocations(self, request):
+        return Response(data=GeolocationsSerializer(Geolocations.objects.all(), many=True).data)
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def copy(self, request, *args, **kwargs):

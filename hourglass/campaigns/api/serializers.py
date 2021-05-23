@@ -1,8 +1,24 @@
 from rest_framework import serializers
 
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection
-from hourglass.references.models import CampaignTypes, Tactics
+from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations
 from hourglass.clients.api.serializers import ClientSerializer
+
+
+class GeolocationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Geolocations
+        fields = (
+            'id', 'name',
+        )
+
+
+class JobTitlesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobTitles
+        fields = (
+            'id', 'name',
+        )
 
 
 class CampaignTypesSerializer(serializers.ModelSerializer):
