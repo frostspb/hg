@@ -42,5 +42,56 @@
           "modified": "2021-01-01T14:46:56.090Z",
           "client_since": "2021-01-01T14:46:56.090Z"
       }
+  },
+
+   {
+      "model": "clients.Company",
+      "pk": 1,
+      "fields": {
+          "name": "Company1",
+          "created": "2021-01-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client": 1
+      }
+  },
+  {
+      "model": "clients.Company",
+      "pk": 2,
+      "fields": {
+          "name": "Company2",
+          "created": "2021-01-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client": 1
+      }
+  },
+  {
+      "model": "clients.Company",
+      "pk": 3,
+      "fields": {
+          "name": "Company3",
+          "created": "2021-01-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client": 1
+      }
+  },
+  {
+      "model": "clients.Company",
+      "pk": 4,
+      "fields": {
+          "name": "Company1",
+          "created": "2021-01-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client": 2
+      }
+  } ,
+  {
+      "model": "clients.Company",
+      "pk": 5,
+      "fields": {
+          "name": "Company1",
+          "created": "2021-01-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client": 3
+      }
   }
 ]

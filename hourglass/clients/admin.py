@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Client
+from .models import Client, Company
 
 
 @admin.register(Client)
@@ -19,3 +19,14 @@ class ClientAdmin(admin.ModelAdmin):
 
     def current_leads_goals(self, obj):
         return obj.current_leads_goals
+
+
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+
+    list_display = [
+        "id", "name", "client", "created"
+    ]
+    search_fields = ["name", "id"]
+    fields = ["name", "created"]
+    ordering = ("-created",)

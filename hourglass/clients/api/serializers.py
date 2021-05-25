@@ -1,6 +1,12 @@
 from rest_framework import serializers
 
-from ..models import Client
+from ..models import Client, Company
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ('id', 'name')
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -19,3 +25,6 @@ class ClientSerializer(serializers.ModelSerializer):
 
     def get_current_campaigns(self, instance):
         return instance.current_campaigns
+
+
+

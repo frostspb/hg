@@ -33,3 +33,9 @@ class Client(TimeStampedModel):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class Company(TimeStampedModel):
+    name = models.CharField(max_length=50)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+

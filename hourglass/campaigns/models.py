@@ -8,7 +8,7 @@ from django.utils.timezone import now
 from django_extensions.db.models import TimeStampedModel
 from django_fsm import FSMField
 from model_clone import CloneMixin
-from hourglass.clients.models import Client
+from hourglass.clients.models import Client, Company
 
 from .base import BaseStateItem, BaseReportPercentItem
 
@@ -220,10 +220,11 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
         return f"{self.id}"
 
 
-class IntentFeedsSection(CloneMixin,BaseReportPercentItem):
+class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Intent topic", max_length=200)
     generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL,  null=True, blank=True)
 
     class Meta:
         verbose_name = "Intent Feed"
