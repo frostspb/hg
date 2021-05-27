@@ -186,8 +186,8 @@ class Campaign(CloneMixin, BaseStateItem):
 
 class SectionSettings(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sections")
-    name = models.CharField("Section", max_length=32)
-    slug = models.SlugField(max_length=32)
+    name = models.CharField("Section", max_length=64)
+    slug = models.SlugField(max_length=64)
     enabled = models.BooleanField(default=True)
     can_enabled = models.BooleanField(default=True)
     delta_ta_sector = models.IntegerField(default=0)
