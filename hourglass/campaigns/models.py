@@ -17,20 +17,35 @@ from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, 
 from .managers import CampaignsManager
 
 
-JOB_TITLES = "JobTitle"
-ASSETS = "Assets"
-INTENT_FEED = "IntentFeed"
-ABM = "ABM"
-SUPP_LIST = "SuppressionList"
-INDUSTRIES = "Industries"
-GEO = "Geo"
-REVENUE = "Revenue"
-COMPANY_SIZE = "CompanySize"
-BANT = "BANT"
-CQ = "CQ"
-INSTALL_BASE = "InstallBase"
-CN = "CN"
-TACTICS = "Tactics"
+JOB_TITLES_SLUG = "JobTitle"
+ASSETS_SLUG = "Assets"
+INTENT_FEED_SLUG = "IntentFeed"
+ABM_SLUG = "ABM"
+SUPP_LIST_SLUG = "SuppressionList"
+INDUSTRIES_SLUG = "Industries"
+GEO_SLUG = "Geo"
+REVENUE_SLUG = "Revenue"
+COMPANY_SIZE_SLUG = "CompanySize"
+BANT_SLUG = "BANT"
+CQ_SLUG = "CQ"
+INSTALL_BASE_SLUG = "InstallBase"
+CN_SLUG = "CN"
+TACTICS_SLUG = "Tactics"
+
+JOB_TITLES_NAME = "Job Title"
+ASSETS_NAME = "Assets"
+INTENT_FEED_NAME = "Intent Feed"
+ABM_NAME = "ABM"
+SUPP_LIST_NAME =  "Suppression list(s)"
+INDUSTRIES_NAME = "Industries"
+GEO_NAME = "Geo"
+REVENUE_NAME = "Revenue"
+COMPANY_SIZE_NAME = "Company Size"
+BANT_NAME = "BANT questions"
+CQ_NAME = "Custom Questions"
+INSTALL_BASE_NAME = "Install Base"
+CN_NAME = "CN"
+TACTICS_NAME = "Tactics"
 
 
 class Campaign(CloneMixin, BaseStateItem):
@@ -107,11 +122,11 @@ class Campaign(CloneMixin, BaseStateItem):
         sections_v = self.sections.filter(enabled=True).aggregate(Sum('delta_v_sector'))
         _velocity = self.base_velocity + sections_v.get('delta_v_sector__sum', 0)
         for i in sections:
-            if i.name == ASSETS:
+            if i.name == ASSETS_SLUG:
                 _velocity += self.assets.count() * i.delta_v_per_row
-            elif i.name == BANT:
+            elif i.name == BANT_SLUG:
                 _velocity += self.bants.count() * i.delta_v_per_row
-            elif i.name == CQ:
+            elif i.name == CQ_SLUG:
                 _velocity += self.cqs.count() * i.delta_v_per_row
         targets_velocity = self.targets.filter(state=BaseStateItem.States.STATE_RUNNING).aggregate(Sum('velocity'))
 
@@ -145,18 +160,18 @@ class Campaign(CloneMixin, BaseStateItem):
         ta = self.audience_targeted + sections_ta.get('delta_ta_sector__sum', 0)
 
         for i in sections:
-            if i.name == JOB_TITLES:
+            if i.name == JOB_TITLES_SLUG:
                 ta += self.titles.count() * i.delta_ta_per_row
-            elif i.name == REVENUE:
+            elif i.name == REVENUE_SLUG:
                 ta += self.revenues.count() * i.delta_ta_per_row
-            elif i.name == COMPANY_SIZE:
+            elif i.name == COMPANY_SIZE_SLUG:
                 ta += self.companies.count() * i.delta_ta_per_row
-            elif i.name == SUPP_LIST:
+            elif i.name == SUPP_LIST_SLUG:
                 pass
-            elif i.name == ABM:
+            elif i.name == ABM_SLUG:
                 #abm_ta = self.abm
                 pass
-            elif i.name == INDUSTRIES:
+            elif i.name == INDUSTRIES_SLUG:
                 ta += self.industries.count() * i.delta_ta_per_row
         return ta
 
@@ -172,6 +187,7 @@ class Campaign(CloneMixin, BaseStateItem):
 class SectionSettings(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sections")
     name = models.CharField("Section", max_length=32)
+    slug = models.SlugField(max_length=32)
     enabled = models.BooleanField(default=True)
     can_enabled = models.BooleanField(default=True)
     delta_ta_sector = models.IntegerField(default=0)
@@ -311,22 +327,22 @@ class CustomQuestionsSection(CloneMixin, BaseStateItem):
 def create_settings(sender, instance, created, **kwargs):
 
     sections = [
-        JOB_TITLES,
-        ASSETS,
-        INTENT_FEED,
-        ABM,
-        SUPP_LIST,
-        INDUSTRIES,
-        GEO,
-        REVENUE,
-        COMPANY_SIZE,
-        BANT,
-        CQ,
-        INSTALL_BASE,
-        CN,
-        TACTICS,
+        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG},
+        {'name': ASSETS_NAME, 'slug': ASSETS_SLUG},
+        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG},
+        {'name': ABM_NAME, 'slug': ABM_SLUG},
+        {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG},
+        {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG},
+        {'name': GEO_NAME, 'slug': GEO_SLUG},
+        {'name': REVENUE_NAME, 'slug': REVENUE_SLUG},
+        {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG},
+        {'name': BANT_NAME, 'slug': BANT_SLUG},
+        {'name': CQ_NAME, 'slug': CQ_SLUG},
+        {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG},
+        {'name': CN_NAME, 'slug': CN_SLUG},
+        {'name': TACTICS_NAME, 'slug': TACTICS_SLUG},
     ]
 
     if created:
-        for_create = [SectionSettings(name=i, campaign=instance) for i in sections]
+        for_create = [SectionSettings(slug=i, campaign=instance) for i in sections]
         SectionSettings.objects.bulk_create(for_create)

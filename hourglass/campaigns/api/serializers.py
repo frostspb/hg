@@ -84,8 +84,9 @@ class CampaignSerializer(serializers.ModelSerializer):
 class SectionsSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionSettings
+        ordering = ('-name',)
         fields = (
-            "id", "name", "enabled",
+            "id", "name", "slug", "enabled",
         )
 
 
