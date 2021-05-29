@@ -50,3 +50,16 @@ class Tactics(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Answers(models.Model):
+    value = models.TextField()
+
+class Question(models.Model):
+    class QuestionKinds(models.TextChoices):
+        BANT = 'BANT', 'BANT'
+        CUSTOM = 'custom', 'Custom'
+
+    kind = models.CharField(max_length=16, choices=QuestionKinds.choices, default=QuestionKinds.BANT)
+    name = models.TextField()
+    answer_variants = models.ManyToManyField(Answers)

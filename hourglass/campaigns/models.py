@@ -12,7 +12,7 @@ from hourglass.clients.models import Client, Company
 
 from .base import BaseStateItem, BaseReportPercentItem
 
-from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics
+from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question
 
 from .managers import CampaignsManager
 
@@ -240,7 +240,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Intent topic", max_length=200)
     generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL,  null=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Intent Feed"
@@ -316,11 +316,13 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
 class BANTQuestionsSection(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="bants")
     answer = models.TextField("Answer")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
 
 class CustomQuestionsSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="cqs")
     answer = models.TextField("Answer")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
 
 @receiver(post_save, sender=Campaign)
