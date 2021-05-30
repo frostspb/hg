@@ -19,9 +19,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     queryset = Campaign.objects.filter(active=True)
     filterset_fields = ('client',)
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
-    def types(self, request):
-        return Response(data=CampaignTypesSerializer(CampaignTypes.objects.filter(active=True), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def integration_types(self, request):
@@ -34,14 +31,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):
         return Response(data=Campaign.CampaignKinds.choices)
-
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
-    def titles(self, request):
-        return Response(data=JobTitlesSerializer(JobTitles.objects.all(), many=True).data)
-
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
-    def geolocations(self, request):
-        return Response(data=GeolocationsSerializer(Geolocations.objects.all(), many=True).data)
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def copy(self, request, *args, **kwargs):
