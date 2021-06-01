@@ -29,8 +29,9 @@ class TacticsAdmin(admin.ModelAdmin):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ["id", "name"]
+    list_display = ["id", "name", "kind"]
     search_fields = ["name", "id"]
+
 
 @admin.register(Answers)
 class AnswersAdmin(admin.ModelAdmin):
