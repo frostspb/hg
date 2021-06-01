@@ -29,6 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
     def get_photo_url(self, instance):
         return instance.photo_url
 
+
 class CurrentUserView(views.APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)

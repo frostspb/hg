@@ -55,6 +55,7 @@ class Tactics(models.Model):
 class Answers(models.Model):
     value = models.TextField()
 
+
 class Question(models.Model):
     class QuestionKinds(models.TextChoices):
         BANT = 'BANT', 'BANT'
@@ -63,3 +64,13 @@ class Question(models.Model):
     kind = models.CharField(max_length=16, choices=QuestionKinds.choices, default=QuestionKinds.BANT)
     name = models.TextField()
     answer_variants = models.ManyToManyField(Answers)
+
+
+class Managers(models.Model):
+    name = models.CharField(max_length=255)
+    photo = models.FileField(null=True, blank=True)
+
+    @property
+    def photo_url(self):
+        if self.photo:
+            return self.photo.url

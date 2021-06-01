@@ -149,5 +149,80 @@
         "active": true
 
     }
+},
+{
+    "model": "references.Answers",
+    "pk": 1,
+    "fields": {
+        "value": "Yes"
+
+
+    }
+},
+{
+    "model": "references.Answers",
+    "pk": 1,
+    "fields": {
+        "value": "No"
+
+
+    }
+},
+{
+    "model": "references.Question",
+    "pk": 1,
+    "fields": {
+        "kind": "BANT",
+        "name": "Do you have a defined budget for this project?",
+        "answer_variants": [1,2]
+
+    }
+},
+{
+    "model": "references.Question",
+    "pk": 2,
+    "fields": {
+        "kind": "BANT",
+        "name": "Are you responsible for approving, authorizing or recommending this investment?",
+        "answer_variants": [1,2]
+
+    }
+},
+{
+    "model": "references.Question",
+    "pk": 3,
+    "fields": {
+        "kind": "BANT",
+        "name": "Are you currently planning to evluate or review an Inventory Management software solution?",
+        "answer_variants": [1,2]
+
+    }
+},
+    {
+    "model": "references.Question",
+    "pk": 4,
+    "fields": {
+        "kind": "BANT",
+        "name": "What timeframe do you have to deploy desired solution?",
+        "answer_variants": [1,2]
+
+    }
+},
+
+{
+    "model": "references.Managers",
+    "pk": 1,
+    "fields": {
+
+        "name": "Manager1"
+    }
+},
+{
+    "model": "references.Managers",
+    "pk": 2,
+    "fields": {
+
+        "name": "Manager2"
+    }
 }
 ]

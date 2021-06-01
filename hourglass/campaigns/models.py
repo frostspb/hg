@@ -12,7 +12,7 @@ from hourglass.clients.models import Client, Company
 
 from .base import BaseStateItem, BaseReportPercentItem
 
-from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question
+from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question, Managers
 
 from .managers import CampaignsManager
 
@@ -66,7 +66,7 @@ class Campaign(CloneMixin, BaseStateItem):
         FRONT_LOAD = 'front-load', 'Front-Load'
 
     customer_information = models.CharField("Customer information", max_length=250)
-    contact_name = models.CharField("Contact Name", max_length=250)
+    contact_name = models.ForeignKey(Managers, on_delete=models.CASCADE)
     email = models.EmailField("Email")
     note = models.TextField("Notes", null=True, blank=True)
     name = models.CharField("Campaign Name", max_length=250)

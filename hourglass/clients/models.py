@@ -13,7 +13,7 @@ class Client(TimeStampedModel):
     client_type = models.CharField(max_length=16, choices=ClientTypes.choices, default=ClientTypes.STANDARD)
     total_campaigns = models.IntegerField("Total Campaigns", default=0)
     leads_generated = models.IntegerField("Leads Generated Totally", default=0)
-    client_since = models.DateTimeField("Our Client since", null=True)
+    client_since = models.DateField("Our Client since", null=True)
     active = models.BooleanField(default=True)
 
     class Meta:

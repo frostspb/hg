@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Answers, Question
+from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Answers, Question, Managers
 #from hourglass.clients.api.serializers import ClientSerializer
 
 class GeolocationsSerializer(serializers.ModelSerializer):
@@ -18,6 +18,19 @@ class JobTitlesSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name',
         )
+
+
+class ManagersSerializer(serializers.ModelSerializer):
+    photo_url = serializers.SerializerMethodField(allow_null=True)
+
+    class Meta:
+        model = Managers
+        fields = (
+            'id', 'name', 'photo_url'
+        )
+
+    def get_photo_url(self, instance):
+        return instance.photo_url
 
 
 class CampaignTypesSerializer(serializers.ModelSerializer):
