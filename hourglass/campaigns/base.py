@@ -33,7 +33,7 @@ class BaseStateItem(TimeStampedModel):
 
     @property
     def duration(self):
-        if self.state == self.States.STATE_RUNNING:
+        if self.state == self.States.STATE_RUNNING and self.started_at:
             return self.execution_time + (now() - self.started_at).seconds
         else:
             return self.execution_time
