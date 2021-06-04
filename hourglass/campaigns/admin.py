@@ -77,13 +77,13 @@ class CampaignAdmin(CloneModelAdmin):
         ("Customer", {"fields": ("customer_information", "managed_by", "email", "note", "client")}),
         ("Campaign admin settings", {
             "fields": (
-                "start_offset", "end_offset", "audience_targeted", "start_date", "end_date", "kind", "state",
+                "name", "start_offset", "end_offset", "audience_targeted", "start_date", "end_date", "state",
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
             )
         })
 
     )
-    readonly_fields = ["id", "created", ]
+    readonly_fields = ["id", "created", "kind"]
     ordering = ("-created",)
     actions = ["start", "stop", "pause", "resume",]
     inlines = [
