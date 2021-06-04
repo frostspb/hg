@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CampaignTypes, Geolocations, Tactics, Question, Answers #,JobTitles,
+from .models import CampaignTypes, Geolocations, Tactics, Question, Answers, Managers #,JobTitles,
 
 
 @admin.register(CampaignTypes)
@@ -36,4 +36,9 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(Answers)
 class AnswersAdmin(admin.ModelAdmin):
     list_display = ["id", "value"]
+
+
+@admin.register(Managers)
+class ManagersAdmin(admin.ModelAdmin):
+    list_display = ["id", "name", "photo"]
 

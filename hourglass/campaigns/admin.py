@@ -6,11 +6,13 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     CustomQuestionsSection, SectionSettings
 
 
-
 class SectionSettingsAdmin(admin.TabularInline):
     model = SectionSettings
     extra = 0
     fields = ['enabled', 'can_enabled', 'delta_ta_sector', 'delta_ta_per_row', 'delta_v_sector', 'delta_v_per_row']
+
+    def has_add_permission(self, request, obj=None):
+        return False
 
 
 class TargetSectionAdmin(admin.TabularInline):
@@ -72,7 +74,7 @@ class CampaignAdmin(CloneModelAdmin):
     search_fields = ["client__name", "id"]
 
     fieldsets = (
-        ("Customer", {"fields": ("customer_information", "contact_name", "email", "note", "client")}),
+        ("Customer", {"fields": ("customer_information", "managed_by", "email", "note", "client")}),
         ("Campaign admin settings", {
             "fields": (
                 "start_offset", "end_offset", "audience_targeted", "start_date", "end_date", "kind", "state",

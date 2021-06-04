@@ -55,6 +55,10 @@ class Tactics(models.Model):
 class Answers(models.Model):
     value = models.TextField()
 
+    class Meta:
+        verbose_name = "Answer"
+        verbose_name_plural = "Answers"
+
     def __str__(self):
         return self.value
 
@@ -76,7 +80,15 @@ class Managers(models.Model):
     name = models.CharField(max_length=255)
     photo = models.FileField(null=True, blank=True)
 
+    class Meta:
+        verbose_name = "Manager"
+        verbose_name_plural = "Managers"
+
     @property
     def photo_url(self):
         if self.photo:
             return self.photo.url
+    def __str__(self):
+        return self.name
+
+
