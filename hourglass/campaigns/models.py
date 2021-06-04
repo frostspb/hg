@@ -67,6 +67,7 @@ class Campaign(CloneMixin, BaseStateItem):
 
     customer_information = models.CharField("Customer information", max_length=250)
     managed_by = models.ForeignKey(Managers, on_delete=models.CASCADE)
+    contact_name = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField("Email")
     note = models.TextField("Notes", null=True, blank=True)
     name = models.CharField("Campaign Name", max_length=250)

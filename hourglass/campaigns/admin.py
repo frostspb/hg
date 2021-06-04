@@ -68,7 +68,7 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 @admin.register(Campaign)
 class CampaignAdmin(CloneModelAdmin):
     list_display = [
-        "id", "client", "created", "active",  "kind", "customer_information", "state", "ta", "velocity", "duration",
+        "id", "client", "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
         "total_goal", "generated",
     ]
     search_fields = ["client__name", "id"]
