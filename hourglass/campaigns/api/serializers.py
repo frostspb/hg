@@ -127,7 +127,7 @@ class HourglassSerializer(serializers.ModelSerializer):
         )
 
     def get_end_date(self, instance):
-        return instance.end_date
+        return instance.end_date.strftime('%d-%m-%Y')
 
     def get_TA(self, instance):
         return instance.ta
