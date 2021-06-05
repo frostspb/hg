@@ -65,31 +65,41 @@ class Campaign(CloneMixin, BaseStateItem):
         EVEN = 'even', 'Even'
         FRONT_LOAD = 'front-load', 'Front-Load'
 
-    customer_information = models.CharField("Customer information", max_length=250)
-    managed_by = models.ForeignKey(Managers, on_delete=models.CASCADE)
+    # front
+
     contact_name = models.CharField(max_length=255, blank=True, null=True)
+    start_date = models.DateField("Start Date", null=True, blank=True)
+    end_date = models.DateField("End Date", null=True, blank=True)
+    order = models.IntegerField("Purchase Order", null=True)
+    customer_information = models.CharField("Customer information", max_length=250, null=True, blank=True)
+    details = models.TextField("Campaign Details", null=True, blank=True)
+    guarantees = models.TextField("Campaign Guarantees", null=True, blank=True)
     email = models.EmailField("Email")
     note = models.TextField("Notes", null=True, blank=True)
-    name = models.CharField("Campaign Name", max_length=250)
+
+    # both
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    name = models.CharField("Campaign Name", max_length=250)
+    campaign_type = models.CharField("Campaign Type", max_length=128, null=True, blank=True)
+
+    # sys
     active = models.BooleanField(default=True)
+    kind = models.CharField(max_length=16, choices=CampaignKinds.choices, default=CampaignKinds.STANDARD)
+
+    # admin
+    managed_by = models.ForeignKey(Managers, on_delete=models.CASCADE, null=True)
     start_offset = models.PositiveSmallIntegerField("Start Date offset in days", default=0)
     end_offset = models.PositiveSmallIntegerField("End Date offset in days", default=0)
     audience_targeted = models.IntegerField("Base Target Audience", default=0)
-    kind = models.CharField(max_length=16, choices=CampaignKinds.choices, default=CampaignKinds.STANDARD)
-    start_date = models.DateField("Start Date")
-    end_date = models.DateField("End Date")
-    order = models.IntegerField("Purchase Order", null=True)
     integration = models.CharField(max_length=16, choices=IntegrationTypes.choices, default=IntegrationTypes.SALESFORCE)
     pacing = models.CharField(max_length=16, choices=PacingTypes.choices, default=PacingTypes.EVEN)
-    campaign_type = models.CharField("Campaign Type", max_length=128, null=True, blank=True)
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
-    details = models.TextField("Campaign Details", null=True, blank=True)
-    guarantees = models.TextField("Campaign Guarantees", null=True, blank=True)
     base_velocity = models.IntegerField("Base Velocity", default=0)
     top_percent = models.FloatField("Top Leads Percent", default=0)
     middle_percent = models.FloatField("Middle Leads Percent", default=0)
     bottom_percent = models.FloatField("Bottom Leads Percent", default=0)
+
+
 
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
@@ -183,6 +193,7 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def is_standard(self):
         return self.kind == self.CampaignKinds.STANDARD
+
 
 
 class SectionSettings(CloneMixin, models.Model):

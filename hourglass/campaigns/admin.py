@@ -69,15 +69,15 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 class CampaignAdmin(CloneModelAdmin):
     list_display = [
         "id", "client", "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
-        "total_goal", "generated",
+        "total_goal", "generated", "start_date_admin", "end_date_admin"
     ]
     search_fields = ["client__name", "id"]
 
     fieldsets = (
-        ("Customer", {"fields": ("customer_information", "managed_by", "email", "note", "client")}),
+        ("Customer", {"fields": ("customer_information", "managed_by", "client")}),
         ("Campaign admin settings", {
             "fields": (
-                "name", "start_offset", "end_offset", "audience_targeted", "start_date", "end_date", "state",
+                "name", "start_offset", "end_offset", "audience_targeted",  "state",
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
             )
         })
@@ -99,6 +99,12 @@ class CampaignAdmin(CloneModelAdmin):
         BANTQuestionsSectionAdmin,
         CustomQuestionsSectionAdmin,
     ]
+
+    def start_date_admin(self, obj):
+        return obj.initial_start_date
+
+    def end_date_admin(self, obj):
+        return obj.initial_end_date
 
     def ta(self, obj):
         return obj.ta

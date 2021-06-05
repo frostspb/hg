@@ -56,8 +56,9 @@ class TargetSectionSerializer(serializers.ModelSerializer):
 
 
 class CampaignSerializer(serializers.ModelSerializer):
-    # start_date = serializers.SerializerMethodField()
-    # end_date = serializers.SerializerMethodField()
+    start_date = serializers.SerializerMethodField()
+    end_date = serializers.SerializerMethodField()
+    kind = serializers.CharField(default=Campaign.CampaignKinds.USER)
     #pos = CampaignsSectionSerializer(source='campaignpos_set', many=True)
 
     #start_date = serializers.DateField(format='%d-%m-%Y')
@@ -66,19 +67,19 @@ class CampaignSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = (
             "id", "client", "created", "active", "customer_information", "contact_name", "email", "note",
-            "start_offset", "end_offset", "audience_targeted", "name", "campaign_type", "order",
+            "name", "campaign_type", "order",
             "start_date", "end_date", "kind", "state",  "details",   "guarantees", "integration", "pacing"
         )
 
-    # def get_start_date(self, instance):
-    #     if instance.is_standard:
-    #         return instance.initial_start_date
-    #     return instance.start_date
-    #
-    # def get_end_date(self, instance):
-    #     if instance.is_standard:
-    #         return instance.initial_end_date
-    #     return instance.end_date
+    def get_start_date(self, instance):
+        if instance.is_standard:
+            return instance.initial_start_date
+        return instance.start_date
+
+    def get_end_date(self, instance):
+        if instance.is_standard:
+            return instance.initial_end_date
+        return instance.end_date
 
 
 class SectionsSettingsSerializer(serializers.ModelSerializer):
