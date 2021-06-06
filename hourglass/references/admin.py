@@ -13,9 +13,9 @@ class CampaignTypesAdmin(admin.ModelAdmin):
 
 @admin.register(Geolocations)
 class GeolocationsAdmin(admin.ModelAdmin):
-    list_display = ["id", "name"]
+    list_display = ["id", "name", "code"]
     search_fields = ["name", "id"]
-    fields = ["name", ]
+    fields = ["name", "code"]
     ordering = ("name",)
 
 

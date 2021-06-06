@@ -1,5 +1,6 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
+    DestroyModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -7,10 +8,15 @@ from rest_framework.response import Response
 from hourglass.references.models import CampaignTypes, JobTitles, Geolocations
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
-from .serializers import TargetSectionSerializer, CampaignSerializer,\
+from .serializers import TargetSectionSerializer, CampaignSerializer , AssetsSectionSerializer,\
     CampaignTypesSerializer, CampaignCopySerializer, SectionsSettingsSerializer, HourglassSerializer,\
-    CampaignSettingsSerializer, GeolocationsSerializer, JobTitlesSerializer
-from ..models import Campaign
+    CampaignSettingsSerializer, GeolocationsSectionSerializer, JobTitlesSerializer,CustomQuestionsSectionSerializer,\
+    CustomQuestionsSection, BANTQuestionsSectionSerializer, GeolocationsSectionSerializer,\
+    CompanySizeSectionSerializer, RevenueSectionSerializer, IndustriesSectionSerializer,\
+    JobTitlesSectionSerializer, IntentFeedsSectionSerializer
+from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
+    IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
+    CustomQuestionsSection
 
 
 class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin):
@@ -18,7 +24,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     serializer_class = CampaignSerializer
     queryset = Campaign.objects.filter(active=True)
     filterset_fields = ('client',)
-
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def integration_types(self, request):
@@ -52,3 +57,74 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     def settings_campaign(self, request, *args, **kwargs):
         return Response(data=CampaignSettingsSerializer(self.get_object()).data)
 
+
+class AssetsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AssetsSectionSerializer
+    queryset = AssetsSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class IntentFeedsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = IntentFeedsSectionSerializer
+    queryset = IntentFeedsSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class JobTitlesSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = JobTitlesSectionSerializer
+    queryset = JobTitlesSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class IndustriesSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = IndustriesSectionSerializer
+    queryset = IndustriesSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class RevenueSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = RevenueSectionSerializer
+    queryset = RevenueSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class CompanySizeSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CompanySizeSectionSerializer
+    queryset = CompanySizeSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class GeolocationsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = GeolocationsSectionSerializer
+    queryset = GeolocationsSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class BANTQuestionsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = BANTQuestionsSectionSerializer
+    queryset = BANTQuestionsSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class CustomQuestionsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CustomQuestionsSectionSerializer
+    queryset = CustomQuestionsSection.objects.all()
+    filterset_fields = ('campaign',)

@@ -1,24 +1,11 @@
 from rest_framework import serializers
 
-from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection
+from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
+    IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
+    CustomQuestionsSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations
+from hourglass.references.api.serializers import AnswerSerializer, QuestionSerializer, JobTitlesSerializer
 from hourglass.clients.api.serializers import ClientSerializer
-
-
-class GeolocationsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Geolocations
-        fields = (
-            'id', 'name',
-        )
-
-
-class JobTitlesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = JobTitles
-        fields = (
-            'id', 'name',
-        )
 
 
 class CampaignTypesSerializer(serializers.ModelSerializer):
@@ -99,14 +86,6 @@ class TacticsSerializer(serializers.ModelSerializer):
         )
 
 
-class AssetsSectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AssetsSection
-        fields = (
-            "id", "name", "landing_page",  "percent"
-        )
-
-
 class HourglassSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
     TA = serializers.SerializerMethodField()
@@ -176,3 +155,84 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
         for i in t:
             i['active'] = True if i.get('id') in model_tactics else False
         return t
+
+# Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
+# IndustriesSection, RevenueSection, CompanySizeSection,GeolocationsSection , BANTQuestionsSection, CustomQuestionsSection
+
+
+class AssetsSectionSerializer(serializers.ModelSerializer):
+    titles = JobTitlesSerializer(allow_null=True)
+
+    class Meta:
+        model = AssetsSection
+        fields = (
+            "id", "name", "landing_page",  "percent", "campaign", "titles"
+        )
+
+
+class IntentFeedsSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntentFeedsSection
+        fields = (
+            "id", "name", "campaign",  "company", "generated",
+        )
+
+
+class JobTitlesSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobTitlesSection
+        fields = (
+            "id", "name", "campaign",   "generated",
+        )
+
+
+class IndustriesSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IndustriesSection
+        fields = (
+            "id", "name", "campaign",
+        )
+
+
+class RevenueSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RevenueSection
+        fields = (
+            "id", "name", "campaign",
+        )
+
+
+class CompanySizeSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanySizeSection
+        fields = (
+            "id", "name", "campaign",
+        )
+
+
+class GeolocationsSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GeolocationsSection
+        fields = (
+            "id", "name", "geolocation", "campaign",
+        )
+
+
+class BANTQuestionsSectionSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer()
+
+    class Meta:
+        model = BANTQuestionsSection
+        fields = (
+            "id", "campaign", "question", "answer"
+        )
+
+
+class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer()
+
+    class Meta:
+        model = CustomQuestionsSection
+        fields = (
+            "id",  "campaign", "question", "answer"
+        )
