@@ -20,7 +20,7 @@
       "fields": {
           "name": "Monetaric",
           "active": true,
-          "client_type": "prospective",
+          "client_type": "standard",
           "total_campaigns": 8,
           "leads_generated": 458,
           "created": "2021-01-01T14:46:56.090Z",
@@ -33,9 +33,9 @@
       "model": "clients.Client",
       "pk": 3,
       "fields": {
-          "name": "Vitya",
+          "name": "Healinic ",
           "active": true,
-          "client_type": "contract",
+          "client_type": "standard",
           "total_campaigns": 23,
           "leads_generated": 9650,
           "created": "2021-03-01T14:46:56.090Z",
