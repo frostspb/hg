@@ -58,6 +58,12 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         return Response(data=CampaignSettingsSerializer(self.get_object()).data)
 
 
+class SectionSettingsViewSet(UpdateModelMixin,  RetrieveModelMixin, GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = SectionsSettingsSerializer
+    queryset = SectionSettings.objects.all()
+
+
 class AssetsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
                            DestroyModelMixin):
     permission_classes = [IsAuthenticated]
@@ -71,7 +77,7 @@ class IntentFeedsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModel
     permission_classes = [IsAuthenticated]
     serializer_class = IntentFeedsSectionSerializer
     queryset = IntentFeedsSection.objects.all()
-    filterset_fields = ('campaign',)
+    filterset_fields = ('campaign', 'kind')
 
 
 class JobTitlesSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,

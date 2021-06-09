@@ -3,7 +3,7 @@ from hourglass.contrib.rest import OptionalSlashDefaultRouter
 from hourglass.clients.api.views import ClientsViewSet
 from hourglass.campaigns.api.views import CampaignViewSet, CustomQuestionsSectionViewSet, BANTQuestionsSectionViewSet,\
 GeolocationsSectionViewSet, CompanySizeSectionViewSet, RevenueSectionViewSet, IndustriesSectionViewSet, \
-JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet
+JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet, SectionSettingsViewSet
 
 from hourglass.references.api.views import ReferencesViewSet
 
@@ -11,7 +11,8 @@ router = OptionalSlashDefaultRouter()
 
 router.register("client", ClientsViewSet, basename="client")
 router.register("campaign", CampaignViewSet, basename="campaign")
-router.register("campaign_settings/references", ReferencesViewSet, basename="references")
+router.register("section_settings", SectionSettingsViewSet, basename="section_settings")
+router.register("references", ReferencesViewSet, basename="references")
 router.register("campaign_settings/custom_questions", CustomQuestionsSectionViewSet, basename="questions")
 router.register("campaign_settings/bant_questions", BANTQuestionsSectionViewSet, basename="bant")
 router.register("campaign_settings/geolocations", GeolocationsSectionViewSet, basename="geolocations")

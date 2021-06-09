@@ -248,10 +248,15 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
 
 
 class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
+    class Kinds(models.TextChoices):
+        INFUSEMEDIA = 'INFUSEmedia', 'INFUSEmedia'
+        BOMBORA = 'Bombora', 'Bombora'
+        ABERDEEN = 'Aberdeen', 'Aberdeen'
     name = models.CharField("Intent topic", max_length=200)
     generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    kind = models.CharField(max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
 
     class Meta:
         verbose_name = "Intent Feed"

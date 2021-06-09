@@ -74,7 +74,7 @@ class SectionsSettingsSerializer(serializers.ModelSerializer):
         model = SectionSettings
         ordering = ('-name',)
         fields = (
-            "id", "name", "slug", "enabled",
+            "id", "name", "slug", "enabled", "can_enabled"
         )
 
 
@@ -156,9 +156,6 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             i['active'] = True if i.get('id') in model_tactics else False
         return t
 
-# Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
-# IndustriesSection, RevenueSection, CompanySizeSection,GeolocationsSection , BANTQuestionsSection, CustomQuestionsSection
-
 
 class AssetsSectionSerializer(serializers.ModelSerializer):
     titles = JobTitlesSerializer(allow_null=True)
@@ -174,7 +171,7 @@ class IntentFeedsSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = IntentFeedsSection
         fields = (
-            "id", "name", "campaign",  "company", "generated",
+            "id", "name", "campaign",  "company", "generated", "kind",
         )
 
 
