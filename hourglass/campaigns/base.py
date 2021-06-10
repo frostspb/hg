@@ -58,7 +58,7 @@ class BaseStateItem(TimeStampedModel):
 
 
 class BaseReportPercentItem(BaseStateItem):
-    percent = models.FloatField
+    percent = models.FloatField(default=0)
     name = models.CharField(max_length=256)
 
     class Meta:

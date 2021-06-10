@@ -254,7 +254,7 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
         verbose_name_plural = "Assets"
 
     def __str__(self):
-        return f"{self.id}"
+        return f"#{self.id}"
 
 
 class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
