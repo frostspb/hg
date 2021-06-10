@@ -23,6 +23,7 @@ class TargetSectionAdmin(admin.TabularInline):
 class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
     extra = 0
+    exclude = ['execution_time', 'started_at']
 
 
 class IntentFeedsSectionAdmin(admin.TabularInline):

@@ -206,6 +206,10 @@ class SectionSettings(CloneMixin, models.Model):
     delta_v_sector = models.IntegerField(default=0)
     delta_v_per_row = models.IntegerField(default=0)
 
+    class Meta:
+        verbose_name = "Section Settings"
+        verbose_name_plural = "Section Settings"
+
     def __str__(self):
         return f"Section {self.name}"
 
@@ -224,6 +228,10 @@ class TargetSection(CloneMixin, BaseStateItem):
     @property
     def percent_completion(self):
         return int((self.leads_generated / self.leads_goal) * 100)
+
+    class Meta:
+        verbose_name = "Campaign"
+        verbose_name_plural = "Campaign"
 
     def __str__(self):
         return f"{self.id}"
@@ -255,7 +263,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Intent topic", max_length=200)
     generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ManyToManyField(Company, null=True, blank=True)
     kind = models.CharField(max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
 
     class Meta:
@@ -362,5 +370,5 @@ def create_settings(sender, instance, created, **kwargs):
     ]
 
     if created:
-        for_create = [SectionSettings(slug=i, campaign=instance) for i in sections]
+        for_create = [SectionSettings(slug=i.get('slug'), campaign=instance, name=i.get('name')) for i in sections]
         SectionSettings.objects.bulk_create(for_create)
