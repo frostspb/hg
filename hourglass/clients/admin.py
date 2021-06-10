@@ -28,5 +28,5 @@ class CompanyAdmin(admin.ModelAdmin):
         "id", "name", "client", "created"
     ]
     search_fields = ["name", "id"]
-    fields = ["name", "created"]
+    fields = ["name"]
     ordering = ("-created",)
