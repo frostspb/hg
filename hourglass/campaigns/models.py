@@ -216,7 +216,7 @@ class SectionSettings(CloneMixin, models.Model):
 
 class TargetSection(CloneMixin, BaseStateItem):
     campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
-    leads_goal = models.PositiveIntegerField('Leads goal')
+    leads_goal = models.PositiveIntegerField('Leads goal', default=0)
     leads_generated = models.PositiveIntegerField('Leads Generated', default=0)
     velocity = models.PositiveSmallIntegerField("Velocity", default=0)
 
@@ -228,14 +228,15 @@ class TargetSection(CloneMixin, BaseStateItem):
 
     @property
     def percent_completion(self):
-        return int((self.leads_generated / self.leads_goal) * 100)
+        if self.leads_goal > 0:
+            return int((self.leads_generated / self.leads_goal) * 100)
 
     class Meta:
         verbose_name = "Campaign"
         verbose_name_plural = "Campaign"
 
     def __str__(self):
-        return f"{self.id}"
+        return f"#{self.id}"
 
     # @property
     # def execution_time

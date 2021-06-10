@@ -18,7 +18,16 @@ class SectionSettingsAdmin(admin.TabularInline):
 class TargetSectionAdmin(admin.TabularInline):
     model = TargetSection
     extra = 0
-    exclude = ['execution_time', 'started_at']
+    exclude = ['execution_time', 'started_at', 'velocity']
+    fields = [ 'state', 'campaign_pos_type', 'leads_goal', 'leads_generated', 'percent_completion', 'remaining_leads']
+    readonly_fields = ['percent_completion', 'remaining_leads']
+
+    def percent_completion(self, obj):
+        return obj.percent_completion
+
+    def remaining_leads(self, obj):
+        return obj.remaining_leads
+
 
 
 class AssetsSectionAdmin(admin.TabularInline):
