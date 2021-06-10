@@ -215,10 +215,11 @@ class SectionSettings(CloneMixin, models.Model):
 
 
 class TargetSection(CloneMixin, BaseStateItem):
+    campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
     leads_goal = models.PositiveIntegerField('Leads goal')
     leads_generated = models.PositiveIntegerField('Leads Generated', default=0)
     velocity = models.PositiveSmallIntegerField("Velocity", default=0)
-    campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
+
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="targets")
 
     @property

@@ -18,6 +18,7 @@ class SectionSettingsAdmin(admin.TabularInline):
 class TargetSectionAdmin(admin.TabularInline):
     model = TargetSection
     extra = 0
+    exclude = ['execution_time', 'started_at']
 
 
 class AssetsSectionAdmin(admin.TabularInline):
