@@ -99,8 +99,6 @@ class Campaign(CloneMixin, BaseStateItem):
     middle_percent = models.FloatField("Middle Leads Percent", default=0)
     bottom_percent = models.FloatField("Bottom Leads Percent", default=0)
 
-
-
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",

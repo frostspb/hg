@@ -29,7 +29,6 @@ class TargetSectionAdmin(admin.TabularInline):
         return obj.remaining_leads
 
 
-
 class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
     extra = 0
@@ -39,31 +38,37 @@ class AssetsSectionAdmin(admin.TabularInline):
 class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
+    exclude = ['execution_time', 'started_at', 'velocity']
 
 
 class JobTitlesSectionAdmin(admin.TabularInline):
     model = JobTitlesSection
     extra = 0
+    exclude = ['execution_time', 'started_at', 'velocity']
 
 
 class IndustriesSectionAdmin(admin.TabularInline):
     model = IndustriesSection
     extra = 0
+    exclude = ['execution_time', 'started_at', 'velocity']
 
 
 class RevenueSectionAdmin(admin.TabularInline):
     model = RevenueSection
     extra = 0
+    exclude = ['execution_time', 'started_at', 'velocity']
 
 
 class GeolocationsSectionAdmin(admin.TabularInline):
     model = GeolocationsSection
     extra = 0
+    exclude = ['execution_time', 'started_at', 'velocity']
 
 
 class CompanySizeSectionAdmin(admin.TabularInline):
     model = CompanySizeSection
     extra = 0
+    exclude = ['execution_time', 'started_at', 'velocity']
 
 
 class BANTQuestionsSectionAdmin(admin.TabularInline):
@@ -71,9 +76,11 @@ class BANTQuestionsSectionAdmin(admin.TabularInline):
     extra = 0
 
 
+
 class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection
     extra = 0
+    exclude = ['execution_time', 'started_at', 'velocity']
 
 
 @admin.register(Campaign)
