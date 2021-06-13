@@ -3,7 +3,9 @@ from hourglass.contrib.rest import OptionalSlashDefaultRouter
 from hourglass.clients.api.views import ClientsViewSet
 from hourglass.campaigns.api.views import CampaignViewSet, CustomQuestionsSectionViewSet, BANTQuestionsSectionViewSet,\
 GeolocationsSectionViewSet, CompanySizeSectionViewSet, RevenueSectionViewSet, IndustriesSectionViewSet, \
-JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet, SectionSettingsViewSet
+JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet, SectionSettingsViewSet,\
+CreativesSectionViewSet, NurturingSectionViewSet, LeadCascadeProgramSectionViewSet,FairTradeSectionViewSet,\
+InstallBaseSectionViewSet,ABMSectionViewSet
 
 from hourglass.references.api.views import ReferencesViewSet
 
@@ -22,6 +24,13 @@ router.register("campaign_settings/industries", IndustriesSectionViewSet, basena
 router.register("campaign_settings/titles", JobTitlesSectionViewSet, basename="industries")
 router.register("campaign_settings/feed", IntentFeedsSectionViewSet, basename="feed")
 router.register("campaign_settings/assets", AssetsSectionViewSet, basename="assets")
+
+router.register("campaign_settings/creatives", CreativesSectionViewSet, basename="creatives")
+router.register("campaign_settings/cascade", LeadCascadeProgramSectionViewSet, basename="cascade")
+router.register("campaign_settings/nurturing", NurturingSectionViewSet, basename="nurturing")
+router.register("campaign_settings/fair_trade", FairTradeSectionViewSet, basename="fair_trade")
+router.register("campaign_settings/install_base", InstallBaseSectionViewSet, basename="install_base")
+router.register("campaign_settings/abm", ABMSectionViewSet, basename="abm")
 
 
 app_name = "api"

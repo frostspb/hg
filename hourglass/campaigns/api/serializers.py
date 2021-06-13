@@ -2,7 +2,8 @@ from rest_framework import serializers
 
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
-    CustomQuestionsSection
+    CustomQuestionsSection,ABMSection, InstallBaseSection, FairTradeSection, \
+    LeadCascadeProgramSection, NurturingSection, CreativesSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations
 from hourglass.references.api.serializers import AnswerSerializer, QuestionSerializer, JobTitlesSerializer
 from hourglass.clients.api.serializers import ClientSerializer
@@ -234,3 +235,80 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
         fields = (
             "id",  "campaign", "question", "answer"
         )
+
+
+class ABMSectionSerializer(serializers.ModelSerializer):
+    goal_abm = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = ABMSection
+        fields = (
+            "id",  "campaign", "file", "accounts", "name", "percent", "goal_abm"
+        )
+
+    def get_goal_abm(self, instance):
+        return instance.goal_abm
+
+
+class InstallBaseSectionSerializer(serializers.ModelSerializer):
+    leads_installbase = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = InstallBaseSection
+        fields = (
+            "id",  "campaign", "name",  "leads_installbase"
+        )
+
+    def get_leads_installbase(self, instance):
+        return instance.leads_installbase
+
+
+class FairTradeSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FairTradeSection
+        fields = (
+            "id",  "campaign", "name", "value"
+        )
+
+
+class LeadCascadeProgramSectionSerializer(serializers.ModelSerializer):
+    leads_cascade = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = LeadCascadeProgramSection
+        fields = (
+            "id", "campaign", "name", "percent"
+        )
+
+    def get_leads_cascade(self, instance):
+        return instance.leads_cascade
+
+
+class NurturingSectionSerializer(serializers.ModelSerializer):
+
+    assets = AssetsSectionSerializer()
+    link = serializers.SerializerMethodField(read_only=True)
+    generated_leads = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = NurturingSection
+        fields = (
+            "id", "campaign", "name", "assets", "link", "generated_leads"
+        )
+
+    def get_link(self, instance):
+        return instance.link
+
+    def get_generated_leads(self, instance):
+        return instance.generated_leads
+
+
+class CreativesSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CreativesSection
+        fields = (
+            "id", "name", "value",
+        )
+
