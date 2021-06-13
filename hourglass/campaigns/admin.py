@@ -47,7 +47,7 @@ class NurturingSectionAdmin(admin.TabularInline):
     extra = 0
     exclude = ['execution_time', 'started_at']
     fields = ['state', 'name', 'assets', 'link', 'generated_leads']
-    readonly_fields = ['generated_leads', ]
+    readonly_fields = ['generated_leads', 'link']
 
     def generated_leads(self, obj):
         return obj.generated_leads
