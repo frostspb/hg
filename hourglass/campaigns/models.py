@@ -32,13 +32,19 @@ INSTALL_BASE_SLUG = "InstallBase"
 CN_SLUG = "CN"
 TACTICS_SLUG = "Tactics"
 
+ITC_SLUG = "ITCurated"
+FT_SLUG = "Fair-TradeLeadQualification"
+LCP_SLUG = "LeadCascadeProgram'"
+NURTURING_SLUG = "Nurturing"
+CREATIVES_SLUG = "Creatives"
+
 JOB_TITLES_NAME = "Job Title"
 ASSETS_NAME = "Assets"
 INTENT_FEED_NAME = "Intent Feed"
 ABM_NAME = "ABM"
-SUPP_LIST_NAME =  "Suppression list(s)"
+SUPP_LIST_NAME = "Suppression list(s)"
 INDUSTRIES_NAME = "Industries"
-GEO_NAME = "Geo"
+GEO_NAME = "Geolocation"
 REVENUE_NAME = "Revenue"
 COMPANY_SIZE_NAME = "Company Size"
 BANT_NAME = "BANT questions"
@@ -46,6 +52,12 @@ CQ_NAME = "Custom Questions"
 INSTALL_BASE_NAME = "Install Base"
 CN_NAME = "CN"
 TACTICS_NAME = "Tactics"
+
+ITC_NAME = "IT Curated"
+FT_NAME = "Fair-Trade Lead Qualification"
+LCP_NAME = "Lead Cascade Program'"
+NURTURING_NAME = "Nurturing"
+CREATIVES_NAME = "Creatives"
 
 
 class Campaign(CloneMixin, BaseStateItem):
@@ -117,6 +129,13 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def total_goal(self):
         res = self.targets.filter().aggregate(Sum('leads_goal')).get('leads_goal__sum', 0)
+        if not res:
+            res = 0
+        return res
+
+    @property
+    def total_generated(self):
+        res = self.targets.filter().aggregate(Sum('leads_generated')).get('leads_generated__sum', 0)
         if not res:
             res = 0
         return res
@@ -254,6 +273,11 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
     def __str__(self):
         return f"#{self.id}"
 
+    @property
+    def leads_assets(self):
+        return (self.percent / 100) * self.campaign.total_generated
+
+
 
 class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     class Kinds(models.TextChoices):
@@ -342,11 +366,85 @@ class BANTQuestionsSection(CloneMixin, models.Model):
     answer = models.TextField("Answer")
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "BANT Question"
+        verbose_name_plural = "BANT Questions"
+
+    def __str__(self):
+        return f"{self.id}"
+
 
 class CustomQuestionsSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="cqs")
     answer = models.TextField("Answer")
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Custom Question"
+        verbose_name_plural = "Custom Questions"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class ABMSection(CloneMixin, BaseReportPercentItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="abms")
+    file = models.FileField("List")
+    accounts = models.IntegerField("Accounts", default=0)
+    name = models.CharField(max_length=256, null=True)
+
+    class Meta:
+        verbose_name = "ABM"
+        verbose_name_plural = "ABM"
+
+    @property
+    def goal_abm(self):
+        return (self.percent/100) * self.campaign.total_goal
+
+
+class FairTradeSection(CloneMixin, BaseStateItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="fair_trades")
+    name = models.CharField("Treat Desctiption", max_length=256)
+    value = models.CharField("Value", max_length=256)
+
+
+class InstallBaseSection(CloneMixin, BaseReportPercentItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="ibs")
+    name = models.CharField("Title", max_length=256)
+
+    @property
+    def leads_installbase (self):
+        return (self.percent / 100) * self.campaign.total_generated
+
+
+class LeadCascadeProgramSection(CloneMixin, BaseReportPercentItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="lead_cascades")
+    name = models.CharField("Leads Description", max_length=256)
+
+    @property
+    def leads_cascade (self):
+        return (self.percent / 100) * self.campaign.total_generated
+
+
+class NurturingSection(CloneMixin, BaseStateItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="nurturings")
+    name = models.CharField("Type", max_length=256)
+    assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
+
+    @property
+    def link(self):
+        return self.assets.landing_page
+
+    @property
+    def generated_leads(self):
+        return self.assets.leads_assets
+
+
+class CreativesSection(CloneMixin, BaseStateItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="creatives")
+    name = models.EmailField("email")
+    value = models.TextField()
+
 
 
 @receiver(post_save, sender=Campaign)
@@ -365,8 +463,13 @@ def create_settings(sender, instance, created, **kwargs):
         {'name': BANT_NAME, 'slug': BANT_SLUG},
         {'name': CQ_NAME, 'slug': CQ_SLUG},
         {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG},
-        {'name': CN_NAME, 'slug': CN_SLUG},
+        #{'name': CN_NAME, 'slug': CN_SLUG},
         {'name': TACTICS_NAME, 'slug': TACTICS_SLUG},
+        {'name': ITC_NAME, 'slug': ITC_SLUG},
+        {'name': FT_NAME, 'slug': FT_SLUG},
+        {'name': LCP_NAME, 'slug': LCP_SLUG},
+        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG},
+        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG},
     ]
 
     if created:

@@ -3,7 +3,9 @@ from model_clone import CloneModelAdmin
 from django.contrib import admin, messages
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
-    CustomQuestionsSection, SectionSettings
+    CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
+    LeadCascadeProgramSection, NurturingSection, CreativesSection
+
 
 
 class SectionSettingsAdmin(admin.TabularInline):
@@ -33,6 +35,69 @@ class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
     extra = 0
     exclude = ['execution_time', 'started_at']
+    fields = ['state', 'name', 'landing_page', 'titles', 'leads_assets']
+    readonly_fields = ['leads_assets', ]
+
+    def leads_assets(self, obj):
+        return obj.leads_assets
+
+
+class NurturingSectionAdmin(admin.TabularInline):
+    model = NurturingSection
+    extra = 0
+    exclude = ['execution_time', 'started_at']
+    fields = ['state', 'name', 'assets', 'link', 'generated_leads']
+    readonly_fields = ['generated_leads', ]
+
+    def generated_leads(self, obj):
+        return obj.generated_leads
+
+    def link(self, obj):
+        return obj.link
+
+
+class CreativesSectionAdmin(admin.TabularInline):
+    model = CreativesSection
+    extra = 0
+    exclude = ['execution_time', 'started_at', 'state']
+
+
+class FairTradeSectionAdmin(admin.TabularInline):
+    model = FairTradeSection
+    extra = 0
+    exclude = ['execution_time', 'started_at']
+
+class ABMSectionAdmin(admin.TabularInline):
+    model = ABMSection
+    extra = 0
+    fields = ['state', 'percent', 'file', 'accounts', 'goal_abm', ]
+    readonly_fields = ['goal_abm',]
+    exclude = ['name']
+
+    def goal_abm(self, obj):
+        return obj.goal_abm
+
+
+class LeadCascadeProgramSectionAdmin(admin.TabularInline):
+    model = LeadCascadeProgramSection
+    extra = 0
+    fields = ['state', 'percent', 'name',  'leads_cascade', ]
+    readonly_fields = ['leads_cascade',]
+    exclude = ['name']
+
+    def leads_cascade(self, obj):
+        return obj.leads_cascade
+
+
+class InstallBaseSectionAdmin(admin.TabularInline):
+    model = InstallBaseSection
+    extra = 0
+    fields = ['state', 'percent', 'name', 'leads_installbase', ]
+    readonly_fields = ['leads_installbase', ]
+    exclude = ['name']
+
+    def leads_installbase(self, obj):
+        return obj.leads_installbase
 
 
 class IntentFeedsSectionAdmin(admin.TabularInline):
@@ -86,7 +151,7 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 @admin.register(Campaign)
 class CampaignAdmin(CloneModelAdmin):
     list_display = [
-        "id", "client", "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
+        "id", "client", "name", "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
         "total_goal", "generated", "start_date_admin", "end_date_admin"
     ]
     search_fields = ["client__name", "id"]
@@ -116,6 +181,13 @@ class CampaignAdmin(CloneModelAdmin):
         CompanySizeSectionAdmin,
         BANTQuestionsSectionAdmin,
         CustomQuestionsSectionAdmin,
+        ABMSectionAdmin,
+        InstallBaseSectionAdmin,
+        LeadCascadeProgramSectionAdmin,
+        FairTradeSectionAdmin,
+        NurturingSectionAdmin,
+        CreativesSectionAdmin
+
     ]
 
     def start_date_admin(self, obj):
