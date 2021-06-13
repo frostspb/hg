@@ -83,7 +83,6 @@ class LeadCascadeProgramSectionAdmin(admin.TabularInline):
     extra = 0
     fields = ['state', 'percent', 'name',  'leads_cascade', ]
     readonly_fields = ['leads_cascade',]
-    exclude = ['name']
 
     def leads_cascade(self, obj):
         return obj.leads_cascade
@@ -94,7 +93,7 @@ class InstallBaseSectionAdmin(admin.TabularInline):
     extra = 0
     fields = ['state', 'percent', 'name', 'leads_installbase', ]
     readonly_fields = ['leads_installbase', ]
-    exclude = ['name']
+ 
 
     def leads_installbase(self, obj):
         return obj.leads_installbase
