@@ -12,7 +12,7 @@ from hourglass.clients.models import Client, Company
 
 from .base import BaseStateItem, BaseReportPercentItem
 
-from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question, Managers
+from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question, Managers, ITCurated
 
 from .managers import CampaignsManager
 
@@ -114,7 +114,8 @@ class Campaign(CloneMixin, BaseStateItem):
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
-        "intents", "titles", "assets", "targets", "sections",
+        "intents", "titles", "assets", "targets", "sections", "creatives", "nurturings", "itcurateds",
+        "lead_cascades", "ibs", "fair_trades", "abms"
     ]
 
     _clone_m2m_fields = ["tactics"]
@@ -276,7 +277,6 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
     @property
     def leads_assets(self):
         return (self.percent / 100) * self.campaign.total_generated
-
 
 
 class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
@@ -445,6 +445,17 @@ class CreativesSection(CloneMixin, BaseStateItem):
     name = models.EmailField("email")
     value = models.TextField()
 
+
+class ITCuratedSection(CloneMixin, models.Model):
+    class Statuses(models.TextChoices):
+        ACTIVE = 'active', 'Active'
+        PAUSE = 'pause', 'Pause'
+        REQUESTED = 'requested', 'Requested'
+
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="itcurateds")
+    status = models.CharField(max_length=16, choices=Statuses.choices, default=Statuses.ACTIVE)
+    curated = models.ForeignKey(ITCurated, related_name='curateds', on_delete=models.CASCADE)
+    pos = models.SmallIntegerField('Position', default=0)
 
 
 @receiver(post_save, sender=Campaign)

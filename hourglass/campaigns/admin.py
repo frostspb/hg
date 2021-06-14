@@ -4,7 +4,7 @@ from django.contrib import admin, messages
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection
 
 
 
@@ -40,6 +40,11 @@ class AssetsSectionAdmin(admin.TabularInline):
 
     def leads_assets(self, obj):
         return obj.leads_assets
+
+
+class ITCuratedSectionAdmin(admin.TabularInline):
+    model = ITCuratedSection
+    extra = 0
 
 
 class NurturingSectionAdmin(admin.TabularInline):
@@ -93,7 +98,7 @@ class InstallBaseSectionAdmin(admin.TabularInline):
     extra = 0
     fields = ['state', 'percent', 'name', 'leads_installbase', ]
     readonly_fields = ['leads_installbase', ]
- 
+
 
     def leads_installbase(self, obj):
         return obj.leads_installbase
@@ -185,7 +190,8 @@ class CampaignAdmin(CloneModelAdmin):
         LeadCascadeProgramSectionAdmin,
         FairTradeSectionAdmin,
         NurturingSectionAdmin,
-        CreativesSectionAdmin
+        CreativesSectionAdmin,
+        ITCuratedSectionAdmin
 
     ]
 

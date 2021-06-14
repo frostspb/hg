@@ -89,7 +89,19 @@ class Managers(models.Model):
     def photo_url(self):
         if self.photo:
             return self.photo.url
+
     def __str__(self):
         return self.name
+
+
+class ITCurated(models.Model):
+    slug = models.SlugField()
+    visible = models.BooleanField(default=True)
+    link = models.URLField("Link")
+    title = models.CharField(max_length=64)
+
+    class Meta:
+        verbose_name = "IT Curated block"
+        verbose_name_plural = "IT Curated blocks"
 
 

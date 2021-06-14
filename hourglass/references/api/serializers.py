@@ -1,8 +1,10 @@
 from rest_framework import serializers
 
 
-from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Answers, Question, Managers
+from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Answers, Question, Managers, \
+    ITCurated
 #from hourglass.clients.api.serializers import ClientSerializer
+
 
 class GeolocationsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +42,7 @@ class CampaignTypesSerializer(serializers.ModelSerializer):
             'id', 'name',
         )
 
+
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answers
@@ -47,10 +50,20 @@ class AnswerSerializer(serializers.ModelSerializer):
             'id', 'value',
         )
 
+
 class QuestionSerializer(serializers.ModelSerializer):
     answer_variants = AnswerSerializer(read_only=True, many=True)
+
     class Meta:
         model = Question
         fields = (
             'id', 'name', 'answer_variants',
+        )
+
+
+class ITCuratedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ITCurated
+        fields = (
+            'id', 'slug', 'link', 'title'
         )

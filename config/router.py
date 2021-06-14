@@ -4,8 +4,8 @@ from hourglass.clients.api.views import ClientsViewSet
 from hourglass.campaigns.api.views import CampaignViewSet, CustomQuestionsSectionViewSet, BANTQuestionsSectionViewSet,\
 GeolocationsSectionViewSet, CompanySizeSectionViewSet, RevenueSectionViewSet, IndustriesSectionViewSet, \
 JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet, SectionSettingsViewSet,\
-CreativesSectionViewSet, NurturingSectionViewSet, LeadCascadeProgramSectionViewSet,FairTradeSectionViewSet,\
-InstallBaseSectionViewSet,ABMSectionViewSet
+CreativesSectionViewSet, NurturingSectionViewSet, LeadCascadeProgramSectionViewSet, FairTradeSectionViewSet,\
+InstallBaseSectionViewSet, ABMSectionViewSet, ITCuratedSectionViewSet
 
 from hourglass.references.api.views import ReferencesViewSet
 
@@ -31,6 +31,7 @@ router.register("campaign_settings/nurturing", NurturingSectionViewSet, basename
 router.register("campaign_settings/fair_trade", FairTradeSectionViewSet, basename="fair_trade")
 router.register("campaign_settings/install_base", InstallBaseSectionViewSet, basename="install_base")
 router.register("campaign_settings/abm", ABMSectionViewSet, basename="abm")
+router.register("campaign_settings/itcurated", ITCuratedSectionViewSet, basename="itcurated")
 
 
 app_name = "api"

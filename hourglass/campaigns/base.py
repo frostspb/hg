@@ -34,7 +34,7 @@ class BaseStateItem(TimeStampedModel):
     @property
     def duration(self):
         if self.state == self.States.STATE_RUNNING and self.started_at:
-            return self.execution_time + (now() - self.started_at).seconds
+            return self.execution_time + (now() - self.started_at).minutes
         else:
             return self.execution_time
 
@@ -44,12 +44,12 @@ class BaseStateItem(TimeStampedModel):
 
     @transition(field='state', source=States.STATE_RUNNING, target=States.STATE_PAUSE)
     def pause(self):
-        self.execution_time += (now() - self.started_at).seconds
+        self.execution_time += (now() - self.started_at).minutes
         self.started_at = None
 
     @transition(field='state', source=[States.STATE_RUNNING, States.STATE_PAUSE], target=States.STATE_STOPPED)
     def stop(self):
-        self.execution_time += (now() - self.started_at).seconds
+        self.execution_time += (now() - self.started_at).minutes
         self.started_at = None
 
     @transition(field='state', source=States.STATE_PAUSE, target=States.STATE_RUNNING)

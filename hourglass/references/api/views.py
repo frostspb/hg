@@ -4,10 +4,10 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from ..models import CampaignTypes, JobTitles, Geolocations, Question, Answers, Managers
+from ..models import CampaignTypes, JobTitles, Geolocations, Question, Answers, Managers, ITCurated
 
 from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, QuestionSerializer, \
-    ManagersSerializer
+    ManagersSerializer, ITCuratedSerializer
 
 
 class ReferencesViewSet(GenericViewSet):
@@ -38,3 +38,7 @@ class ReferencesViewSet(GenericViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def managers(self, request):
         return Response(data=ManagersSerializer(Managers.objects.all(), many=True).data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def itcurated(self, request):
+        return Response(data=ITCuratedSerializer(ITCurated.objects.filter(visible=True), many=True).data)
