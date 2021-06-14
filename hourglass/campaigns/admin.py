@@ -114,7 +114,7 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'name', 'goal_intent_feed', 'generated', 'company', 'kind']
+    fields = ['state', 'percent', 'name', 'goal_intent_feed', 'generated', 'company', 'kind', 'companies_count']
     readonly_fields = ['goal_intent_feed', ]
 
     def goal_intent_feed(self, obj):
@@ -202,13 +202,21 @@ class CampaignAdmin(CloneModelAdmin):
         ("Customer", {"fields": ("customer_information", "managed_by", "client")}),
         ("Campaign admin settings", {
             "fields": (
-                "name", "start_offset", "end_offset", "audience_targeted",  "state",
+                "name", "start_offset", "end_offset",   "state",
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
+                "dashboard_string_count", "remaining_admin_percent", "in_progress_admin_percent"
             )
-        })
+        }),
+
+        ("Target Audience", {
+            "fields": ("audience_targeted", "delivered", "remaining", "in_validation"),
+            #"readonly_fields": ("delivered", "remaining", "in_validation")
+            }
+         )
+
 
     )
-    readonly_fields = ["id", "created", "kind"]
+    readonly_fields = ["id", "created", "kind", "delivered", "remaining", "in_validation"]
     ordering = ("-created",)
     actions = ["start", "stop", "pause", "resume",]
     inlines = [
@@ -232,6 +240,16 @@ class CampaignAdmin(CloneModelAdmin):
         NurturingSectionAdmin,
         CreativesSectionAdmin,
     ]
+
+    def delivered(self, obj):
+        return obj.delivered
+
+    def remaining(self, obj):
+        return obj.remaining
+
+    def in_validation(self, obj):
+        return obj.in_validation
+
 
     def start_date_admin(self, obj):
         return obj.initial_start_date

@@ -7,6 +7,7 @@ from django.contrib.postgres.fields import JSONField
 from django.utils.timezone import now
 from django_extensions.db.models import TimeStampedModel
 from django_fsm import FSMField
+from django.core.validators import MaxValueValidator, MinValueValidator
 from model_clone import CloneMixin
 from hourglass.clients.models import Client, Company
 
@@ -110,6 +111,12 @@ class Campaign(CloneMixin, BaseStateItem):
     top_percent = models.FloatField("Top Leads Percent", default=0)
     middle_percent = models.FloatField("Middle Leads Percent", default=0)
     bottom_percent = models.FloatField("Bottom Leads Percent", default=0)
+    dashboard_string_count = models.PositiveSmallIntegerField(
+        default=1,
+        validators=[MinValueValidator(1), MaxValueValidator(6)]
+    )
+    remaining_admin_percent = models.PositiveSmallIntegerField(default=0)
+    in_progress_admin_percent = models.PositiveSmallIntegerField(default=0)
 
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
@@ -164,6 +171,21 @@ class Campaign(CloneMixin, BaseStateItem):
             if tv:
                 _velocity += tv
         return _velocity
+
+    @property
+    def delivered(self):
+        if self.total_goal:
+            return int((self.total_generated/self.total_goal) * 100)
+
+    @property
+    def remaining(self):
+        if self.total_goal:
+            return int(((self.total_goal - self.total_generated) / self.total_goal) * self.remaining_admin_percent)
+
+    @property
+    def in_validation(self):
+        if self.total_goal:
+            return int(((self.total_goal - self.total_generated) / self.total_goal) * self.in_progress_admin_percent)
 
     @property
     def generated(self):
@@ -289,6 +311,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
     company = models.ManyToManyField(Company, null=True, blank=True)
     kind = models.CharField(max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
+    companies_count = models.PositiveSmallIntegerField("Leads Generated", default=0)
 
     class Meta:
         verbose_name = "Intent Feed"
