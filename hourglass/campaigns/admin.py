@@ -99,7 +99,6 @@ class InstallBaseSectionAdmin(admin.TabularInline):
     fields = ['state', 'percent', 'name', 'leads_installbase', ]
     readonly_fields = ['leads_installbase', ]
 
-
     def leads_installbase(self, obj):
         return obj.leads_installbase
 
@@ -107,37 +106,69 @@ class InstallBaseSectionAdmin(admin.TabularInline):
 class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
-    exclude = ['execution_time', 'started_at', 'velocity']
+    #exclude = ['execution_time', 'started_at', 'velocity']
+    fields = ['state', 'percent', 'name', 'goal_intent_feed', 'generated', 'company', 'kind']
+    readonly_fields = ['goal_intent_feed', ]
+
+    def goal_intent_feed(self, obj):
+        return obj.goal_intent_feed
 
 
 class JobTitlesSectionAdmin(admin.TabularInline):
     model = JobTitlesSection
     extra = 0
-    exclude = ['execution_time', 'started_at', 'velocity']
+    #exclude = ['execution_time', 'started_at', 'velocity']
+    fields = ['state', 'percent', 'name', 'leads_generated',]
+    readonly_fields = ['leads_generated', ]
+
+    def leads_generated(self, obj):
+        return obj.leads_generated
 
 
 class IndustriesSectionAdmin(admin.TabularInline):
     model = IndustriesSection
     extra = 0
-    exclude = ['execution_time', 'started_at', 'velocity']
+    #exclude = ['execution_time', 'started_at', 'velocity']
+    fields = ['state', 'percent', 'name', 'leads_industry', ]
+    readonly_fields = ['leads_industry', ]
 
-
-class RevenueSectionAdmin(admin.TabularInline):
-    model = RevenueSection
-    extra = 0
-    exclude = ['execution_time', 'started_at', 'velocity']
+    def leads_industry(self, obj):
+        return obj.leads_industry
 
 
 class GeolocationsSectionAdmin(admin.TabularInline):
     model = GeolocationsSection
     extra = 0
-    exclude = ['execution_time', 'started_at', 'velocity']
+    #exclude = ['execution_time', 'started_at', 'velocity']
+
+    fields = ['state', 'percent', 'name', 'leads_geolocation', 'geolocation' ]
+    readonly_fields = ['leads_geolocation', ]
+
+    def leads_geolocation(self, obj):
+        return obj.leads_geolocation
+
+
+class RevenueSectionAdmin(admin.TabularInline):
+    model = RevenueSection
+    extra = 0
+    #exclude = ['execution_time', 'started_at', 'velocity']
+
+    fields = ['state', 'percent', 'name', 'leads_revenue', ]
+    readonly_fields = ['leads_revenue', ]
+
+    def leads_revenue(self, obj):
+        return obj.leads_revenue
 
 
 class CompanySizeSectionAdmin(admin.TabularInline):
     model = CompanySizeSection
     extra = 0
-    exclude = ['execution_time', 'started_at', 'velocity']
+    #exclude = ['execution_time', 'started_at', 'velocity']
+    fields = ['state', 'percent', 'name', 'leads_company_size', ]
+    readonly_fields = ['leads_company_size', ]
+
+    def leads_revenue(self, obj):
+        return obj.leads_revenue
 
 
 class BANTQuestionsSectionAdmin(admin.TabularInline):

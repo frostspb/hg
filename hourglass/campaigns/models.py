@@ -297,6 +297,10 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     def __str__(self):
         return f"{self.id}"
 
+    @property
+    def goal_intent_feed(self):
+        return (self.percent / 100) * self.campaign.total_goal
+
 
 class JobTitlesSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Job Titles", max_length=200)
@@ -310,6 +314,10 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
     def __str__(self):
         return f"{self.id}"
 
+    @property
+    def leads_generated(self):
+        return (self.generated / 100) * self.campaign.total_goal
+
 
 class IndustriesSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Industry", max_length=200)
@@ -322,29 +330,9 @@ class IndustriesSection(CloneMixin, BaseReportPercentItem):
     def __str__(self):
         return f"{self.id}"
 
-
-class RevenueSection(CloneMixin, BaseReportPercentItem):
-    name = models.CharField("Revenue", max_length=200)
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="revenues")
-
-    class Meta:
-        verbose_name = "Revenue"
-        verbose_name_plural = "Revenue"
-
-    def __str__(self):
-        return f"{self.id}"
-
-
-class CompanySizeSection(CloneMixin, BaseReportPercentItem):
-    name = models.CharField("Company Size", max_length=200)
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="companies")
-
-    class Meta:
-        verbose_name = "Company Size"
-        verbose_name_plural = "Companies Sizes"
-
-    def __str__(self):
-        return f"{self.id}"
+    @property
+    def leads_industry(self):
+        return (self.percent / 100) * self.campaign.total_goal
 
 
 class GeolocationsSection(CloneMixin, BaseReportPercentItem):
@@ -359,6 +347,42 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
 
     def __str__(self):
         return f"{self.id}"
+
+    @property
+    def leads_geolocation(self):
+        return (self.percent / 100) * self.campaign.total_goal
+
+
+class RevenueSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("Revenue", max_length=200)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="revenues")
+
+    class Meta:
+        verbose_name = "Revenue"
+        verbose_name_plural = "Revenue"
+
+    def __str__(self):
+        return f"{self.id}"
+
+    @property
+    def leads_revenue(self):
+        return (self.percent / 100) * self.campaign.total_goal
+
+
+class CompanySizeSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("Company Size", max_length=200)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="companies")
+
+    class Meta:
+        verbose_name = "Company Size"
+        verbose_name_plural = "Companies Sizes"
+
+    def __str__(self):
+        return f"{self.id}"
+
+    @property
+    def leads_company_size(self):
+        return (self.percent / 100) * self.campaign.total_goal
 
 
 class BANTQuestionsSection(CloneMixin, models.Model):

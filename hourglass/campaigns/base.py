@@ -5,7 +5,7 @@ from django.utils.timezone import now
 from django_extensions.db.models import TimeStampedModel
 from django_fsm import FSMField, transition
 
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 from hourglass.clients.models import Client
 from hourglass.contrib.mixins import StateMixin
 
@@ -58,7 +58,7 @@ class BaseStateItem(TimeStampedModel):
 
 
 class BaseReportPercentItem(BaseStateItem):
-    percent = models.FloatField(default=0)
+    percent = models.FloatField(default=0, validators=[MaxValueValidator(100)])
     name = models.CharField(max_length=256)
 
     class Meta:
