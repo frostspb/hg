@@ -4,7 +4,7 @@ from django.contrib import admin, messages
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 
 
 
@@ -67,10 +67,17 @@ class CreativesSectionAdmin(admin.TabularInline):
     exclude = ['execution_time', 'started_at', 'state']
 
 
+class SuppresionListSectionAdmin(admin.TabularInline):
+    model = SuppresionListSection
+    extra = 0
+    exclude = ['execution_time', 'started_at']
+
+
 class FairTradeSectionAdmin(admin.TabularInline):
     model = FairTradeSection
     extra = 0
     exclude = ['execution_time', 'started_at']
+
 
 class ABMSectionAdmin(admin.TabularInline):
     model = ABMSection
@@ -209,21 +216,21 @@ class CampaignAdmin(CloneModelAdmin):
         TargetSectionAdmin,
         AssetsSectionAdmin,
         IntentFeedsSectionAdmin,
+        ABMSectionAdmin,
+        SuppresionListSectionAdmin,
         JobTitlesSectionAdmin,
         IndustriesSectionAdmin,
-        RevenueSectionAdmin,
         GeolocationsSectionAdmin,
+        RevenueSectionAdmin,
         CompanySizeSectionAdmin,
         BANTQuestionsSectionAdmin,
         CustomQuestionsSectionAdmin,
-        ABMSectionAdmin,
         InstallBaseSectionAdmin,
+        ITCuratedSectionAdmin,
         LeadCascadeProgramSectionAdmin,
         FairTradeSectionAdmin,
         NurturingSectionAdmin,
         CreativesSectionAdmin,
-        ITCuratedSectionAdmin
-
     ]
 
     def start_date_admin(self, obj):

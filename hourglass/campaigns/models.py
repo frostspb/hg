@@ -115,7 +115,7 @@ class Campaign(CloneMixin, BaseStateItem):
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
         "intents", "titles", "assets", "targets", "sections", "creatives", "nurturings", "itcurateds",
-        "lead_cascades", "ibs", "fair_trades", "abms"
+        "lead_cascades", "ibs", "fair_trades", "abms", "sups"
     ]
 
     _clone_m2m_fields = ["tactics"]
@@ -317,6 +317,12 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
     @property
     def leads_generated(self):
         return (self.generated / 100) * self.campaign.total_goal
+
+
+class SuppresionListSection(CloneMixin, BaseStateItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sups")
+    title = models.CharField(max_length=128)
+    accounts_value = models.PositiveSmallIntegerField()
 
 
 class IndustriesSection(CloneMixin, BaseReportPercentItem):

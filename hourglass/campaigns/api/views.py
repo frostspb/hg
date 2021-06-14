@@ -15,12 +15,12 @@ from .serializers import TargetSectionSerializer, CampaignSerializer , AssetsSec
     CompanySizeSectionSerializer, RevenueSectionSerializer, IndustriesSectionSerializer,\
     JobTitlesSectionSerializer, IntentFeedsSectionSerializer, ABMSectionSerializer,\
     InstallBaseSectionSerializer, FairTradeSectionSerializer,LeadCascadeProgramSectionSerializer,\
-    NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer
+    NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer
 
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 
 
 class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin):
@@ -197,4 +197,13 @@ class ITCuratedSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMix
     permission_classes = [IsAuthenticated]
     serializer_class = ITCuratedSectionSerializer
     queryset = ITCuratedSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class SuppresionListSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet,
+                                    CreateModelMixin,
+                                    DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = SuppresionListSectionSerializer
+    queryset = SuppresionListSection.objects.all()
     filterset_fields = ('campaign',)

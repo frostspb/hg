@@ -3,7 +3,7 @@ from rest_framework import serializers
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection,ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations
 from hourglass.references.api.serializers import AnswerSerializer, QuestionSerializer, JobTitlesSerializer, ITCuratedSerializer
 from hourglass.clients.api.serializers import ClientSerializer
@@ -320,4 +320,13 @@ class ITCuratedSectionSerializer(serializers.ModelSerializer):
         model = ITCuratedSection
         fields = (
             "id", "curated", "status", "pos"
+        )
+
+
+class SuppresionListSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SuppresionListSection
+        fields = (
+            "id", "title", "accounts_value"
         )
