@@ -1,4 +1,7 @@
 from django.http import Http404
+from django.urls import reverse
+from django.utils.http import urlencode
+from django.utils.html import format_html
 from model_clone import CloneModelAdmin
 from django.contrib import admin, messages
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
@@ -35,7 +38,7 @@ class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
     extra = 0
     exclude = ['execution_time', 'started_at']
-    fields = ['state', 'name', 'landing_page', 'titles', 'leads_assets']
+    fields = ['state', 'name', 'landing_page', 'titles', 'leads_assets', 'percent']
     readonly_fields = ['leads_assets', ]
 
     def leads_assets(self, obj):
@@ -125,7 +128,7 @@ class JobTitlesSectionAdmin(admin.TabularInline):
     model = JobTitlesSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'name', 'leads_generated',]
+    fields = ['state', 'percent', 'job_title', 'leads_generated', 'goal']
     readonly_fields = ['leads_generated', ]
 
     def leads_generated(self, obj):
@@ -193,8 +196,8 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 @admin.register(Campaign)
 class CampaignAdmin(CloneModelAdmin):
     list_display = [
-        "id", "client", "name", "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
-        "total_goal", "generated", "start_date_admin", "end_date_admin"
+        "id", "name_link", "client",  "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
+        "total_goal", "generated", "start_date_admin", "end_date_admin",
     ]
     search_fields = ["client__name", "id"]
 
@@ -216,6 +219,7 @@ class CampaignAdmin(CloneModelAdmin):
 
 
     )
+
     readonly_fields = ["id", "created", "kind", "delivered", "remaining", "in_validation"]
     ordering = ("-created",)
     actions = ["start", "stop", "pause", "resume",]
@@ -241,6 +245,12 @@ class CampaignAdmin(CloneModelAdmin):
         CreativesSectionAdmin,
     ]
 
+
+    def name_link(self, obj):
+        url = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=[obj.id])
+        return format_html('<a href="{}">{}</a>', url, obj.name)
+
+    name_link.short_description = "Campaign Name"
     def delivered(self, obj):
         return obj.delivered
 

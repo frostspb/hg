@@ -178,10 +178,11 @@ class IntentFeedsSectionSerializer(serializers.ModelSerializer):
 
 
 class JobTitlesSectionSerializer(serializers.ModelSerializer):
+    job_title = JobTitlesSerializer(many=False)
     class Meta:
         model = JobTitlesSection
         fields = (
-            "id", "name", "campaign",   "generated",
+            "id", "job_title", "campaign",   "generated",
         )
 
 

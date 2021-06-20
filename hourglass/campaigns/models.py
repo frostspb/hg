@@ -326,9 +326,11 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 
 
 class JobTitlesSection(CloneMixin, BaseReportPercentItem):
-    name = models.CharField("Job Titles", max_length=200)
+    name = models.CharField("Name", max_length=200, null=True, blank=True)
+    job_title = models.ForeignKey(JobTitles, on_delete=models.CASCADE)
     generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="titles")
+    goal = models.PositiveSmallIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Job Title"
