@@ -279,7 +279,7 @@ class LeadCascadeProgramSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeadCascadeProgramSection
         fields = (
-            "id", "campaign", "name", "percent"
+            "id", "campaign", "name", "percent", 'leads_cascade'
         )
 
     def get_leads_cascade(self, instance):
