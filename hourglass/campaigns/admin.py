@@ -201,7 +201,7 @@ class CampaignAdmin(CloneModelAdmin):
         ("Customer", {"fields": ("customer_information", "managed_by", "client")}),
         ("Campaign admin settings", {
             "fields": (
-                "name", "start_offset", "end_offset",   "state", "job_titles"
+                "name", "start_offset", "end_offset",   "state", "job_titles",
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
                 "dashboard_string_count", "remaining_admin_percent", "in_progress_admin_percent",
                 "intent_feed_lead_generated", "intent_feed_goal_percent", "goal_intent_feed"
