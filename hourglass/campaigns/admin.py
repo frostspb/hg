@@ -117,11 +117,8 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'name', 'goal_intent_feed', 'generated', 'company', 'kind', 'companies_count']
-    readonly_fields = ['goal_intent_feed', ]
-
-    def goal_intent_feed(self, obj):
-        return obj.goal_intent_feed
+    fields = ['state', 'percent', 'name',   'company', 'kind', 'companies_count']
+    readonly_fields = [ ]
 
 
 class JobTitlesSectionAdmin(admin.TabularInline):
@@ -186,7 +183,6 @@ class BANTQuestionsSectionAdmin(admin.TabularInline):
     extra = 0
 
 
-
 class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection
     extra = 0
@@ -205,22 +201,22 @@ class CampaignAdmin(CloneModelAdmin):
         ("Customer", {"fields": ("customer_information", "managed_by", "client")}),
         ("Campaign admin settings", {
             "fields": (
-                "name", "start_offset", "end_offset",   "state",
+                "name", "start_offset", "end_offset",   "state", "job_titles"
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
-                "dashboard_string_count", "remaining_admin_percent", "in_progress_admin_percent"
+                "dashboard_string_count", "remaining_admin_percent", "in_progress_admin_percent",
+                "intent_feed_lead_generated", "intent_feed_goal_percent", "goal_intent_feed"
             )
         }),
 
-        ("Target Audience", {
-            "fields": ("audience_targeted", "delivered", "remaining", "in_validation"),
-            #"readonly_fields": ("delivered", "remaining", "in_validation")
-            }
+        (
+            "Target Audience",
+            {"fields": ("audience_targeted", "delivered", "remaining", "in_validation")}
          )
 
 
     )
 
-    readonly_fields = ["id", "created", "kind", "delivered", "remaining", "in_validation"]
+    readonly_fields = ["id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed"]
     ordering = ("-created",)
     actions = ["start", "stop", "pause", "resume",]
     inlines = [
@@ -245,12 +241,15 @@ class CampaignAdmin(CloneModelAdmin):
         CreativesSectionAdmin,
     ]
 
+    def goal_intent_feed(self, obj):
+        return obj.goal_intent_feed
 
     def name_link(self, obj):
         url = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=[obj.id])
         return format_html('<a href="{}">{}</a>', url, obj.name)
 
     name_link.short_description = "Campaign Name"
+
     def delivered(self, obj):
         return obj.delivered
 
@@ -259,7 +258,6 @@ class CampaignAdmin(CloneModelAdmin):
 
     def in_validation(self, obj):
         return obj.in_validation
-
 
     def start_date_admin(self, obj):
         return obj.initial_start_date

@@ -108,6 +108,9 @@ class HourglassSerializer(serializers.ModelSerializer):
         )
 
     def get_end_date(self, instance):
+        if instance.kind == instance.CampaignKinds.STANDARD:
+            return instance.initial_end_date
+
         if instance.end_date:
             return instance.end_date.strftime('%d-%m-%Y')
 

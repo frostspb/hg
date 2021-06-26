@@ -107,6 +107,7 @@ class Campaign(CloneMixin, BaseStateItem):
     integration = models.CharField(max_length=16, choices=IntegrationTypes.choices, default=IntegrationTypes.SALESFORCE)
     pacing = models.CharField(max_length=16, choices=PacingTypes.choices, default=PacingTypes.EVEN)
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
+    job_titles = models.ManyToManyField(JobTitles, null=True, blank=True)
     base_velocity = models.IntegerField("Base Velocity", default=0)
     top_percent = models.FloatField("Top Leads Percent", default=0)
     middle_percent = models.FloatField("Middle Leads Percent", default=0)
@@ -117,6 +118,9 @@ class Campaign(CloneMixin, BaseStateItem):
     )
     remaining_admin_percent = models.PositiveSmallIntegerField(default=0)
     in_progress_admin_percent = models.PositiveSmallIntegerField(default=0)
+
+    intent_feed_lead_generated = models.PositiveSmallIntegerField(default=0)
+    intent_feed_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
 
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
@@ -133,6 +137,14 @@ class Campaign(CloneMixin, BaseStateItem):
 
     def __str__(self):
         return f"Campaign{self.id}"
+
+    @property
+    def goal_intent_feed(self):
+        return (self.intent_feed_goal_percent / 100) * self.total_goal
+
+    @property
+    def done_intent_feed(self):
+        return (self.intent_feed_goal_percent / 100) * self.total_goal
 
     @property
     def total_goal(self):
@@ -306,12 +318,12 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
         INFUSEMEDIA = 'INFUSEmedia', 'INFUSEmedia'
         BOMBORA = 'Bombora', 'Bombora'
         ABERDEEN = 'Aberdeen', 'Aberdeen'
+
     name = models.CharField("Intent topic", max_length=200)
-    generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
     company = models.ManyToManyField(Company, null=True, blank=True)
     kind = models.CharField(max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
-    companies_count = models.PositiveSmallIntegerField("Leads Generated", default=0)
+    companies_count = models.PositiveSmallIntegerField("Companies Generated", default=0)
 
     class Meta:
         verbose_name = "Intent Feed"
