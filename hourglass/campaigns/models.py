@@ -119,8 +119,9 @@ class Campaign(CloneMixin, BaseStateItem):
     remaining_admin_percent = models.PositiveSmallIntegerField(default=0)
     in_progress_admin_percent = models.PositiveSmallIntegerField(default=0)
 
-    intent_feed_lead_generated = models.PositiveSmallIntegerField(default=0)
     intent_feed_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    intent_feed_done_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    abm_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
 
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
@@ -139,19 +140,64 @@ class Campaign(CloneMixin, BaseStateItem):
         return f"Campaign{self.id}"
 
     @property
+    def goal_abm(self):
+        return round((self.abm_goal_percent / 100) * self.total_goal, 2)
+
+    @property
+    def done_abm(self):
+        res = 0
+        for abm in self.abms.all():
+            res += abm.leads
+        return round(res, 2)
+
+    @property
+    def done_abm_percent(self):
+        if self.goal_abm:
+            return round((self.done_abm/self.goal_abm) * 100, 2)
+        return 0
+
+    @property
+    def total_intent_feed(self):
+        res = 0
+        for intent in self.intents.all():
+            res += intent.leads_generated
+        return round(res, 2)
+
+    @property
+    def total_intent_feed_infusemedia(self):
+        res = 0
+        for intent in self.intents.filter(kind=IntentFeedsSection.Kinds.INFUSEMEDIA):
+            res += intent.leads_generated
+        return round(res, 2)
+
+    @property
+    def total_intent_feed_bombora(self):
+        res = 0
+        for intent in self.intents.filter(kind=IntentFeedsSection.Kinds.BOMBORA):
+            res += intent.leads_generated
+        return round(res, 2)
+
+    @property
+    def total_intent_feed_aberdeen(self):
+        res = 0
+        for intent in self.intents.filter(kind=IntentFeedsSection.Kinds.ABERDEEN):
+            res += intent.leads_generated
+        return round(res, 2)
+
+    @property
     def goal_intent_feed(self):
-        return (self.intent_feed_goal_percent / 100) * self.total_goal
+        return round((self.intent_feed_goal_percent / 100) * self.total_goal, 2)
 
     @property
     def done_intent_feed(self):
-        return (self.intent_feed_goal_percent / 100) * self.total_goal
+        return round((self.intent_feed_done_percent / 100) * self.goal_intent_feed, 2)
 
     @property
     def total_goal(self):
         res = self.targets.filter().aggregate(Sum('leads_goal')).get('leads_goal__sum', 0)
         if not res:
             res = 0
-        return res
+        return round(res,2)
 
     @property
     def total_generated(self):
@@ -333,6 +379,10 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
         return f"{self.id}"
 
     @property
+    def leads_generated(self):
+        return (self.percent/100 ) * self.campaign.done_intent_feed
+
+    @property
     def goal_intent_feed(self):
         return (self.percent / 100) * self.campaign.total_goal
 
@@ -465,7 +515,7 @@ class ABMSection(CloneMixin, BaseReportPercentItem):
         verbose_name_plural = "ABM"
 
     @property
-    def goal_abm(self):
+    def leads(self):
         return (self.percent/100) * self.campaign.total_goal
 
 

@@ -85,12 +85,12 @@ class FairTradeSectionAdmin(admin.TabularInline):
 class ABMSectionAdmin(admin.TabularInline):
     model = ABMSection
     extra = 0
-    fields = ['state', 'percent', 'file', 'accounts', 'goal_abm', ]
-    readonly_fields = ['goal_abm',]
+    fields = ['state', 'percent', 'file', 'accounts', 'leads', ]
+    readonly_fields = ['leads', ]
     exclude = ['name']
 
-    def goal_abm(self, obj):
-        return obj.goal_abm
+    def leads(self, obj):
+        return obj.leads
 
 
 class LeadCascadeProgramSectionAdmin(admin.TabularInline):
@@ -117,8 +117,11 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'name',   'company', 'kind', 'companies_count']
-    readonly_fields = [ ]
+    fields = ['state', 'percent', 'name',   'company', 'kind', 'companies_count', 'leads_generated']
+    readonly_fields = ['leads_generated']
+
+    def leads_generated(self, obj):
+        return obj.leads_generated
 
 
 class JobTitlesSectionAdmin(admin.TabularInline):
@@ -204,9 +207,27 @@ class CampaignAdmin(CloneModelAdmin):
                 "name", "start_offset", "end_offset",   "state", "job_titles",
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
                 "dashboard_string_count", "remaining_admin_percent", "in_progress_admin_percent",
-                "intent_feed_lead_generated", "intent_feed_goal_percent", "goal_intent_feed"
+
             )
         }),
+        ("Intent Feed Total settings", {
+            "fields": (
+                "intent_feed_goal_percent", "intent_feed_done_percent", "goal_intent_feed", "done_intent_feed",
+                "total_intent_feed", "total_intent_feed_infusemedia", "total_intent_feed_bombora",
+                "total_intent_feed_aberdeen",
+
+
+            )
+        }
+        ),
+
+        ("ABM Total settings", {
+            "fields": (
+                "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent"
+
+            )
+        }
+         ),
 
         (
             "Target Audience",
@@ -216,7 +237,11 @@ class CampaignAdmin(CloneModelAdmin):
 
     )
 
-    readonly_fields = ["id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed"]
+    readonly_fields = [
+        "id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed",
+        "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
+        "total_intent_feed", "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent"
+    ]
     ordering = ("-created",)
     actions = ["start", "stop", "pause", "resume",]
     inlines = [
@@ -241,8 +266,33 @@ class CampaignAdmin(CloneModelAdmin):
         CreativesSectionAdmin,
     ]
 
+    def goal_abm(self, obj):
+        return obj.goal_abm
+
+    def done_abm(self, obj):
+        return obj.done_abm
+
+    def done_abm_percent(self, obj):
+        return obj.done_abm_percent
+
+    def total_intent_feed(self, obj):
+        return obj.total_intent_feed
+
+    def total_intent_feed_infusemedia(self, obj):
+        return obj.total_intent_feed_infusemedia
+
+    def total_intent_feed_bombora(self, obj):
+        return obj.total_intent_feed_bombora
+
+    def total_intent_feed_aberdeen(self, obj):
+        return obj.total_intent_feed_aberdeen
+
+
     def goal_intent_feed(self, obj):
         return obj.goal_intent_feed
+
+    def done_intent_feed(self, obj):
+        return obj.done_intent_feed
 
     def name_link(self, obj):
         url = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=[obj.id])
