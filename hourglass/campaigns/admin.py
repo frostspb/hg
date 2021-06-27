@@ -240,7 +240,7 @@ class CampaignAdmin(CloneModelAdmin):
     readonly_fields = [
         "id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed",
         "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
-        "total_intent_feed", "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent"
+        "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
     ]
     ordering = ("-created",)
     actions = ["start", "stop", "pause", "resume",]
