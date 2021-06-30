@@ -9,6 +9,7 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 
+from ajax_select import make_ajax_form
 
 class SectionSettingsAdmin(admin.TabularInline):
     model = SectionSettings
@@ -42,6 +43,10 @@ class AssetsSectionAdmin(admin.TabularInline):
     exclude = ['execution_time', 'started_at']
     fields = ['state', 'name', 'landing_page', 'titles', 'leads_assets', 'percent']
     readonly_fields = ['leads_assets', ]
+    form = make_ajax_form(AssetsSection, {
+        'titles': 'titles',  # ManyToManyField
+
+    })
 
     def leads_assets(self, obj):
         return obj.leads_assets

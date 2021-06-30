@@ -12,6 +12,7 @@ from .auth import CurrentUserView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from ajax_select import urls as ajax_select_urls
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -28,6 +29,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
+    url(r'^ajax_select/', include(ajax_select_urls)),
     path('admin/', admin.site.urls),
     path("api/", include("config.router")),
     path('api/auth/', include(
