@@ -299,10 +299,12 @@ class SectionSettings(CloneMixin, models.Model):
     slug = models.SlugField(max_length=64)
     enabled = models.BooleanField(default=True)
     can_enabled = models.BooleanField(default=True)
-    delta_ta_sector = models.IntegerField(default=0)
-    delta_ta_per_row = models.IntegerField(default=0)
-    delta_v_sector = models.IntegerField(default=0)
-    delta_v_per_row = models.IntegerField(default=0)
+    delta_ta_sector = models.IntegerField("% Change of TA by Sector", default=0)
+    delta_ta_per_row = models.IntegerField("% Change of TA by Each Line", default=0)
+    delta_v_sector = models.IntegerField("Speed Change by Sector", default=0)
+    delta_v_per_row = models.IntegerField("Speed Change by Each Line", default=0)
+    quality_sector = models.IntegerField("Change of Quality by Sector", default=0)
+    quality_per_row = models.IntegerField("Change of Quality by Each Line", default=0)
 
     class Meta:
         verbose_name = "Section Settings"
@@ -579,11 +581,12 @@ class ITCuratedSection(CloneMixin, models.Model):
 def create_settings(sender, instance, created, **kwargs):
 
     sections = [
-        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG},
+
         {'name': ASSETS_NAME, 'slug': ASSETS_SLUG},
         {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG},
         {'name': ABM_NAME, 'slug': ABM_SLUG},
         {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG},
+        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG},
         {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG},
         {'name': GEO_NAME, 'slug': GEO_SLUG},
         {'name': REVENUE_NAME, 'slug': REVENUE_SLUG},
@@ -592,7 +595,7 @@ def create_settings(sender, instance, created, **kwargs):
         {'name': CQ_NAME, 'slug': CQ_SLUG},
         {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG},
         #{'name': CN_NAME, 'slug': CN_SLUG},
-        {'name': TACTICS_NAME, 'slug': TACTICS_SLUG},
+        #{'name': TACTICS_NAME, 'slug': TACTICS_SLUG},
         {'name': ITC_NAME, 'slug': ITC_SLUG},
         {'name': FT_NAME, 'slug': FT_SLUG},
         {'name': LCP_NAME, 'slug': LCP_SLUG},

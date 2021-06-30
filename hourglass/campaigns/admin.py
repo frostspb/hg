@@ -10,13 +10,15 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 
 
-
 class SectionSettingsAdmin(admin.TabularInline):
     model = SectionSettings
     extra = 0
-    fields = ['enabled', 'can_enabled', 'delta_ta_sector', 'delta_ta_per_row', 'delta_v_sector', 'delta_v_per_row']
+    fields = ['enabled', 'delta_ta_sector', 'delta_ta_per_row', 'delta_v_sector', 'delta_v_per_row']
 
     def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
         return False
 
 
@@ -215,8 +217,6 @@ class CampaignAdmin(CloneModelAdmin):
                 "intent_feed_goal_percent", "intent_feed_done_percent", "goal_intent_feed", "done_intent_feed",
                 "total_intent_feed", "total_intent_feed_infusemedia", "total_intent_feed_bombora",
                 "total_intent_feed_aberdeen",
-
-
             )
         }
         ),
@@ -233,8 +233,6 @@ class CampaignAdmin(CloneModelAdmin):
             "Target Audience",
             {"fields": ("audience_targeted", "delivered", "remaining", "in_validation")}
          )
-
-
     )
 
     readonly_fields = [
@@ -242,8 +240,11 @@ class CampaignAdmin(CloneModelAdmin):
         "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
         "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
     ]
+
     ordering = ("-created",)
+
     actions = ["start", "stop", "pause", "resume",]
+
     inlines = [
         SectionSettingsAdmin,
         TargetSectionAdmin,
@@ -286,7 +287,6 @@ class CampaignAdmin(CloneModelAdmin):
 
     def total_intent_feed_aberdeen(self, obj):
         return obj.total_intent_feed_aberdeen
-
 
     def goal_intent_feed(self, obj):
         return obj.goal_intent_feed
@@ -360,4 +360,3 @@ class CampaignAdmin(CloneModelAdmin):
         for i in qs:
             i.start()
             i.save()
-
