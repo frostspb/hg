@@ -11,6 +11,7 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
 
 from ajax_select import make_ajax_form
 
+
 class SectionSettingsAdmin(admin.TabularInline):
     model = SectionSettings
     extra = 0
@@ -124,7 +125,7 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'name',   'company', 'kind', 'companies_count', 'leads_generated']
+    fields = ['kind', 'state', 'name', 'companies_count',  'company',  'leads_generated', 'percent',  ]
     readonly_fields = ['leads_generated']
 
     def leads_generated(self, obj):
@@ -135,7 +136,7 @@ class JobTitlesSectionAdmin(admin.TabularInline):
     model = JobTitlesSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'job_title', 'leads_generated', 'goal']
+    fields = ['state', 'job_title', 'leads_generated', 'goal', 'percent', ]
     readonly_fields = ['leads_generated', ]
 
     def leads_generated(self, obj):

@@ -369,8 +369,8 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 
     name = models.CharField("Intent topic", max_length=200)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
-    company = models.ManyToManyField(Company, null=True, blank=True)
-    kind = models.CharField(max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
+    company = models.ManyToManyField(Company, null=True, blank=True, verbose_name="Companies")
+    kind = models.CharField(" Integration Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
     companies_count = models.PositiveSmallIntegerField("Companies Generated", default=0)
 
     class Meta:
@@ -391,7 +391,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 
 class JobTitlesSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Name", max_length=200, null=True, blank=True)
-    job_title = models.ForeignKey(JobTitles, on_delete=models.CASCADE)
+    job_title = models.ForeignKey(JobTitles, on_delete=models.CASCADE, verbose_name="Title Captured")
     generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="titles")
     goal = models.PositiveSmallIntegerField(null=True, blank=True)
