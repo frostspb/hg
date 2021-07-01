@@ -54,6 +54,18 @@ class Industry(models.Model):
         return self.name
 
 
+class CompanySize(models.Model):
+    name = models.CharField("Company Size", max_length=128)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Company Size"
+        verbose_name_plural = "Company Size"
+
+    def __str__(self):
+        return self.name
+
+
 class Revenue(models.Model):
     name = models.CharField("Revenue", max_length=128)
     active = models.BooleanField(default=True)

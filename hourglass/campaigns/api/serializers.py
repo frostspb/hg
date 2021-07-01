@@ -61,12 +61,12 @@ class CampaignSerializer(serializers.ModelSerializer):
 
     def get_start_date(self, instance):
         if instance.is_standard:
-            return instance.initial_start_date
+            return instance.initial_start_date.date
         return instance.start_date
 
     def get_end_date(self, instance):
         if instance.is_standard:
-            return instance.initial_end_date
+            return instance.initial_end_date.date
         return instance.end_date
 
 
@@ -109,7 +109,7 @@ class HourglassSerializer(serializers.ModelSerializer):
 
     def get_end_date(self, instance):
         if instance.kind == instance.CampaignKinds.STANDARD:
-            return instance.initial_end_date
+            return instance.initial_end_date.strftime('%d-%m-%Y')
 
         if instance.end_date:
             return instance.end_date.strftime('%d-%m-%Y')

@@ -1,11 +1,19 @@
 from django.contrib import admin
 
 from .models import CampaignTypes, Geolocations, Tactics, Question, Answers, Managers, JobTitles,\
-    ITCurated, Revenue, Industry
+    ITCurated, Revenue, Industry, CompanySize
 
 
 @admin.register(CampaignTypes)
 class CampaignTypesAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    search_fields = ["name", "id"]
+    fields = ["name", "active"]
+    ordering = ("name",)
+
+
+@admin.register(CompanySize)
+class CompanySizeAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
     search_fields = ["name", "id"]
     fields = ["name", "active"]

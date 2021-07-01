@@ -14,7 +14,7 @@ from hourglass.clients.models import Client, Company
 from .base import BaseStateItem, BaseReportPercentItem
 
 from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question, Managers, ITCurated,\
-    Industry, Revenue
+    Industry, Revenue, CompanySize
 
 from .managers import CampaignsManager
 
@@ -468,7 +468,7 @@ class RevenueSection(CloneMixin, BaseReportPercentItem):
 
 
 class CompanySizeSection(CloneMixin, BaseReportPercentItem):
-    name = models.CharField("Company Size", max_length=200)
+    company_size = models.ForeignKey(CompanySize, verbose_name="Company Size", on_delete=models.CASCADE, related_name="sizes")
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="companies")
 
     class Meta:

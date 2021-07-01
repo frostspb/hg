@@ -2,13 +2,21 @@ from rest_framework import serializers
 
 
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Answers, Question, Managers, \
-    ITCurated, Revenue, Industry
+    ITCurated, Revenue, Industry, CompanySize
 #from hourglass.clients.api.serializers import ClientSerializer
 
 
 class GeolocationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Geolocations
+        fields = (
+            'id', 'name',
+        )
+
+
+class CompanySizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanySize
         fields = (
             'id', 'name',
         )

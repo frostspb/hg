@@ -186,11 +186,13 @@ class CompanySizeSectionAdmin(admin.TabularInline):
     model = CompanySizeSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'name', 'leads_company_size', ]
+    fields = ['state',  'company_size', 'leads_company_size', 'percent']
     readonly_fields = ['leads_company_size', ]
 
     def leads_company_size(self, obj):
         return obj.leads_company_size
+
+    leads_company_size.short_description = "Leads Generated"
 
 
 class BANTQuestionsSectionAdmin(admin.TabularInline):
