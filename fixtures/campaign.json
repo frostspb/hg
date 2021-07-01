@@ -224,5 +224,47 @@
 
         "name": "Manager2"
     }
+},
+{
+    "model": "references.Revenue",
+    "pk": 1,
+    "fields": {
+        "name": "Under $5M"
+    }
+},
+{
+    "model": "references.Revenue",
+    "pk": 2,
+    "fields": {
+        "name": "Small and Medium-Sized Businesses—$5-10M"
+    }
+},
+{
+    "model": "references.Revenue",
+    "pk": 3,
+    "fields": {
+        "name": "Small and Medium Enterprises—$10M-$1B"
+    }
+},
+{
+    "model": "references.Revenue",
+    "pk": 4,
+    "fields": {
+        "name": "Large Enterprises—Over $1B"
+    }
+},
+{
+    "model": "references.Industry",
+    "pk": 1,
+    "fields": {
+        "name": "IT"
+    }
+},
+{
+    "model": "references.Industry",
+    "pk": 2,
+    "fields": {
+        "name": "Finance"
+    }
 }
 ]

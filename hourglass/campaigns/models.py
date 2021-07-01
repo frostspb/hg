@@ -13,7 +13,8 @@ from hourglass.clients.models import Client, Company
 
 from .base import BaseStateItem, BaseReportPercentItem
 
-from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question, Managers, ITCurated
+from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question, Managers, ITCurated,\
+    Industry, Revenue
 
 from .managers import CampaignsManager
 
@@ -415,7 +416,8 @@ class SuppresionListSection(CloneMixin, BaseStateItem):
 
 
 class IndustriesSection(CloneMixin, BaseReportPercentItem):
-    name = models.CharField("Industry", max_length=200)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    industry = models.ForeignKey(Industry, verbose_name="Industry", on_delete=models.CASCADE, related_name="industs")
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="industries")
 
     class Meta:
@@ -449,7 +451,8 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
 
 
 class RevenueSection(CloneMixin, BaseReportPercentItem):
-    name = models.CharField("Revenue", max_length=200)
+    name = models.CharField("Revenue", max_length=200, blank=True, null=True)
+    revenue = models.ForeignKey(Revenue, verbose_name="Revenue Title", on_delete=models.CASCADE, related_name="revens")
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="revenues")
 
     class Meta:

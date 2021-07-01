@@ -36,7 +36,31 @@ class JobTitles(models.Model):
 
     class Meta:
         verbose_name = "Job Title"
-        verbose_name_plural = "JobTitle"
+        verbose_name_plural = "Job Titles"
+
+    def __str__(self):
+        return self.name
+
+
+class Industry(models.Model):
+    name = models.CharField("Industry", max_length=128)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Industry"
+        verbose_name_plural = "Industry"
+
+    def __str__(self):
+        return self.name
+
+
+class Revenue(models.Model):
+    name = models.CharField("Revenue", max_length=128)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Revenue"
+        verbose_name_plural = "Revenue"
 
     def __str__(self):
         return self.name

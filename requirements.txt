@@ -51,3 +51,4 @@ django-ajax-selects==2.1.0
 drf-yasg==1.20.0
 
 
+

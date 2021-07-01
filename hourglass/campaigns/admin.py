@@ -93,7 +93,7 @@ class FairTradeSectionAdmin(admin.TabularInline):
 class ABMSectionAdmin(admin.TabularInline):
     model = ABMSection
     extra = 0
-    fields = ['state', 'percent', 'file', 'accounts', 'leads', ]
+    fields = ['state',  'file', 'accounts', 'leads', 'percent',]
     readonly_fields = ['leads', ]
     exclude = ['name']
 
@@ -147,11 +147,13 @@ class IndustriesSectionAdmin(admin.TabularInline):
     model = IndustriesSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-    fields = ['state', 'percent', 'name', 'leads_industry', ]
+    fields = ['state', 'industry', 'leads_industry',  'percent', ]
     readonly_fields = ['leads_industry', ]
 
     def leads_industry(self, obj):
         return obj.leads_industry
+
+    leads_industry.short_description = "Leads Generated"
 
 
 class GeolocationsSectionAdmin(admin.TabularInline):
@@ -171,11 +173,13 @@ class RevenueSectionAdmin(admin.TabularInline):
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
 
-    fields = ['state', 'percent', 'name', 'leads_revenue', ]
+    fields = ['state',  'revenue', 'leads_revenue', 'percent',]
     readonly_fields = ['leads_revenue', ]
 
     def leads_revenue(self, obj):
         return obj.leads_revenue
+
+    leads_revenue.short_description = "Leads Generated"
 
 
 class CompanySizeSectionAdmin(admin.TabularInline):
@@ -185,8 +189,8 @@ class CompanySizeSectionAdmin(admin.TabularInline):
     fields = ['state', 'percent', 'name', 'leads_company_size', ]
     readonly_fields = ['leads_company_size', ]
 
-    def leads_revenue(self, obj):
-        return obj.leads_revenue
+    def leads_company_size(self, obj):
+        return obj.leads_company_size
 
 
 class BANTQuestionsSectionAdmin(admin.TabularInline):
