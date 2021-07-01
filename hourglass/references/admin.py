@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import CampaignTypes, Geolocations, Tactics, Question, Answers, Managers, JobTitles, ITCurated
+from .models import CampaignTypes, Geolocations, Tactics, Question, Answers, Managers, JobTitles,\
+    ITCurated, Revenue, Industry
 
 
 @admin.register(CampaignTypes)
@@ -13,6 +14,22 @@ class CampaignTypesAdmin(admin.ModelAdmin):
 
 @admin.register(JobTitles)
 class JobTitlesAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    search_fields = ["name", "id"]
+    fields = ["name", "active"]
+    ordering = ("name",)
+
+
+@admin.register(Revenue)
+class RevenueAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    search_fields = ["name", "id"]
+    fields = ["name", "active"]
+    ordering = ("name",)
+
+
+@admin.register(Industry)
+class IndustryAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
     search_fields = ["name", "id"]
     fields = ["name", "active"]
