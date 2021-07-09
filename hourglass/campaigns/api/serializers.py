@@ -68,16 +68,25 @@ class CampaignSerializer(serializers.ModelSerializer):
             return instance.created.strftime('%d-%m-%Y')
 
     def get_start_date(self, instance):
+        res = None
         if instance.is_standard:
             if instance.initial_start_date:
-                return instance.initial_start_date.strftime('%d-%m-%Y')
-        return instance.start_date.strftime('%d-%m-%Y')
+                res = instance.initial_start_date
+        else:
+            if instance.start_date:
+                res = instance.start_date
+        if res:
+            return res.strftime('%d-%m-%Y')
 
     def get_end_date(self, instance):
+        res = None
         if instance.is_standard:
             if instance.initial_end_date:
-                return instance.initial_end_date.strftime('%d-%m-%Y')
-        return instance.end_date.strftime('%d-%m-%Y')
+                res = instance.initial_end_date
+        else:
+            if instance.end_date:
+                res = instance.end_date
+        return res.strftime('%d-%m-%Y')
 
 
 class SectionsSettingsSerializer(serializers.ModelSerializer):
