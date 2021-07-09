@@ -304,8 +304,8 @@ class SectionSettings(CloneMixin, models.Model):
     delta_ta_per_row = models.IntegerField("% Change of TA by Each Line", default=0)
     delta_v_sector = models.IntegerField("Speed Change by Sector", default=0)
     delta_v_per_row = models.IntegerField("Speed Change by Each Line", default=0)
-    quality_sector = models.IntegerField("Change of Quality by Sector", default=0)
-    quality_per_row = models.IntegerField("Change of Quality by Each Line", default=0)
+    quality_sector = models.IntegerField("Change of Quality by Sector", null=True, blank=True)
+    quality_per_row = models.IntegerField("Change of Quality by Each Line", null=True, blank=True)
 
     class Meta:
         verbose_name = "Section Settings"
