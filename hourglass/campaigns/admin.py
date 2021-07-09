@@ -19,6 +19,7 @@ class SectionSettingsAdmin(admin.TabularInline):
         'enabled', 'delta_ta_sector', 'delta_ta_per_row', 'delta_v_sector', 'delta_v_per_row',
         'quality_sector', 'quality_per_row',
     ]
+    classes = ['collapse']
 
     def has_add_permission(self, request, obj=None):
         return False
@@ -40,6 +41,8 @@ class TargetSectionAdmin(admin.TabularInline):
     def remaining_leads(self, obj):
         return obj.remaining_leads
 
+    classes = ['collapse']
+
 
 class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
@@ -51,14 +54,16 @@ class AssetsSectionAdmin(admin.TabularInline):
         'titles': 'titles',  # ManyToManyField
 
     })
-
+    classes = ['collapse']
     def leads_assets(self, obj):
         return obj.leads_assets
+
 
 
 class ITCuratedSectionAdmin(admin.TabularInline):
     model = ITCuratedSection
     extra = 0
+    classes = ['collapse']
 
 
 class NurturingSectionAdmin(admin.TabularInline):
@@ -67,6 +72,7 @@ class NurturingSectionAdmin(admin.TabularInline):
     exclude = ['execution_time', 'started_at']
     fields = ['state', 'name', 'assets', 'link', 'generated_leads']
     readonly_fields = ['generated_leads', 'link']
+    classes = ['collapse']
 
     def generated_leads(self, obj):
         return obj.generated_leads
@@ -79,6 +85,7 @@ class CreativesSectionAdmin(admin.TabularInline):
     model = CreativesSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'state']
+    classes = ['collapse']
 
 
 class SuppresionListSectionAdmin(admin.TabularInline):
@@ -91,6 +98,7 @@ class FairTradeSectionAdmin(admin.TabularInline):
     model = FairTradeSection
     extra = 0
     exclude = ['execution_time', 'started_at']
+    classes = ['collapse']
 
 
 class ABMSectionAdmin(admin.TabularInline):
@@ -99,6 +107,7 @@ class ABMSectionAdmin(admin.TabularInline):
     fields = ['state',  'file', 'accounts', 'leads', 'percent',]
     readonly_fields = ['leads', ]
     exclude = ['name']
+    classes = ['collapse']
 
     def leads(self, obj):
         return obj.leads
@@ -109,6 +118,7 @@ class LeadCascadeProgramSectionAdmin(admin.TabularInline):
     extra = 0
     fields = ['state', 'percent', 'name',  'leads_cascade', ]
     readonly_fields = ['leads_cascade',]
+    classes = ['collapse']
 
     def leads_cascade(self, obj):
         return obj.leads_cascade
@@ -119,6 +129,7 @@ class InstallBaseSectionAdmin(admin.TabularInline):
     extra = 0
     fields = ['state', 'percent', 'name', 'leads_installbase', ]
     readonly_fields = ['leads_installbase', ]
+    classes = ['collapse']
 
     def leads_installbase(self, obj):
         return obj.leads_installbase
@@ -130,6 +141,7 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['kind', 'state', 'name', 'companies_count',  'company',  'leads_generated', 'percent',  ]
     readonly_fields = ['leads_generated']
+    classes = ['collapse']
 
     def leads_generated(self, obj):
         return obj.leads_generated
@@ -141,6 +153,7 @@ class JobTitlesSectionAdmin(admin.TabularInline):
     #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['state', 'job_title', 'leads_generated', 'goal', 'percent', ]
     readonly_fields = ['leads_generated', ]
+    classes = ['collapse']
 
     def leads_generated(self, obj):
         return obj.leads_generated
@@ -152,6 +165,7 @@ class IndustriesSectionAdmin(admin.TabularInline):
     #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['state', 'industry', 'leads_industry',  'percent', ]
     readonly_fields = ['leads_industry', ]
+    classes = ['collapse']
 
     def leads_industry(self, obj):
         return obj.leads_industry
@@ -163,7 +177,7 @@ class GeolocationsSectionAdmin(admin.TabularInline):
     model = GeolocationsSection
     extra = 0
     #exclude = ['execution_time', 'started_at', 'velocity']
-
+    classes = ['collapse']
     fields = ['state', 'percent', 'name', 'leads_geolocation', 'geolocation' ]
     readonly_fields = ['leads_geolocation', ]
 
@@ -178,6 +192,7 @@ class RevenueSectionAdmin(admin.TabularInline):
 
     fields = ['state',  'revenue', 'leads_revenue', 'percent',]
     readonly_fields = ['leads_revenue', ]
+    classes = ['collapse']
 
     def leads_revenue(self, obj):
         return obj.leads_revenue
@@ -191,6 +206,7 @@ class CompanySizeSectionAdmin(admin.TabularInline):
     #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['state',  'company_size', 'leads_company_size', 'percent']
     readonly_fields = ['leads_company_size', ]
+    classes = ['collapse']
 
     def leads_company_size(self, obj):
         return obj.leads_company_size
@@ -201,12 +217,14 @@ class CompanySizeSectionAdmin(admin.TabularInline):
 class BANTQuestionsSectionAdmin(admin.TabularInline):
     model = BANTQuestionsSection
     extra = 0
+    classes = ['collapse']
 
 
 class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'velocity']
+    classes = ['collapse']
 
 
 @admin.register(Campaign)
