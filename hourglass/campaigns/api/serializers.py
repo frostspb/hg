@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.conf import settings
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection,ABMSection, InstallBaseSection, FairTradeSection, \
@@ -65,7 +65,7 @@ class CampaignSerializer(serializers.ModelSerializer):
 
     def get_created(self, instance):
         if instance.created:
-            return instance.created.strftime('%d-%m-%Y')
+            return instance.created.strftime(settings.ENDPOINT_DATE_FORMAT)
 
     def get_start_date(self, instance):
         res = None
@@ -76,7 +76,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             if instance.start_date:
                 res = instance.start_date
         if res:
-            return res.strftime('%d-%m-%Y')
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
 
     def get_end_date(self, instance):
         res = None
@@ -87,7 +87,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             if instance.end_date:
                 res = instance.end_date
         if res:
-            return res.strftime('%d-%m-%Y')
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
 
 
 class SectionsSettingsSerializer(serializers.ModelSerializer):
@@ -129,10 +129,10 @@ class HourglassSerializer(serializers.ModelSerializer):
 
     def get_end_date(self, instance):
         if instance.kind == instance.CampaignKinds.STANDARD:
-            return instance.initial_end_date.strftime('%d-%m-%Y')
+            return instance.initial_end_date.strftime(settings.ENDPOINT_DATE_FORMAT)
 
         if instance.end_date:
-            return instance.end_date.strftime('%d-%m-%Y')
+            return instance.end_date.strftime(settings.ENDPOINT_DATE_FORMAT)
 
     def get_TA(self, instance):
         return instance.ta

@@ -31,6 +31,7 @@ SITE_ORIGIN = os.environ.get('SITE_ORIGIN')
 SITE_ADDR = os.environ.get('SITE_ADDR')
 FRONT_ADDR = os.environ.get('FRONT_ADDR')
 
+ENDPOINT_DATE_FORMAT = '%d/%m/%Y'
 
 # Application definition
 
