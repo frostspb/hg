@@ -173,20 +173,30 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
 
 
 class IntentFeedsSectionSerializer(serializers.ModelSerializer):
+    leads_generated = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = IntentFeedsSection
         fields = (
-            "id", "name", "campaign",  "company", "generated", "kind",
+            "id", "name", "campaign",  "company", "leads_generated", "kind",
         )
+
+    def get_leads_generated(self, instance):
+        return instance.leads_generated
 
 
 class JobTitlesSectionSerializer(serializers.ModelSerializer):
     job_title = JobTitlesSerializer(many=False)
+    leads_generated = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = JobTitlesSection
         fields = (
-            "id", "job_title", "campaign",   "generated",
+            "id", "job_title", "campaign",   "leads_generated",
         )
+
+    def get_leads_generated(self, instance):
+        return instance.leads_generated
 
 
 class IndustriesSectionSerializer(serializers.ModelSerializer):
