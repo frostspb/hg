@@ -86,7 +86,8 @@ class CampaignSerializer(serializers.ModelSerializer):
         else:
             if instance.end_date:
                 res = instance.end_date
-        return res.strftime('%d-%m-%Y')
+        if res:
+            return res.strftime('%d-%m-%Y')
 
 
 class SectionsSettingsSerializer(serializers.ModelSerializer):
