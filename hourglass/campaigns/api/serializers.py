@@ -43,51 +43,7 @@ class TargetSectionSerializer(serializers.ModelSerializer):
         return instance.remaining_leads
 
 
-class CampaignSerializer(serializers.ModelSerializer):
-    start_date = serializers.SerializerMethodField()
-    end_date = serializers.SerializerMethodField()
-    created = serializers.SerializerMethodField()
-    kind = serializers.CharField(default=Campaign.CampaignKinds.USER)
 
-    #pos = CampaignsSectionSerializer(source='campaignpos_set', many=True)
-
-    #start_date = serializers.DateField(format='%d-%m-%Y')
-
-    class Meta:
-        model = Campaign
-        fields = (
-            "id", #"client",
-            "created", "active", "customer_information", "contact_name", "email", "note",
-            "name", "campaign_type", "order",
-            "start_date", "end_date", "kind",
-            "state",  "details",   "guarantees", "integration", "pacing"
-        )
-
-    def get_created(self, instance):
-        if instance.created:
-            return instance.created.strftime(settings.ENDPOINT_DATE_FORMAT)
-
-    def get_start_date(self, instance):
-        res = None
-        if instance.is_standard:
-            if instance.initial_start_date:
-                res = instance.initial_start_date
-        else:
-            if instance.start_date:
-                res = instance.start_date
-        if res:
-            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
-
-    def get_end_date(self, instance):
-        res = None
-        if instance.is_standard:
-            if instance.initial_end_date:
-                res = instance.initial_end_date
-        else:
-            if instance.end_date:
-                res = instance.end_date
-        if res:
-            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
 
 
 class SectionsSettingsSerializer(serializers.ModelSerializer):
@@ -272,16 +228,16 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
 
 
 class ABMSectionSerializer(serializers.ModelSerializer):
-    goal_abm = serializers.SerializerMethodField(read_only=True)
+    leads = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = ABMSection
         fields = (
-            "id",  "campaign", "file", "accounts", "name", "percent", "goal_abm"
+            "id",  "campaign", "file", "accounts", "name", "percent", "leads"
         )
 
-    def get_goal_abm(self, instance):
-        return instance.goal_abm
+    def get_leads(self, instance):
+        return instance.leads
 
 
 class InstallBaseSectionSerializer(serializers.ModelSerializer):
@@ -364,3 +320,66 @@ class SuppresionListSectionSerializer(serializers.ModelSerializer):
         fields = (
             "id", "title", "accounts_value"
         )
+
+
+class CampaignSerializer(serializers.ModelSerializer):
+    start_date = serializers.SerializerMethodField()
+    end_date = serializers.SerializerMethodField()
+    created = serializers.SerializerMethodField()
+    kind = serializers.CharField(default=Campaign.CampaignKinds.USER)
+
+    assets = AssetsSectionSerializer(many=True, read_only=True)
+    intents = IntentFeedsSectionSerializer(many=True, read_only=True)
+    titles = JobTitlesSectionSerializer(many=True, read_only=True)
+    industries = IndustriesSectionSerializer(many=True, read_only=True)
+    revenues = RevenueSectionSerializer(many=True, read_only=True)
+    companies_size = CompanySizeSectionSerializer(source="companies", many=True, read_only=True)
+    geolocations = GeolocationsSectionSerializer(many=True, read_only=True)
+    bants = BANTQuestionsSectionSerializer(many=True, read_only=True)
+    custom_questions = CustomQuestionsSectionSerializer(source="cqs", many=True, read_only=True)
+    abms = ABMSectionSerializer(many=True, read_only=True)
+    install_base = InstallBaseSectionSerializer(source="ibs", many=True, read_only=True)
+    fair_trades = FairTradeSectionSerializer(many=True, read_only=True)
+    lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
+    nurturings = NurturingSectionSerializer(many=True, read_only=True)
+    creatives = CreativesSectionSerializer(many=True, read_only=True)
+    #start_date = serializers.DateField(format='%d-%m-%Y')
+
+    class Meta:
+        model = Campaign
+        fields = (
+            "id", #"client",
+            "created", "active", "customer_information", "contact_name", "email", "note",
+            "name", "campaign_type", "order",
+            "start_date", "end_date", "kind",
+            "state",  "details",   "guarantees", "integration", "pacing", "assets", "intents", "titles",
+            "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
+            "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives"
+
+        )
+
+    def get_created(self, instance):
+        if instance.created:
+            return instance.created.strftime(settings.ENDPOINT_DATE_FORMAT)
+
+    def get_start_date(self, instance):
+        res = None
+        if instance.is_standard:
+            if instance.initial_start_date:
+                res = instance.initial_start_date
+        else:
+            if instance.start_date:
+                res = instance.start_date
+        if res:
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
+
+    def get_end_date(self, instance):
+        res = None
+        if instance.is_standard:
+            if instance.initial_end_date:
+                res = instance.initial_end_date
+        else:
+            if instance.end_date:
+                res = instance.end_date
+        if res:
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
