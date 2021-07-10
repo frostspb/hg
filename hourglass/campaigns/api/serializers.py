@@ -343,7 +343,7 @@ class CreativesSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreativesSection
         fields = (
-            "id", "name", "value",
+            "id", "subject_line", "email_text", "landing_page", "banners"
         )
 
 

@@ -564,8 +564,10 @@ class NurturingSection(CloneMixin, BaseStateItem):
 
 class CreativesSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="creatives")
-    name = models.EmailField("email")
-    value = models.TextField()
+    subject_line = models.EmailField("Subject Line", blank=True, null=True)
+    email_text = models.TextField("Email Text", blank=True, null=True)
+    landing_page = models.FileField(blank=True, null=True)
+    banners = models.FileField(blank=True, null=True)
 
 
 class ITCuratedSection(CloneMixin, models.Model):

@@ -92,6 +92,7 @@ class SuppresionListSectionAdmin(admin.TabularInline):
     model = SuppresionListSection
     extra = 0
     exclude = ['execution_time', 'started_at']
+    classes = ['collapse']
 
 
 class FairTradeSectionAdmin(admin.TabularInline):
