@@ -351,7 +351,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "id", #"client",
             "created", "active", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order",
-            "start_date", "end_date", "kind",
+            "start_date", "end_date", "kind", "dashboard_string_count",
             "state",  "details",   "guarantees", "integration", "pacing", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives"
