@@ -112,6 +112,8 @@ class ABMSectionAdmin(admin.TabularInline):
     exclude = ['name']
     classes = ['collapse']
 
+    insert_after = 'done_abm_percent'
+
     def leads(self, obj):
         return obj.leads
 
@@ -145,6 +147,7 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     fields = ['kind', 'state', 'name', 'companies_count',  'company',  'leads_generated', 'percent',  ]
     readonly_fields = ['leads_generated']
     classes = ['collapse']
+    insert_after = 'total_intent_feed_aberdeen'
 
     def leads_generated(self, obj):
         return obj.leads_generated
@@ -403,3 +406,12 @@ class CampaignAdmin(CloneModelAdmin):
         for i in qs:
             i.start()
             i.save()
+
+    change_form_template = 'admin/custom/change_form.html'
+
+    class Media:
+        css = {
+            'all': (
+                'css/admin.css',
+            )
+        }
