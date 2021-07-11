@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     'ajax_select',
+    #'django_select2',
+    'smart_selects',
     'rest_framework',
     'corsheaders',
     'django_celery_beat',
@@ -213,3 +215,27 @@ CELERY_TASK_SOFT_TIME_LIMIT = 5 * 60 - 10
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
+
+
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://redis:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     },
+#     "select2": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://redis:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
+
+# Tell select2 which cache configuration to use:
+#SELECT2_CACHE_BACKEND = "select2"
+
+#JQUERY_URL = True
+USE_DJANGO_JQUERY = True

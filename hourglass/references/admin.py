@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import CampaignTypes, Geolocations, Tactics, Question, Answers, Managers, JobTitles,\
-    ITCurated, Revenue, Industry, CompanySize
+from .models import CampaignTypes, Geolocations, Tactics, Managers, JobTitles,\
+    ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer
 
 
 @admin.register(CampaignTypes)
@@ -68,18 +68,39 @@ class TacticsAdmin(admin.ModelAdmin):
     ordering = ("name",)
 
 
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "kind"]
-    search_fields = ["name", "id"]
-
-
-@admin.register(Answers)
-class AnswersAdmin(admin.ModelAdmin):
-    list_display = ["id", "value"]
-
-
 @admin.register(Managers)
 class ManagersAdmin(admin.ModelAdmin):
     list_display = ["id", "name", "photo"]
+
+
+class BANTAnswerAdmin(admin.TabularInline):
+    model = BANTAnswer
+    extra = 0
+    fields = [
+        'answer', 'preferred',
+    ]
+
+
+@admin.register(BANTQuestion)
+class BANTQuestionAdmin(admin.ModelAdmin):
+    list_display = ["id", "question"]
+    fields = ["question", "kind"]
+
+    inlines = [BANTAnswerAdmin]
+
+
+class CustomAnswerAdmin(admin.TabularInline):
+    model = CustomAnswer
+    extra = 0
+    fields = [
+        'answer', 'preferred',
+    ]
+
+
+@admin.register(CustomQuestion)
+class CustomQuestionAdmin(admin.ModelAdmin):
+    list_display = ["id", "question"]
+    fields = ["question"]
+
+    inlines = [CustomAnswerAdmin]
 

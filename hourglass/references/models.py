@@ -89,28 +89,45 @@ class Tactics(models.Model):
         return self.name
 
 
-class Answers(models.Model):
-    value = models.TextField()
+class BANTQuestion(models.Model):
+    class SectionKind(models.TextChoices):
+        BUDGET = 'budget', 'Budget'
+        AUTHORITY = 'authority', 'Authority'
+        NEED = 'need', 'Need'
+        TIME = 'time', 'Time'
 
-    class Meta:
-        verbose_name = "Answer"
-        verbose_name_plural = "Answers"
-
-    def __str__(self):
-        return self.value
-
-
-class Question(models.Model):
-    class QuestionKinds(models.TextChoices):
-        BANT = 'BANT', 'BANT'
-        CUSTOM = 'custom', 'Custom'
-
-    kind = models.CharField(max_length=16, choices=QuestionKinds.choices, default=QuestionKinds.BANT)
-    name = models.TextField()
-    answer_variants = models.ManyToManyField(Answers)
+    question = models.TextField()
+    kind = models.CharField(max_length=16, choices=SectionKind.choices, default=SectionKind.BUDGET)
 
     def __str__(self):
-        return self.name
+        return self.question
+
+
+class BANTAnswer(models.Model):
+
+    question = models.ForeignKey(BANTQuestion, on_delete=models.CASCADE, related_name='answers')
+    answer = models.TextField()
+    preferred = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.answer
+
+
+class CustomQuestion(models.Model):
+    question = models.TextField()
+
+    def __str__(self):
+        return self.question
+
+
+class CustomAnswer(models.Model):
+
+    question = models.ForeignKey(CustomQuestion, on_delete=models.CASCADE, related_name='answers')
+    answer = models.TextField()
+    preferred = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.answer
 
 
 class Managers(models.Model):

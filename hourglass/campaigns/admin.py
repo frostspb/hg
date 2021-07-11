@@ -9,7 +9,9 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 
+
 from ajax_select import make_ajax_form
+#from hourglass.campaigns.forms import BANTForm
 
 
 class SectionSettingsAdmin(admin.TabularInline):
@@ -219,12 +221,13 @@ class BANTQuestionsSectionAdmin(admin.TabularInline):
     model = BANTQuestionsSection
     extra = 0
     classes = ['collapse']
+    exclude = ['question_txt', 'answer_txt']
 
 
 class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection
     extra = 0
-    exclude = ['execution_time', 'started_at', 'velocity']
+    exclude = ['question_txt', 'answer_txt']
     classes = ['collapse']
 
 
@@ -300,6 +303,12 @@ class CampaignAdmin(CloneModelAdmin):
         NurturingSectionAdmin,
         CreativesSectionAdmin,
     ]
+
+    #class Media:
+        #js = ("admin/js/vendor/jquery/jquery.min.js",)
+        # js = (
+        #     'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',  # jquery
+        # )
 
     def goal_abm(self, obj):
         return obj.goal_abm

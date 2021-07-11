@@ -13,10 +13,13 @@ from hourglass.clients.models import Client, Company
 
 from .base import BaseStateItem, BaseReportPercentItem
 
-from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Question, Managers, ITCurated,\
+from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Managers, ITCurated,\
     Industry, Revenue, CompanySize
 
 from .managers import CampaignsManager
+
+from smart_selects.db_fields import ChainedForeignKey
+from hourglass.references.models import BANTQuestion, BANTAnswer, CustomAnswer, CustomQuestion
 
 
 JOB_TITLES_SLUG = "JobTitle"
@@ -483,32 +486,6 @@ class CompanySizeSection(CloneMixin, BaseReportPercentItem):
         return (self.percent / 100) * self.campaign.total_goal
 
 
-class BANTQuestionsSection(CloneMixin, models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="bants")
-    answer = models.TextField("Answer")
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = "BANT Question"
-        verbose_name_plural = "BANT Questions"
-
-    def __str__(self):
-        return f"{self.id}"
-
-
-class CustomQuestionsSection(CloneMixin, BaseStateItem):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="cqs")
-    answer = models.TextField("Answer")
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = "Custom Question"
-        verbose_name_plural = "Custom Questions"
-
-    def __str__(self):
-        return f"{self.id}"
-
-
 class ABMSection(CloneMixin, BaseReportPercentItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="abms")
     file = models.FileField("List")
@@ -580,6 +557,52 @@ class ITCuratedSection(CloneMixin, models.Model):
     status = models.CharField(max_length=16, choices=Statuses.choices, default=Statuses.ACTIVE)
     curated = models.ForeignKey(ITCurated, related_name='curateds', on_delete=models.CASCADE)
     pos = models.SmallIntegerField('Position', default=0)
+
+
+class BANTQuestionsSection(CloneMixin, models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="bants")
+    question_txt = models.TextField("Question", null=True, blank=True)
+    answer_txt = models.TextField("Answer", null=True, blank=True)
+    
+    question = models.ForeignKey(BANTQuestion, on_delete=models.CASCADE)
+
+    answer = ChainedForeignKey(
+        BANTAnswer,
+        chained_field="question",
+        chained_model_field="question",
+        show_all=False,
+        auto_choose=True,
+        sort=True
+    )
+
+    class Meta:
+        verbose_name = "BANT Question"
+        verbose_name_plural = "BANT Questions"
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class CustomQuestionsSection(CloneMixin, BaseStateItem):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="cqs")
+    question_txt = models.TextField("Question", null=True, blank=True)
+    answer_txt = models.TextField("Answer", null=True, blank=True)
+    question = models.ForeignKey(CustomQuestion, on_delete=models.CASCADE)
+    answer = ChainedForeignKey(
+        CustomAnswer,
+        chained_field="question",
+        chained_model_field="question",
+        show_all=False,
+        auto_choose=True,
+        sort=True
+    )
+
+    class Meta:
+        verbose_name = "Custom Question"
+        verbose_name_plural = "Custom Questions"
+
+    def __str__(self):
+        return f"{self.id}"
 
 
 @receiver(post_save, sender=Campaign)

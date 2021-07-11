@@ -49,6 +49,6 @@ django-clone==2.5.2
 django-solo==1.1.5
 django-ajax-selects==2.1.0
 drf-yasg==1.20.0
-
+django-smart-selects==1.5.9
 
 

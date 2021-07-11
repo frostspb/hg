@@ -4,11 +4,12 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from ..models import CampaignTypes, JobTitles, Geolocations, Question, Answers, Managers, ITCurated, Revenue, Industry,\
-    CompanySize
+from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
+    CompanySize, BANTQuestion, CustomQuestion
 
-from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, QuestionSerializer, \
-    ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer
+from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, \
+    ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer,\
+    CustomQuestionSerializer, BANTQuestionSerializer
 
 
 class ReferencesViewSet(GenericViewSet):
@@ -37,12 +38,12 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_bant(self, request):
-        return Response(data=QuestionSerializer(Question.objects.filter(kind=Question.QuestionKinds.BANT), many=True).data)
+        return Response(data=BANTQuestionSerializer(BANTQuestion.objects.all(), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_custom(self, request):
         return Response(
-            data=QuestionSerializer(Question.objects.filter(kind=Question.QuestionKinds.CUSTOM), many=True).data)
+            data=CustomQuestionSerializer(CustomQuestion.objects.all(), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def managers(self, request):

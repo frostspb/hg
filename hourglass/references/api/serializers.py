@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 
-from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Answers, Question, Managers, \
-    ITCurated, Revenue, Industry, CompanySize
+from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations,  Managers, \
+    ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer
 #from hourglass.clients.api.serializers import ClientSerializer
 
 
@@ -67,21 +67,39 @@ class RevenueSerializer(serializers.ModelSerializer):
         )
 
 
-class AnswerSerializer(serializers.ModelSerializer):
+class BANTAnswerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Answers
+        model = BANTAnswer
         fields = (
-            'id', 'value',
+            'id', 'answer', 'preferred'
         )
 
 
-class QuestionSerializer(serializers.ModelSerializer):
-    answer_variants = AnswerSerializer(read_only=True, many=True)
+class BANTQuestionSerializer(serializers.ModelSerializer):
+    answers = BANTAnswerSerializer(read_only=True, many=True)
 
     class Meta:
-        model = Question
+        model = BANTQuestion
         fields = (
-            'id', 'name', 'answer_variants',
+            'id', 'question', 'answers', 'kind'
+        )
+
+
+class CustomAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomAnswer
+        fields = (
+            'id', 'answer', 'preferred'
+        )
+
+
+class CustomQuestionSerializer(serializers.ModelSerializer):
+    answers = CustomAnswerSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = CustomQuestion
+        fields = (
+            'id', 'question', 'answers', 'kind'
         )
 
 

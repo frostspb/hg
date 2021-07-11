@@ -150,64 +150,7 @@
 
     }
 },
-{
-    "model": "references.Answers",
-    "pk": 1,
-    "fields": {
-        "value": "Yes"
 
-
-    }
-},
-{
-    "model": "references.Answers",
-    "pk": 2,
-    "fields": {
-        "value": "No"
-
-
-    }
-},
-{
-    "model": "references.Question",
-    "pk": 1,
-    "fields": {
-        "kind": "BANT",
-        "name": "Do you have a defined budget for this project?",
-        "answer_variants": [1,2]
-
-    }
-},
-{
-    "model": "references.Question",
-    "pk": 2,
-    "fields": {
-        "kind": "BANT",
-        "name": "Are you responsible for approving, authorizing or recommending this investment?",
-        "answer_variants": [1,2]
-
-    }
-},
-{
-    "model": "references.Question",
-    "pk": 3,
-    "fields": {
-        "kind": "BANT",
-        "name": "Are you currently planning to evluate or review an Inventory Management software solution?",
-        "answer_variants": [1,2]
-
-    }
-},
-    {
-    "model": "references.Question",
-    "pk": 4,
-    "fields": {
-        "kind": "BANT",
-        "name": "What timeframe do you have to deploy desired solution?",
-        "answer_variants": [1,2]
-
-    }
-},
 
 {
     "model": "references.Managers",
@@ -322,6 +265,122 @@
     "pk": 2,
     "fields": {
         "name": "Finance"
+    }
+},
+{
+    "model": "references.BANTQuestion",
+    "pk": 1,
+    "fields": {
+        "kind": "budget",
+        "question": "Do you have a defined budget for this project?"
+
+    }
+},
+{
+    "model": "references.BANTQuestion",
+    "pk": 2,
+    "fields": {
+        "kind": "authority",
+        "question": "Are you responsible for approving, authorizing or recommending this investment?"
+
+    }
+},
+{
+    "model": "references.BANTQuestion",
+    "pk": 3,
+    "fields": {
+        "kind": "need",
+        "question": "Are you currently planning to evaluate or review an Inventory Management software solution?"
+
+    }
+},
+    {
+    "model": "references.BANTQuestion",
+    "pk": 4,
+    "fields": {
+        "kind": "time",
+        "question": "What timeframe do you have to deploy desired solution?"
+
+    }
+},
+   {
+    "model": "references.BANTAnswer",
+    "pk": 1,
+    "fields": {
+        "answer": "Yes",
+        "question": 1,
+        "preferred": true
+
+    }
+},
+ {
+    "model": "references.BANTAnswer",
+    "pk": 2,
+    "fields": {
+        "answer": "No",
+        "question": 1,
+        "preferred": false
+
+    }
+},
+{
+    "model": "references.BANTAnswer",
+    "pk": 3,
+    "fields": {
+        "answer": "Yes",
+        "question": 2,
+        "preferred": true
+
+    }
+},
+ {
+    "model": "references.BANTAnswer",
+    "pk": 4,
+    "fields": {
+        "answer": "No",
+        "question": 2,
+        "preferred": false
+
+    }
+},
+{
+    "model": "references.BANTAnswer",
+    "pk": 5,
+    "fields": {
+        "answer": "Yes",
+        "question": 3,
+        "preferred": true
+
+    }
+},
+ {
+    "model": "references.BANTAnswer",
+    "pk": 6,
+    "fields": {
+        "answer": "No",
+        "question": 3,
+        "preferred": false
+
+    }
+},
+{
+    "model": "references.BANTAnswer",
+    "pk": 7,
+    "fields": {
+        "answer": "Yes",
+        "question": 4,
+        "preferred": true
+
+    }
+},
+ {
+    "model": "references.BANTAnswer",
+    "pk": 8,
+    "fields": {
+        "answer": "No",
+        "question": 4,
+        "preferred": false
+
     }
 }
 ]

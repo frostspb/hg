@@ -5,7 +5,8 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     CustomQuestionsSection,ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations
-from hourglass.references.api.serializers import AnswerSerializer, QuestionSerializer, JobTitlesSerializer, ITCuratedSerializer
+from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
+    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer
 from hourglass.clients.api.serializers import ClientSerializer
 
 
@@ -208,22 +209,24 @@ class GeolocationsSectionSerializer(serializers.ModelSerializer):
 
 
 class BANTQuestionsSectionSerializer(serializers.ModelSerializer):
-    question = QuestionSerializer()
+    question = BANTQuestionSerializer()
+    answer = BANTAnswerSerializer()
 
     class Meta:
         model = BANTQuestionsSection
         fields = (
-            "id", "campaign", "question", "answer"
+            "id", "campaign", "question", "answer", "question_txt", "answer_txt"
         )
 
 
 class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
-    question = QuestionSerializer()
+    question = CustomQuestionSerializer()
+    answer = CustomAnswerSerializer()
 
     class Meta:
         model = CustomQuestionsSection
         fields = (
-            "id",  "campaign", "question", "answer"
+            "id", "state", "campaign", "question", "answer", "question_txt", "answer_txt"
         )
 
 
