@@ -10,3 +10,5 @@ envs/.env.dev.db
 envs/.env.prod.db
 .pytest_cache
 .coverage
+/staticfiles/
+/mediafiles/

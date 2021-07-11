@@ -99,7 +99,7 @@ class CustomQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomQuestion
         fields = (
-            'id', 'question', 'answers', 'kind'
+            'id', 'question', 'answers', 
         )
 
 
