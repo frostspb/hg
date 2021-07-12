@@ -298,7 +298,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "id", #"client",
+            "id", "client",
             "created", "active", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order",
             "start_date", "end_date", "kind", "dashboard_string_count",
