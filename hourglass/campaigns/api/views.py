@@ -32,7 +32,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
-        print ('-------------------', manager)
         serializer.save(managed_by=manager)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
