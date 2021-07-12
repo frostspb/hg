@@ -1,3 +1,4 @@
+from random import choice
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
     DestroyModelMixin
@@ -5,7 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from hourglass.references.models import CampaignTypes, JobTitles, Geolocations
+from hourglass.references.models import CampaignTypes, JobTitles, Geolocations, Managers
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
 from .serializers import TargetSectionSerializer, CampaignSerializer , AssetsSectionSerializer,\
@@ -28,6 +29,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     serializer_class = CampaignSerializer
     queryset = Campaign.objects.filter(active=True)
     filterset_fields = ('client',)
+
+    def perform_create(self, serializer):
+        manager = choice(Managers.objects.all())
+        print ('-------------------', manager)
+        serializer.save(managed_by=manager)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def integration_types(self, request):

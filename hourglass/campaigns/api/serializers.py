@@ -1,10 +1,11 @@
+from random import choice
 from rest_framework import serializers
 from django.conf import settings
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection,ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
-from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations
+from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Managers
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer
 from hourglass.clients.api.serializers import ClientSerializer
@@ -300,13 +301,15 @@ class CampaignSerializer(serializers.ModelSerializer):
         fields = (
             "id", "client",
             "created", "active", "customer_information", "contact_name", "email", "note",
-            "name", "campaign_type", "order",
+            "name", "campaign_type", "order", "managed_by",
             "start_date", "end_date", "kind", "dashboard_string_count",
             "state",  "details",   "guarantees", "integration", "pacing", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives"
 
         )
+
+
 
     def get_created(self, instance):
         if instance.created:
@@ -367,7 +370,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration",
+            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration", "managed_by",
             "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives"

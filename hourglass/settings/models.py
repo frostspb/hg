@@ -9,6 +9,10 @@ class HourglassSettings(SingletonModel):
     min_delta_val = models.SmallIntegerField("Min delta value", default=3)
     max_delta_val = models.SmallIntegerField("Max delta value", default=5)
 
+    class Meta:
+        verbose_name = "Total Active Campaigns"
+        verbose_name_plural = "Total Active Campaigns"
+
     def get_value(self):
         delta = random.randint(self.min_delta_val, self.max_delta_val)
         seed = random.randint(0, 10)
