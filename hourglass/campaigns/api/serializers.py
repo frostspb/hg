@@ -1,4 +1,3 @@
-from random import choice
 from rest_framework import serializers
 from django.conf import settings
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
@@ -7,7 +6,7 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Managers
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
-    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer
+    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer
 from hourglass.clients.api.serializers import ClientSerializer
 
 
@@ -45,9 +44,6 @@ class TargetSectionSerializer(serializers.ModelSerializer):
         return instance.remaining_leads
 
 
-
-
-
 class SectionsSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionSettings
@@ -63,9 +59,6 @@ class TacticsSerializer(serializers.ModelSerializer):
         fields = (
             "id", "name",
         )
-
-
-
 
 
 class CampaignSettingsSerializer(serializers.ModelSerializer):
@@ -309,8 +302,6 @@ class CampaignSerializer(serializers.ModelSerializer):
 
         )
 
-
-
     def get_created(self, instance):
         if instance.created:
             return instance.created.strftime(settings.ENDPOINT_DATE_FORMAT)
@@ -350,7 +341,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     sections = SectionsSettingsSerializer(read_only=True, many=True)
     #tactics = TacticsSerializer(read_only=True, many=True)
     tactics = serializers.SerializerMethodField()
-
+    managed_by = ManagersSerializer(read_only=True)
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)

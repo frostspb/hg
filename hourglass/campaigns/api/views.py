@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from hourglass.references.models import CampaignTypes, JobTitles, Geolocations, Managers
+from hourglass.references.api.serializers import ManagersSerializer
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
 from .serializers import TargetSectionSerializer, CampaignSerializer , AssetsSectionSerializer,\
