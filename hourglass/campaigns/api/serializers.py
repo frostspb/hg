@@ -287,6 +287,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
+    itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     #start_date = serializers.DateField(format='%d-%m-%Y')
 
     class Meta:
@@ -298,7 +299,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "start_date", "end_date", "kind", "dashboard_string_count",
             "state",  "details",   "guarantees", "integration", "pacing", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
-            "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives"
+            "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives", "itcurateds"
 
         )
 
@@ -361,7 +362,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration", "managed_by",
+            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration", "managed_by", "kind",
             "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives"
