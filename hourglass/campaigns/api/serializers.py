@@ -296,7 +296,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "id", "client",
             "created", "active", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order", "managed_by",
-            "start_date", "end_date", "kind", "dashboard_string_count",
+            "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
             "state",  "details",   "guarantees", "integration", "pacing", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives", "itcurateds"
@@ -362,10 +362,11 @@ class HourglassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "duration", "state", "velocity", "pacing", "integration", "managed_by", "kind",
-            "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count", "assets", "intents", "titles",
-            "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
-            "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives"
+            "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing", "integration", "managed_by",
+            "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
+            "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
+            "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
+            "nurturings", "creatives"
         )
 
     def get_end_date(self, instance):

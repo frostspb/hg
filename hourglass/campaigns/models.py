@@ -117,8 +117,14 @@ class Campaign(CloneMixin, BaseStateItem):
     middle_percent = models.FloatField("Middle Leads Percent", default=0)
     bottom_percent = models.FloatField("Bottom Leads Percent", default=0)
     dashboard_string_count = models.PositiveSmallIntegerField(
+        "Lead Goal Lower Lines (Dashboard View)",
         default=1,
         validators=[MinValueValidator(1), MaxValueValidator(6)]
+    )
+    ta_volume = models.PositiveIntegerField(
+        "Target Audience Volume (in cubes)",
+        default=0,
+
     )
     remaining_admin_percent = models.PositiveSmallIntegerField(default=0)
     in_progress_admin_percent = models.PositiveSmallIntegerField(default=0)
