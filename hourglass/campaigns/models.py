@@ -113,9 +113,9 @@ class Campaign(CloneMixin, BaseStateItem):
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
     job_titles = models.ManyToManyField(JobTitles, null=True, blank=True)
     base_velocity = models.IntegerField("Base Velocity", default=0)
-    top_percent = models.FloatField("Top Leads Percent", default=0)
-    middle_percent = models.FloatField("Middle Leads Percent", default=0)
-    bottom_percent = models.FloatField("Bottom Leads Percent", default=0)
+    top_percent = models.FloatField("Top Leads Percent", null=True, blank=True)
+    middle_percent = models.FloatField("Middle Leads Percent",  null=True, blank=True)
+    bottom_percent = models.FloatField("Bottom Leads Percent", null=True, blank=True)
     dashboard_string_count = models.PositiveSmallIntegerField(
         "Lead Goal Lower Lines (Dashboard View)",
         default=1,

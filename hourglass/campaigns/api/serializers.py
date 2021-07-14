@@ -65,12 +65,36 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     client = ClientSerializer(read_only=True, many=False)
     targets = TargetSectionSerializer(read_only=True, many=True)
     tactics = serializers.SerializerMethodField()
+    start_date = serializers.SerializerMethodField()
+    end_date = serializers.SerializerMethodField()
 
     class Meta:
         model = Campaign
         fields = (
             "client", "start_date", "end_date", "name", "integration",  "pacing", "targets", "tactics"
         )
+
+    def get_start_date(self, instance):
+        res = None
+        if instance.is_standard:
+            if instance.initial_start_date:
+                res = instance.initial_start_date
+        else:
+            if instance.start_date:
+                res = instance.start_date
+        if res:
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
+
+    def get_end_date(self, instance):
+        res = None
+        if instance.is_standard:
+            if instance.initial_end_date:
+                res = instance.initial_end_date
+        else:
+            if instance.end_date:
+                res = instance.end_date
+        if res:
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
 
     def get_tactics(self, instance):
         model_tactics = instance.tactics.values_list('id', flat=True)
