@@ -68,11 +68,29 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     start_date = serializers.SerializerMethodField()
     end_date = serializers.SerializerMethodField()
 
+    delivered = serializers.SerializerMethodField()
+    remaining = serializers.SerializerMethodField()
+    in_validation = serializers.SerializerMethodField()
+    total_generated = serializers.SerializerMethodField()
+
     class Meta:
         model = Campaign
         fields = (
-            "client", "start_date", "end_date", "name", "integration",  "pacing", "targets", "tactics"
+            "client", "start_date", "end_date", "name", "integration",  "pacing", "targets", "tactics",
+            "delivered", "remaining", "in_validation", "total_generated"
         )
+
+    def get_delivered(self, instance):
+        return instance.delivered
+
+    def get_remaining(self, instance):
+        return instance.remaining
+
+    def get_in_validation(self, instance):
+        return instance.in_validation
+
+    def get_total_generated(self, instance):
+        return instance.total_generated
 
     def get_start_date(self, instance):
         res = None
@@ -295,6 +313,10 @@ class CampaignSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
     created = serializers.SerializerMethodField()
     kind = serializers.CharField(default=Campaign.CampaignKinds.USER)
+    delivered = serializers.SerializerMethodField()
+    remaining = serializers.SerializerMethodField()
+    in_validation = serializers.SerializerMethodField()
+    total_generated = serializers.SerializerMethodField()
 
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
@@ -320,12 +342,25 @@ class CampaignSerializer(serializers.ModelSerializer):
             "id", "client",
             "created", "active", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order", "managed_by",
+            "delivered", "remaining", "in_validation", "total_generated",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
             "state",  "details",   "guarantees", "integration", "pacing", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives", "itcurateds"
 
         )
+
+    def get_delivered(self, instance):
+        return instance.delivered
+
+    def get_remaining(self, instance):
+        return instance.remaining
+
+    def get_in_validation(self, instance):
+        return instance.in_validation
+
+    def get_total_generated(self, instance):
+        return instance.total_generated
 
     def get_created(self, instance):
         if instance.created:
@@ -356,6 +391,11 @@ class CampaignSerializer(serializers.ModelSerializer):
 
 class HourglassSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
+    delivered = serializers.SerializerMethodField()
+    remaining = serializers.SerializerMethodField()
+    in_validation = serializers.SerializerMethodField()
+    total_generated = serializers.SerializerMethodField()
+
     TA = serializers.SerializerMethodField()
     duration = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
@@ -387,11 +427,24 @@ class HourglassSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = (
             "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing", "integration", "managed_by",
+            "delivered", "remaining", "in_validation", "total_generated",
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "creatives"
         )
+
+    def get_delivered(self, instance):
+        return instance.delivered
+
+    def get_remaining(self, instance):
+        return instance.remaining
+
+    def get_in_validation(self, instance):
+        return instance.in_validation
+
+    def get_total_generated(self, instance):
+        return instance.total_generated
 
     def get_end_date(self, instance):
         if instance.kind == instance.CampaignKinds.STANDARD:
