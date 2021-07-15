@@ -5,11 +5,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
-    CompanySize, BANTQuestion, CustomQuestion
+    CompanySize, BANTQuestion, CustomQuestion, IntegrationType
 
 from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, \
     ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer,\
-    CustomQuestionSerializer, BANTQuestionSerializer
+    CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer
 
 
 class ReferencesViewSet(GenericViewSet):
@@ -56,3 +56,7 @@ class ReferencesViewSet(GenericViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def company_size(self, request):
         return Response(data=CompanySizeSerializer(CompanySize.objects.filter(visible=True), many=True).data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def integration_types(self, request):
+        return Response(data=IntegrationTypeSerializer(IntegrationType.objects.filter(visible=True), many=True).data)

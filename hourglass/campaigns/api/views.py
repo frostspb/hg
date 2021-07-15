@@ -36,10 +36,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         serializer.save(managed_by=manager)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
-    def integration_types(self, request):
-        return Response(data=Campaign.IntegrationTypes.choices)
-
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def pacing(self, request):
         return Response(data=Campaign.PacingTypes.choices)
 

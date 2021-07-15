@@ -19,7 +19,7 @@ from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, 
 from .managers import CampaignsManager
 
 from smart_selects.db_fields import ChainedForeignKey
-from hourglass.references.models import BANTQuestion, BANTAnswer, CustomAnswer, CustomQuestion
+from hourglass.references.models import BANTQuestion, BANTAnswer, CustomAnswer, CustomQuestion, IntegrationType
 
 
 JOB_TITLES_SLUG = "JobTitle"
@@ -71,13 +71,6 @@ class Campaign(CloneMixin, BaseStateItem):
         USER = 'copy', 'Copy'
         CONTRACT = 'contract', 'Contract'
 
-    class IntegrationTypes(models.TextChoices):
-        SALESFORCE = 'salesforce', 'Salesforce'
-        MARKETO = 'marketo', 'Marketo'
-        HUB_SPOT = 'hub_spot', 'HubSpot'
-        INTEGRATE = 'integrate', 'Integrate'
-        LOLAGROVE = 'lolagrove', 'Lolagrove'
-
     class PacingTypes(models.TextChoices):
         EVEN = 'even', 'Even'
         FRONT_LOAD = 'front-load', 'Front-Load'
@@ -108,7 +101,8 @@ class Campaign(CloneMixin, BaseStateItem):
     start_offset = models.PositiveSmallIntegerField("Start Date offset in days", default=0)
     end_offset = models.PositiveSmallIntegerField("End Date offset in days", default=0)
     audience_targeted = models.IntegerField("Base Target Audience", default=0)
-    integration = models.CharField(max_length=16, choices=IntegrationTypes.choices, default=IntegrationTypes.SALESFORCE)
+    integration_type = models.ForeignKey(
+        IntegrationType, on_delete=models.CASCADE, verbose_name="Integration"  )
     pacing = models.CharField(max_length=16, choices=PacingTypes.choices, default=PacingTypes.EVEN)
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
     job_titles = models.ManyToManyField(JobTitles, null=True, blank=True)
@@ -533,7 +527,7 @@ class LeadCascadeProgramSection(CloneMixin, BaseReportPercentItem):
 
 class NurturingSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="nurturings")
-    name = models.CharField("Type", max_length=256)
+    campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, verbose_name="Type")
     assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
 
     @property

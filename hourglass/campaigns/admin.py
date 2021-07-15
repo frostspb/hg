@@ -72,7 +72,7 @@ class NurturingSectionAdmin(admin.TabularInline):
     model = NurturingSection
     extra = 0
     exclude = ['execution_time', 'started_at']
-    fields = ['state', 'name', 'assets', 'link', 'generated_leads']
+    fields = ['state', 'campaign_type', 'assets', 'link', 'generated_leads']
     readonly_fields = ['generated_leads', 'link']
     classes = ['collapse']
 
@@ -247,7 +247,8 @@ class CampaignAdmin(CloneModelAdmin):
         ("Campaign admin settings", {
             "fields": (
                 "name", "start_offset", "end_offset",   "state", "job_titles",
-                "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration", "pacing",
+                "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration_type",
+                "pacing",
                 "dashboard_string_count", "ta_volume", "remaining_admin_percent", "in_progress_admin_percent",
 
             )

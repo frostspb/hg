@@ -382,5 +382,45 @@
         "preferred": false
 
     }
+},
+    {
+    "model": "references.IntegrationType",
+    "pk": 1,
+    "fields": {
+        "name": "Salesforce"
+
+    }
+},
+ {
+    "model": "references.IntegrationType",
+    "pk": 2,
+    "fields": {
+        "name": "Marketo"
+
+    }
+} ,
+    {
+    "model": "references.IntegrationType",
+    "pk": 3,
+    "fields": {
+        "name": "HubSpot"
+
+    }
+},
+    {
+    "model": "references.IntegrationType",
+    "pk": 4,
+    "fields": {
+        "name": "Integrate"
+
+    }
+},
+    {
+    "model": "references.IntegrationType",
+    "pk": 5,
+    "fields": {
+        "name": "Lolagrove"
+
+    }
 }
 ]

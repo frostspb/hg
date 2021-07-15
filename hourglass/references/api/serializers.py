@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations,  Managers, \
-    ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer
+    ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer, IntegrationType
 #from hourglass.clients.api.serializers import ClientSerializer
 
 
@@ -108,4 +108,12 @@ class ITCuratedSerializer(serializers.ModelSerializer):
         model = ITCurated
         fields = (
             'id', 'slug', 'link', 'title'
+        )
+
+
+class IntegrationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntegrationType
+        fields = (
+            'id', 'name', 'image', 'image_popup'
         )

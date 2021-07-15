@@ -6,7 +6,7 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Managers
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
-    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer
+    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer, IntegrationTypeSerializer
 from hourglass.clients.api.serializers import ClientSerializer
 
 
@@ -67,7 +67,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     tactics = serializers.SerializerMethodField()
     start_date = serializers.SerializerMethodField()
     end_date = serializers.SerializerMethodField()
-
+    integration_type = IntegrationTypeSerializer()
     delivered = serializers.SerializerMethodField()
     remaining = serializers.SerializerMethodField()
     in_validation = serializers.SerializerMethodField()
@@ -76,7 +76,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "client", "start_date", "end_date", "name", "integration",  "pacing", "targets", "tactics",
+            "client", "start_date", "end_date", "name", "integration_type",  "pacing", "targets", "tactics",
             "delivered", "remaining", "in_validation", "total_generated"
         )
 
@@ -266,11 +266,12 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
     assets = AssetsSectionSerializer()
     link = serializers.SerializerMethodField(read_only=True)
     generated_leads = serializers.SerializerMethodField(read_only=True)
+    campaign_type = CampaignTypesSerializer()
 
     class Meta:
         model = NurturingSection
         fields = (
-            "id", "campaign", "name", "assets", "link", "generated_leads"
+            "id", "campaign", "campaign_type", "assets", "link", "generated_leads"
         )
 
     def get_link(self, instance):
@@ -317,6 +318,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     remaining = serializers.SerializerMethodField()
     in_validation = serializers.SerializerMethodField()
     total_generated = serializers.SerializerMethodField()
+    integration_type = IntegrationTypeSerializer()
 
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
@@ -344,7 +346,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "name", "campaign_type", "order", "managed_by",
             "delivered", "remaining", "in_validation", "total_generated",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
-            "state",  "details",   "guarantees", "integration", "pacing", "assets", "intents", "titles",
+            "state",  "details",   "guarantees", "integration_type", "pacing", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives", "itcurateds"
 
@@ -395,6 +397,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     remaining = serializers.SerializerMethodField()
     in_validation = serializers.SerializerMethodField()
     total_generated = serializers.SerializerMethodField()
+    integration_type = IntegrationTypeSerializer()
 
     TA = serializers.SerializerMethodField()
     duration = serializers.SerializerMethodField()
@@ -426,7 +429,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing", "integration", "managed_by",
+            "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing", "integration_type", "managed_by",
             "delivered", "remaining", "in_validation", "total_generated",
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
