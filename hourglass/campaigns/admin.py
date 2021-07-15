@@ -230,7 +230,7 @@ class BANTQuestionsSectionAdmin(admin.TabularInline):
 class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection
     extra = 0
-    exclude = ['question_txt', 'answer_txt']
+    exclude = ['question_txt', 'answer_txt', 'started_at', 'execution_time']
     classes = ['collapse']
 
 
