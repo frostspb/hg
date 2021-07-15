@@ -61,67 +61,6 @@ class TacticsSerializer(serializers.ModelSerializer):
         )
 
 
-class CampaignSettingsSerializer(serializers.ModelSerializer):
-    client = ClientSerializer(read_only=True, many=False)
-    targets = TargetSectionSerializer(read_only=True, many=True)
-    tactics = serializers.SerializerMethodField()
-    start_date = serializers.SerializerMethodField()
-    end_date = serializers.SerializerMethodField()
-    integration_type = IntegrationTypeSerializer()
-    delivered = serializers.SerializerMethodField()
-    remaining = serializers.SerializerMethodField()
-    in_validation = serializers.SerializerMethodField()
-    total_generated = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Campaign
-        fields = (
-            "client", "start_date", "end_date", "name", "integration_type",  "pacing", "targets", "tactics",
-            "delivered", "remaining", "in_validation", "total_generated"
-        )
-
-    def get_delivered(self, instance):
-        return instance.delivered
-
-    def get_remaining(self, instance):
-        return instance.remaining
-
-    def get_in_validation(self, instance):
-        return instance.in_validation
-
-    def get_total_generated(self, instance):
-        return instance.total_generated
-
-    def get_start_date(self, instance):
-        res = None
-        if instance.is_standard:
-            if instance.initial_start_date:
-                res = instance.initial_start_date
-        else:
-            if instance.start_date:
-                res = instance.start_date
-        if res:
-            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
-
-    def get_end_date(self, instance):
-        res = None
-        if instance.is_standard:
-            if instance.initial_end_date:
-                res = instance.initial_end_date
-        else:
-            if instance.end_date:
-                res = instance.end_date
-        if res:
-            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
-
-    def get_tactics(self, instance):
-        model_tactics = instance.tactics.values_list('id', flat=True)
-        t = Tactics.objects.all().values()
-        for i in t:
-            i['active'] = True if i.get('id') in model_tactics else False
-        return t
-
-
 class AssetsSectionSerializer(serializers.ModelSerializer):
     titles = JobTitlesSerializer(allow_null=True)
 
@@ -483,3 +422,86 @@ class HourglassSerializer(serializers.ModelSerializer):
         for i in t:
             i['active'] = True if i.get('id') in model_tactics else False
         return t
+
+
+
+class CampaignSettingsSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(read_only=True, many=False)
+    targets = TargetSectionSerializer(read_only=True, many=True)
+    tactics = serializers.SerializerMethodField()
+    start_date = serializers.SerializerMethodField()
+    end_date = serializers.SerializerMethodField()
+    integration_type = IntegrationTypeSerializer()
+    delivered = serializers.SerializerMethodField()
+    remaining = serializers.SerializerMethodField()
+    in_validation = serializers.SerializerMethodField()
+    total_generated = serializers.SerializerMethodField()
+
+    assets = AssetsSectionSerializer(many=True, read_only=True)
+    intents = IntentFeedsSectionSerializer(many=True, read_only=True)
+    titles = JobTitlesSectionSerializer(many=True, read_only=True)
+    industries = IndustriesSectionSerializer(many=True, read_only=True)
+    revenues = RevenueSectionSerializer(many=True, read_only=True)
+    companies_size = CompanySizeSectionSerializer(source="companies", many=True, read_only=True)
+    geolocations = GeolocationsSectionSerializer(many=True, read_only=True)
+    bants = BANTQuestionsSectionSerializer(many=True, read_only=True)
+    custom_questions = CustomQuestionsSectionSerializer(source="cqs", many=True, read_only=True)
+    abms = ABMSectionSerializer(many=True, read_only=True)
+    install_base = InstallBaseSectionSerializer(source="ibs", many=True, read_only=True)
+    fair_trades = FairTradeSectionSerializer(many=True, read_only=True)
+    lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
+    nurturings = NurturingSectionSerializer(many=True, read_only=True)
+    creatives = CreativesSectionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Campaign
+        fields = (
+            "client", "start_date", "end_date", "name", "integration_type",  "pacing", "targets", "tactics",
+            "delivered", "remaining", "in_validation", "total_generated",
+            "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
+            "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
+            "nurturings", "creatives"
+
+        )
+
+    def get_delivered(self, instance):
+        return instance.delivered
+
+    def get_remaining(self, instance):
+        return instance.remaining
+
+    def get_in_validation(self, instance):
+        return instance.in_validation
+
+    def get_total_generated(self, instance):
+        return instance.total_generated
+
+    def get_start_date(self, instance):
+        res = None
+        if instance.is_standard:
+            if instance.initial_start_date:
+                res = instance.initial_start_date
+        else:
+            if instance.start_date:
+                res = instance.start_date
+        if res:
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
+
+    def get_end_date(self, instance):
+        res = None
+        if instance.is_standard:
+            if instance.initial_end_date:
+                res = instance.initial_end_date
+        else:
+            if instance.end_date:
+                res = instance.end_date
+        if res:
+            return res.strftime(settings.ENDPOINT_DATE_FORMAT)
+
+    def get_tactics(self, instance):
+        model_tactics = instance.tactics.values_list('id', flat=True)
+        t = Tactics.objects.all().values()
+        for i in t:
+            i['active'] = True if i.get('id') in model_tactics else False
+        return t
+

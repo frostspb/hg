@@ -59,4 +59,4 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def integration_types(self, request):
-        return Response(data=IntegrationTypeSerializer(IntegrationType.objects.filter(visible=True), many=True).data)
+        return Response(data=IntegrationTypeSerializer(IntegrationType.objects.all(), many=True).data)

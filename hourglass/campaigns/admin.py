@@ -61,7 +61,6 @@ class AssetsSectionAdmin(admin.TabularInline):
         return obj.leads_assets
 
 
-
 class ITCuratedSectionAdmin(admin.TabularInline):
     model = ITCuratedSection
     extra = 0
