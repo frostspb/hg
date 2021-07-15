@@ -6,16 +6,16 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Managers
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
-    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer, IntegrationTypeSerializer
+    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer, IntegrationTypeSerializer, CampaignTypesSerializer
 from hourglass.clients.api.serializers import ClientSerializer
 
 
-class CampaignTypesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CampaignTypes
-        fields = (
-            'id', 'name',
-        )
+# class CampaignTypesSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = CampaignTypes
+#         fields = (
+#             'id', 'name',
+#         )
 
 
 class CampaignCopySerializer(serializers.Serializer):
