@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import CampaignTypes, Geolocations, Tactics, Managers, JobTitles,\
-    ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer
+    ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer, IntegrationType
 
 
 @admin.register(CampaignTypes)
@@ -103,4 +103,10 @@ class CustomQuestionAdmin(admin.ModelAdmin):
     fields = ["question"]
 
     inlines = [CustomAnswerAdmin]
+
+
+@admin.register(IntegrationType)
+class IntegrationTypeAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    fields = ["name", "image", "image_popup"]
 
