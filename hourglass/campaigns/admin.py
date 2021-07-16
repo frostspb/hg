@@ -247,7 +247,7 @@ class CampaignAdmin(CloneModelAdmin):
             "fields": (
                 "name", "start_offset", "end_offset",   "state", "job_titles",
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration_type",
-                "pacing",
+                "pacing_type",
                 "dashboard_string_count", "ta_volume", "remaining_admin_percent", "in_progress_admin_percent",
 
             )
