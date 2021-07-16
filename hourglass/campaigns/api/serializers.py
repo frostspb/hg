@@ -6,7 +6,7 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Managers
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
-    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer, IntegrationTypeSerializer, CampaignTypesSerializer
+    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer, IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer
 from hourglass.clients.api.serializers import ClientSerializer
 
 
@@ -258,6 +258,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     in_validation = serializers.SerializerMethodField()
     total_generated = serializers.SerializerMethodField()
     integration_type = IntegrationTypeSerializer()
+    pacing_type = PacingSerializer()
 
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
@@ -285,7 +286,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "name", "campaign_type", "order", "managed_by",
             "delivered", "remaining", "in_validation", "total_generated",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
-            "state",  "details",   "guarantees", "integration_type", "pacing", "assets", "intents", "titles",
+            "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives", "itcurateds"
 
@@ -364,11 +365,12 @@ class HourglassSerializer(serializers.ModelSerializer):
     lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
+    pacing_type = PacingSerializer()
 
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing", "integration_type", "managed_by",
+            "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing_type", "integration_type", "managed_by",
             "delivered", "remaining", "in_validation", "total_generated",
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
@@ -436,6 +438,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     remaining = serializers.SerializerMethodField()
     in_validation = serializers.SerializerMethodField()
     total_generated = serializers.SerializerMethodField()
+    pacing_type = PacingSerializer()
 
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
@@ -453,10 +456,11 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
 
+
     class Meta:
         model = Campaign
         fields = (
-            "client", "start_date", "end_date", "name", "integration_type",  "pacing", "targets", "tactics",
+            "client", "start_date", "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
             "delivered", "remaining", "in_validation", "total_generated",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",

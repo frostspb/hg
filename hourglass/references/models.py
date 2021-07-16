@@ -162,3 +162,7 @@ class IntegrationType(models.Model):
     name = models.CharField(max_length=250)
     image = models.FileField(null=True, blank=True)
     image_popup = models.FileField(null=True, blank=True)
+
+
+class Pacing(models.Model):
+    name = models.CharField(max_length=250)

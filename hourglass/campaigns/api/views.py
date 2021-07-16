@@ -35,9 +35,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         manager = choice(Managers.objects.all())
         serializer.save(managed_by=manager)
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
-    def pacing(self, request):
-        return Response(data=Campaign.PacingTypes.choices)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):

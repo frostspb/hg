@@ -14,7 +14,7 @@ from hourglass.clients.models import Client, Company
 from .base import BaseStateItem, BaseReportPercentItem
 
 from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Managers, ITCurated,\
-    Industry, Revenue, CompanySize
+    Industry, Revenue, CompanySize, Pacing
 
 from .managers import CampaignsManager
 
@@ -71,10 +71,6 @@ class Campaign(CloneMixin, BaseStateItem):
         USER = 'copy', 'Copy'
         CONTRACT = 'contract', 'Contract'
 
-    class PacingTypes(models.TextChoices):
-        EVEN = 'even', 'Even'
-        FRONT_LOAD = 'front-load', 'Front-Load'
-
     # front
 
     contact_name = models.CharField(max_length=255, blank=True, null=True)
@@ -103,7 +99,8 @@ class Campaign(CloneMixin, BaseStateItem):
     audience_targeted = models.IntegerField("Base Target Audience", default=0)
     integration_type = models.ForeignKey(
         IntegrationType, on_delete=models.CASCADE, verbose_name="Integration"  )
-    pacing = models.CharField(max_length=16, choices=PacingTypes.choices, default=PacingTypes.EVEN)
+    pacing_type = models.ForeignKey(
+        Pacing, on_delete=models.CASCADE, verbose_name="Pacing")
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
     job_titles = models.ManyToManyField(JobTitles, null=True, blank=True)
     base_velocity = models.IntegerField("Base Velocity", default=0)

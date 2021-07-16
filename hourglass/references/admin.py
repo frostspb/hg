@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from .models import CampaignTypes, Geolocations, Tactics, Managers, JobTitles,\
-    ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer, IntegrationType
+    ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer,\
+    IntegrationType, Pacing
 
 
 @admin.register(CampaignTypes)
@@ -109,4 +110,10 @@ class CustomQuestionAdmin(admin.ModelAdmin):
 class IntegrationTypeAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
     fields = ["name", "image", "image_popup"]
+
+
+@admin.register(Pacing)
+class PacingAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    fields = ["name",]
 

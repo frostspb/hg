@@ -422,5 +422,21 @@
         "name": "Lolagrove"
 
     }
+},
+        {
+    "model": "references.Pacing",
+    "pk": 1,
+    "fields": {
+        "name": "Even"
+
+    }
+},
+ {
+    "model": "references.Pacing",
+    "pk": 2,
+    "fields": {
+        "name": "Front-Load"
+
+    }
 }
 ]
