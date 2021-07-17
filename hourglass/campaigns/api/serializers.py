@@ -247,7 +247,7 @@ class SuppresionListSectionSerializer(serializers.ModelSerializer):
             "id", "title", "accounts_value"
         )
 
-
+#TODO 1 serializer
 class CampaignSerializer(serializers.ModelSerializer):
     start_date = serializers.SerializerMethodField()
     end_date = serializers.SerializerMethodField()
@@ -259,7 +259,8 @@ class CampaignSerializer(serializers.ModelSerializer):
     total_generated = serializers.SerializerMethodField()
     integration_type = IntegrationTypeSerializer()
     pacing_type = PacingSerializer()
-
+    sections = SectionsSettingsSerializer(read_only=True, many=True)
+    targets = TargetSectionSerializer(read_only=True, many=True)
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
@@ -283,12 +284,12 @@ class CampaignSerializer(serializers.ModelSerializer):
         fields = (
             "id", "client",
             "created", "active", "customer_information", "contact_name", "email", "note",
-            "name", "campaign_type", "order", "managed_by",
+            "name", "campaign_type", "order", "managed_by", "targets", "sections",
             "delivered", "remaining", "in_validation", "total_generated",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
             "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
-            "install_base", "fair_trades", "lead_cascades", "nurturings", "creatives", "itcurateds"
+            "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives", "itcurateds"
 
         )
 
@@ -348,6 +349,8 @@ class HourglassSerializer(serializers.ModelSerializer):
     generated_pos = serializers.SerializerMethodField()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
     #tactics = TacticsSerializer(read_only=True, many=True)
+
+    targets = TargetSectionSerializer(read_only=True, many=True)
     tactics = serializers.SerializerMethodField()
     managed_by = ManagersSerializer(read_only=True)
     assets = AssetsSectionSerializer(many=True, read_only=True)
@@ -371,11 +374,11 @@ class HourglassSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = (
             "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing_type", "integration_type", "managed_by",
-            "delivered", "remaining", "in_validation", "total_generated",
+            "delivered", "remaining", "in_validation", "total_generated", "targets",
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "creatives"
+            "nurturings", "nurturing_parameters", "creatives"
         )
 
     def get_delivered(self, instance):
@@ -439,7 +442,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     in_validation = serializers.SerializerMethodField()
     total_generated = serializers.SerializerMethodField()
     pacing_type = PacingSerializer()
-
+    sections = SectionsSettingsSerializer(read_only=True, many=True)
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
@@ -461,10 +464,10 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = (
             "client", "start_date", "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
-            "delivered", "remaining", "in_validation", "total_generated",
+            "delivered", "remaining", "in_validation", "total_generated", "sections",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "creatives"
+            "nurturings", "nurturing_parameters", "creatives"
 
         )
 

@@ -98,7 +98,10 @@ class Campaign(CloneMixin, BaseStateItem):
     end_offset = models.PositiveSmallIntegerField("End Date offset in days", default=0)
     audience_targeted = models.IntegerField("Base Target Audience", default=0)
     integration_type = models.ForeignKey(
-        IntegrationType, on_delete=models.CASCADE, verbose_name="Integration"  )
+        IntegrationType, on_delete=models.CASCADE, verbose_name="Integration")
+
+    pending = models.PositiveSmallIntegerField("Pending in Integration", blank=True, null=True)
+
     pacing_type = models.ForeignKey(
         Pacing, on_delete=models.CASCADE, verbose_name="Pacing")
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
@@ -123,7 +126,7 @@ class Campaign(CloneMixin, BaseStateItem):
     intent_feed_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
     intent_feed_done_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
     abm_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
-
+    nurturing_parameters = models.CharField(max_length=250, null=True, blank=True)
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
