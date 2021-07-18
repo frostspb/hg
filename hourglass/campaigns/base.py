@@ -20,7 +20,7 @@ class BaseStateItem(TimeStampedModel):
             (STATE_PAUSE, STATE_PAUSE),
 
         )
-    state = FSMField("Status", default=StateMixin.States.STATE_PAUSE, choices=StateMixin.States.STATE_CHOICES)
+    state = FSMField("Status", default=StateMixin.States.STATE_RUNNING, choices=StateMixin.States.STATE_CHOICES)
     started_at = models.DateTimeField(null=True, blank=True)
     execution_time = models.IntegerField(default=0)
 
