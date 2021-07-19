@@ -107,7 +107,7 @@ class ITCuratedSerializer(serializers.ModelSerializer):
     class Meta:
         model = ITCurated
         fields = (
-            'id', 'slug', 'link', 'title'
+            'id', 'slug', 'link', 'title', 'position'
         )
 
 

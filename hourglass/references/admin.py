@@ -49,7 +49,7 @@ class IndustryAdmin(admin.ModelAdmin):
 class ITCuratedAdmin(admin.ModelAdmin):
     list_display = ["id", "title", "link", "slug", "visible", ]
     search_fields = ["title", "id", "slug"]
-    fields = ["title", "link", "slug", "visible",]
+    fields = ["title", "link", "slug", "visible", "position"]
     ordering = ("title",)
 
 

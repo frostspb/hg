@@ -152,6 +152,7 @@ class ITCurated(models.Model):
     visible = models.BooleanField(default=True)
     link = models.URLField("Link")
     title = models.CharField(max_length=64)
+    position = models.SmallIntegerField(default=0)
 
     class Meta:
         verbose_name = "IT Curated block"

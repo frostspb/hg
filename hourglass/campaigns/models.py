@@ -614,6 +614,17 @@ class CustomQuestionsSection(CloneMixin, BaseStateItem):
 
 
 @receiver(post_save, sender=Campaign)
+def create_curated(sender, instance, created, **kwargs):
+    if created:
+        for_create = [
+            ITCuratedSection(
+                campaign=instance, curated=i, pos=i.get('position')
+            ) for i in ITCurated.objects.filter(visible=True)
+        ]
+        ITCuratedSection.objects.bulk_create(for_create)
+
+
+@receiver(post_save, sender=Campaign)
 def create_settings(sender, instance, created, **kwargs):
 
     sections = [
