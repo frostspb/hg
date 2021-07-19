@@ -530,6 +530,8 @@ class NurturingSection(CloneMixin, BaseStateItem):
     campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, verbose_name="Type")
     assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
 
+
+
     @property
     def link(self):
         return self.assets.landing_page.url
@@ -558,6 +560,8 @@ class ITCuratedSection(CloneMixin, models.Model):
     curated = models.ForeignKey(ITCurated, related_name='curateds', on_delete=models.CASCADE)
     pos = models.SmallIntegerField('Position', default=0)
 
+    def __str__(self):
+        return f"{self.curated.title}"
 
 class BANTQuestionsSection(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="bants")

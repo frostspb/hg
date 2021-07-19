@@ -157,6 +157,9 @@ class ITCurated(models.Model):
         verbose_name = "IT Curated block"
         verbose_name_plural = "IT Curated blocks"
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class IntegrationType(models.Model):
     name = models.CharField(max_length=250)
