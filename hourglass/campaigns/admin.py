@@ -287,7 +287,7 @@ class CampaignAdmin(CloneModelAdmin):
 
     ordering = ("-created",)
 
-    actions = ["start", "stop", "pause", "resume",]
+    actions = ["start", "pause", ]
 
     inlines = [
         SectionSettingsAdmin,
