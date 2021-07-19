@@ -358,7 +358,7 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
         verbose_name_plural = "Assets"
 
     def __str__(self):
-        return f"#{self.id}"
+        return f"Asset {self.id}"
 
     @property
     def leads_assets(self):
@@ -532,7 +532,7 @@ class NurturingSection(CloneMixin, BaseStateItem):
 
     @property
     def link(self):
-        return self.assets.landing_page
+        return self.assets.landing_page.url
 
     @property
     def generated_leads(self):

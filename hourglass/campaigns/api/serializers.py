@@ -210,7 +210,12 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = NurturingSection
         fields = (
-            "id", "campaign", "campaign_type", "assets", "link", "generated_leads"
+            "id",
+            "campaign",
+            "campaign_type",
+            "assets",
+            "link",
+            "generated_leads"
         )
 
     def get_link(self, instance):
