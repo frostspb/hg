@@ -93,13 +93,8 @@ class CreativesSectionAdmin(admin.TabularInline):
 class SuppresionListSectionAdmin(admin.TabularInline):
     model = SuppresionListSection
     extra = 0
-    fields = ['state', 'file', 'accounts', 'leads', 'percent', ]
-    readonly_fields = ['leads', ]
-    exclude = ['name']
+    exclude = ['execution_time', 'started_at']
     classes = ['collapse']
-
-    def leads(self, obj):
-        return obj.leads
 
 
 class FairTradeSectionAdmin(admin.TabularInline):
@@ -112,15 +107,11 @@ class FairTradeSectionAdmin(admin.TabularInline):
 class ABMSectionAdmin(admin.TabularInline):
     model = ABMSection
     extra = 0
-    fields = ['state',  'file', 'accounts', 'leads', 'percent',]
-    readonly_fields = ['leads', ]
-    exclude = ['name']
+    exclude = ['execution_time', 'started_at']
     classes = ['collapse']
 
     insert_after = 'done_abm_percent'
 
-    def leads(self, obj):
-        return obj.leads
 
 
 class LeadCascadeProgramSectionAdmin(admin.TabularInline):
@@ -271,7 +262,7 @@ class CampaignAdmin(CloneModelAdmin):
 
         ("ABM Total settings", {
             "fields": (
-                "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent"
+                "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent", "abm_look_a_like"
 
             )
         }

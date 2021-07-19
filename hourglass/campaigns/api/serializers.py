@@ -153,12 +153,12 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
 
 
 class ABMSectionSerializer(serializers.ModelSerializer):
-    leads = serializers.SerializerMethodField(read_only=True)
+
 
     class Meta:
         model = ABMSection
         fields = (
-            "id",  "campaign", "file", "accounts", "name", "percent", "leads"
+            "id", "campaign", "title", "accounts_value",
         )
 
     def get_leads(self, instance):
@@ -245,16 +245,11 @@ class ITCuratedSectionSerializer(serializers.ModelSerializer):
 
 
 class SuppresionListSectionSerializer(serializers.ModelSerializer):
-    leads = serializers.SerializerMethodField(read_only=True)
-
     class Meta:
-        model = ABMSection
+        model = SuppresionListSection
         fields = (
-            "id",  "campaign", "file", "accounts", "name", "percent", "leads"
+            "id",  "campaign", "title", "accounts_value",
         )
-
-    def get_leads(self, instance):
-        return instance.leads
 
 #TODO 1 serializer
 class CampaignSerializer(serializers.ModelSerializer):
@@ -299,8 +294,9 @@ class CampaignSerializer(serializers.ModelSerializer):
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
             "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
-            "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives", "itcurateds"
-
+            "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
+            "itcurateds",
+            "abm_look_a_like",
         )
 
     def get_delivered(self, instance):
@@ -389,7 +385,7 @@ class HourglassSerializer(serializers.ModelSerializer):
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "nurturing_parameters", "creatives", "itcurateds"
+            "nurturings", "nurturing_parameters", "creatives", "itcurateds", "abm_look_a_like",
         )
 
     def get_delivered(self, instance):
@@ -478,7 +474,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "delivered", "remaining", "in_validation", "total_generated", "sections",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "nurturing_parameters", "creatives"
+            "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like",
 
         )
 

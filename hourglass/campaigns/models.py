@@ -125,6 +125,7 @@ class Campaign(CloneMixin, BaseStateItem):
 
     intent_feed_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
     intent_feed_done_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    abm_look_a_like = models.PositiveSmallIntegerField("Look-a-like", default=0)
     abm_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
     nurturing_parameters = models.CharField(max_length=250, null=True, blank=True)
     objects = CampaignsManager()
@@ -412,15 +413,10 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
         return int((self.generated / 100) * self.campaign.total_goal)
 
 
-class SuppresionListSection(CloneMixin, BaseReportPercentItem):
+class SuppresionListSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sups")
-    file = models.FileField("List")
-    accounts = models.IntegerField("Accounts", default=0)
-    name = models.CharField(max_length=256, null=True)
-
-    @property
-    def leads(self):
-        return int((self.percent / 100) * self.campaign.total_goal)
+    title = models.CharField(max_length=128)
+    accounts_value = models.PositiveSmallIntegerField()
 
 
 class IndustriesSection(CloneMixin, BaseReportPercentItem):
@@ -491,11 +487,12 @@ class CompanySizeSection(CloneMixin, BaseReportPercentItem):
         return int((self.percent / 100) * self.campaign.total_goal)
 
 
-class ABMSection(CloneMixin, BaseReportPercentItem):
+class ABMSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="abms")
     file = models.FileField("List")
-    accounts = models.IntegerField("Accounts", default=0)
-    name = models.CharField(max_length=256, null=True)
+    title = models.CharField(max_length=128)
+    accounts_value = models.PositiveSmallIntegerField()
+
 
     class Meta:
         verbose_name = "ABM"
