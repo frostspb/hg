@@ -93,8 +93,13 @@ class CreativesSectionAdmin(admin.TabularInline):
 class SuppresionListSectionAdmin(admin.TabularInline):
     model = SuppresionListSection
     extra = 0
-    exclude = ['execution_time', 'started_at']
+    fields = ['state', 'file', 'accounts', 'leads', 'percent', ]
+    readonly_fields = ['leads', ]
+    exclude = ['name']
     classes = ['collapse']
+
+    def leads(self, obj):
+        return obj.leads
 
 
 class FairTradeSectionAdmin(admin.TabularInline):
@@ -230,6 +235,7 @@ class BANTQuestionsSectionAdmin(admin.TabularInline):
 
     def kind(self, obj):
         return obj.question.kind
+
 
 class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection

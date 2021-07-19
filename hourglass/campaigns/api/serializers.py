@@ -245,12 +245,16 @@ class ITCuratedSectionSerializer(serializers.ModelSerializer):
 
 
 class SuppresionListSectionSerializer(serializers.ModelSerializer):
+    leads = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = SuppresionListSection
+        model = ABMSection
         fields = (
-            "id", "title", "accounts_value"
+            "id",  "campaign", "file", "accounts", "name", "percent", "leads"
         )
+
+    def get_leads(self, instance):
+        return instance.leads
 
 #TODO 1 serializer
 class CampaignSerializer(serializers.ModelSerializer):

@@ -412,10 +412,15 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
         return int((self.generated / 100) * self.campaign.total_goal)
 
 
-class SuppresionListSection(CloneMixin, BaseStateItem):
+class SuppresionListSection(CloneMixin, BaseReportPercentItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sups")
-    title = models.CharField(max_length=128)
-    accounts_value = models.PositiveSmallIntegerField()
+    file = models.FileField("List")
+    accounts = models.IntegerField("Accounts", default=0)
+    name = models.CharField(max_length=256, null=True)
+
+    @property
+    def leads(self):
+        return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class IndustriesSection(CloneMixin, BaseReportPercentItem):
@@ -530,8 +535,6 @@ class NurturingSection(CloneMixin, BaseStateItem):
     campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, verbose_name="Type")
     assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
 
-
-
     @property
     def link(self):
         return self.assets.landing_page.url
@@ -562,6 +565,7 @@ class ITCuratedSection(CloneMixin, models.Model):
 
     def __str__(self):
         return f"{self.curated.title}"
+
 
 class BANTQuestionsSection(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="bants")
