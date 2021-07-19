@@ -11,7 +11,6 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
 
 
 from ajax_select import make_ajax_form
-#from hourglass.campaigns.forms import BANTForm
 
 
 class SectionSettingsAdmin(admin.TabularInline):
@@ -57,6 +56,7 @@ class AssetsSectionAdmin(admin.TabularInline):
 
     })
     classes = ['collapse']
+
     def leads_assets(self, obj):
         return obj.leads_assets
 
@@ -148,7 +148,6 @@ class InstallBaseSectionAdmin(admin.TabularInline):
 class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
-    #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['kind', 'state', 'name', 'companies_count',  'company',  'leads_generated', 'percent',  ]
     readonly_fields = ['leads_generated']
     classes = ['collapse']
@@ -161,7 +160,6 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
 class JobTitlesSectionAdmin(admin.TabularInline):
     model = JobTitlesSection
     extra = 0
-    #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['state', 'job_title', 'leads_generated', 'goal', 'percent', ]
     readonly_fields = ['leads_generated', ]
     classes = ['collapse']
@@ -173,7 +171,6 @@ class JobTitlesSectionAdmin(admin.TabularInline):
 class IndustriesSectionAdmin(admin.TabularInline):
     model = IndustriesSection
     extra = 0
-    #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['state', 'industry', 'leads_industry',  'percent', ]
     readonly_fields = ['leads_industry', ]
     classes = ['collapse']
@@ -187,7 +184,6 @@ class IndustriesSectionAdmin(admin.TabularInline):
 class GeolocationsSectionAdmin(admin.TabularInline):
     model = GeolocationsSection
     extra = 0
-    #exclude = ['execution_time', 'started_at', 'velocity']
     classes = ['collapse']
     fields = ['state', 'percent', 'name', 'leads_geolocation', 'geolocation' ]
     readonly_fields = ['leads_geolocation', ]
@@ -199,8 +195,6 @@ class GeolocationsSectionAdmin(admin.TabularInline):
 class RevenueSectionAdmin(admin.TabularInline):
     model = RevenueSection
     extra = 0
-    #exclude = ['execution_time', 'started_at', 'velocity']
-
     fields = ['state',  'revenue', 'leads_revenue', 'percent',]
     readonly_fields = ['leads_revenue', ]
     classes = ['collapse']
@@ -214,7 +208,6 @@ class RevenueSectionAdmin(admin.TabularInline):
 class CompanySizeSectionAdmin(admin.TabularInline):
     model = CompanySizeSection
     extra = 0
-    #exclude = ['execution_time', 'started_at', 'velocity']
     fields = ['state',  'company_size', 'leads_company_size', 'percent']
     readonly_fields = ['leads_company_size', ]
     classes = ['collapse']
@@ -329,12 +322,6 @@ class CampaignAdmin(CloneModelAdmin):
         NurturingSectionAdmin,
         CreativesSectionAdmin,
     ]
-
-    #class Media:
-        #js = ("admin/js/vendor/jquery/jquery.min.js",)
-        # js = (
-        #     'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',  # jquery
-        # )
 
     def goal_abm(self, obj):
         return obj.goal_abm
