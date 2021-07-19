@@ -266,6 +266,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     pacing_type = PacingSerializer()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
     targets = TargetSectionSerializer(read_only=True, many=True)
+
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
@@ -373,6 +374,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
+    itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     pacing_type = PacingSerializer()
 
     class Meta:
@@ -383,7 +385,7 @@ class HourglassSerializer(serializers.ModelSerializer):
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "nurturing_parameters", "creatives"
+            "nurturings", "nurturing_parameters", "creatives", "itcurateds"
         )
 
     def get_delivered(self, instance):
@@ -434,13 +436,13 @@ class HourglassSerializer(serializers.ModelSerializer):
         return t
 
 
-
 class CampaignSettingsSerializer(serializers.ModelSerializer):
+    start_date = serializers.SerializerMethodField()
+    end_date = serializers.SerializerMethodField()
+    created = serializers.SerializerMethodField()
     client = ClientSerializer(read_only=True, many=False)
     targets = TargetSectionSerializer(read_only=True, many=True)
     tactics = serializers.SerializerMethodField()
-    start_date = serializers.SerializerMethodField()
-    end_date = serializers.SerializerMethodField()
     integration_type = IntegrationTypeSerializer()
     delivered = serializers.SerializerMethodField()
     remaining = serializers.SerializerMethodField()
@@ -448,6 +450,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     total_generated = serializers.SerializerMethodField()
     pacing_type = PacingSerializer()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
+
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
@@ -464,11 +467,10 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
 
-
     class Meta:
         model = Campaign
         fields = (
-            "client", "start_date", "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
+            "client", "start_date", "created" , "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
             "delivered", "remaining", "in_validation", "total_generated", "sections",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",

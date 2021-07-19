@@ -74,6 +74,7 @@ class NurturingSectionAdmin(admin.TabularInline):
     fields = ['state', 'campaign_type', 'assets', 'link', 'generated_leads']
     readonly_fields = ['generated_leads', 'link']
     classes = ['collapse']
+    insert_after = "nurturing_parameters"
 
     def generated_leads(self, obj):
         return obj.generated_leads
@@ -224,7 +225,11 @@ class BANTQuestionsSectionAdmin(admin.TabularInline):
     extra = 0
     classes = ['collapse']
     exclude = ['question_txt', 'answer_txt']
+    fields = ['question', 'answer', 'kind',]
+    readonly_fields = ['kind', ]
 
+    def kind(self, obj):
+        return obj.question.kind
 
 class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection
@@ -252,7 +257,7 @@ class CampaignAdmin(CloneModelAdmin):
                 #"accepted", "remaining",
                 "pacing_type",
                 "dashboard_string_count", "ta_volume", "remaining_admin_percent", "in_progress_admin_percent",
-                "nurturing_parameters"
+
 
             )
         }),
@@ -268,6 +273,14 @@ class CampaignAdmin(CloneModelAdmin):
         ("ABM Total settings", {
             "fields": (
                 "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent"
+
+            )
+        }
+         ),
+
+        ("Nurturing settings", {
+            "fields": (
+                "nurturing_parameters",
 
             )
         }
