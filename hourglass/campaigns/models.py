@@ -125,7 +125,7 @@ class Campaign(CloneMixin, BaseStateItem):
 
     intent_feed_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
     intent_feed_done_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
-    abm_look_a_like = models.PositiveSmallIntegerField("Look-a-like", default=0)
+    abm_look_a_like = models.PositiveSmallIntegerField("Look-a-like", blank=True, null=True)
     abm_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
     nurturing_parameters = models.CharField(max_length=250, null=True, blank=True)
     objects = CampaignsManager()

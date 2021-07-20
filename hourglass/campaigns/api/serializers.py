@@ -62,12 +62,12 @@ class TacticsSerializer(serializers.ModelSerializer):
 
 
 class AssetsSectionSerializer(serializers.ModelSerializer):
-    titles = JobTitlesSerializer(allow_null=True)
+    titles = JobTitlesSerializer(allow_null=True, many=True)
 
     class Meta:
         model = AssetsSection
         fields = (
-            "id", "name", "landing_page",  "percent", "campaign", "titles"
+            "id", "name", "landing_page",  "percent", "campaign", "titles", "state"
         )
 
 
