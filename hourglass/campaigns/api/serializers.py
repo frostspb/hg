@@ -81,7 +81,7 @@ class IntentFeedsSectionSerializer(serializers.ModelSerializer):
         model = IntentFeedsSection
         fields = (
             "id", "name", "campaign",  "company", "leads_generated", "kind", "percent", "goal_intent_feed",
-            "companies_count"
+            "companies_count", "state",
         )
 
     def get_leads_generated(self, instance):
