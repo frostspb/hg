@@ -75,12 +75,12 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
 class IntentFeedsSectionSerializer(serializers.ModelSerializer):
     leads_generated = serializers.SerializerMethodField(read_only=True)
     goal_intent_feed = serializers.SerializerMethodField(read_only=True)
-    companies = CompanySerializer(many=True)
+    company = CompanySerializer(many=True)
 
     class Meta:
         model = IntentFeedsSection
         fields = (
-            "id", "name", "campaign",  "companies", "leads_generated", "kind", "percent", "goal_intent_feed",
+            "id", "name", "campaign",  "company", "leads_generated", "kind", "percent", "goal_intent_feed",
             "companies_count"
         )
 
