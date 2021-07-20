@@ -106,11 +106,16 @@ class JobTitlesSectionSerializer(serializers.ModelSerializer):
 
 
 class IndustriesSectionSerializer(serializers.ModelSerializer):
+    leads_industry = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = IndustriesSection
         fields = (
-            "id", "name", "campaign",
+            "id", "name", "campaign", "leads_industry"
         )
+
+    def get_leads_industry(self, instance):
+        return instance.leads_industry
 
 
 class RevenueSectionSerializer(serializers.ModelSerializer):
@@ -305,7 +310,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     #start_date = serializers.DateField(format='%d-%m-%Y')
-    suppression_list = SuppresionListSectionSerializer(sourse='sups', many=True, read_only=True)
+    suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -401,7 +406,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     pacing_type = PacingSerializer()
-    suppression_list = SuppresionListSectionSerializer(sourse='sups', many=True, read_only=True)
+    suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -495,7 +500,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
-    suppression_list = SuppresionListSectionSerializer(sourse='sups', many=True, read_only=True)
+    suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
 
     class Meta:
         model = Campaign
