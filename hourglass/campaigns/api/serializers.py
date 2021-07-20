@@ -3,11 +3,12 @@ from django.conf import settings
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection,ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Managers
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
-    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer, IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer
-from hourglass.clients.api.serializers import ClientSerializer
+    BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
+    IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer
+from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
 # class CampaignTypesSerializer(serializers.ModelSerializer):
@@ -73,15 +74,21 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
 
 class IntentFeedsSectionSerializer(serializers.ModelSerializer):
     leads_generated = serializers.SerializerMethodField(read_only=True)
+    goal_intent_feed = serializers.SerializerMethodField(read_only=True)
+    companies = CompanySerializer(many=True)
 
     class Meta:
         model = IntentFeedsSection
         fields = (
-            "id", "name", "campaign",  "company", "leads_generated", "kind",
+            "id", "name", "campaign",  "companies", "leads_generated", "kind", "percent", "goal_intent_feed",
+            "companies_count"
         )
 
     def get_leads_generated(self, instance):
         return instance.leads_generated
+
+    def get_goal_intent_feed(self, instance):
+        return instance.goal_intent_feed
 
 
 class JobTitlesSectionSerializer(serializers.ModelSerializer):
@@ -251,6 +258,21 @@ class SuppresionListSectionSerializer(serializers.ModelSerializer):
             "id",  "campaign", "title", "accounts_value",
         )
 
+
+class TeamsSerializer(serializers.ModelSerializer):
+    team_lead = AssociatesSerializer(read_only=True, many=False)
+    team_member1 = AssociatesSerializer(read_only=True, many=False)
+    team_member2 = AssociatesSerializer(read_only=True, many=False)
+    team_member3 = AssociatesSerializer(read_only=True, many=False)
+    team_member4 = AssociatesSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = Teams
+        fields = (
+            "id",  "name", "team_lead", "team_member1", "team_member2",
+            "team_member3", "team_member4", "delivered", "rejected",
+        )
+
 #TODO 1 serializer
 class CampaignSerializer(serializers.ModelSerializer):
     start_date = serializers.SerializerMethodField()
@@ -265,7 +287,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     pacing_type = PacingSerializer()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
     targets = TargetSectionSerializer(read_only=True, many=True)
-
+    teams = TeamsSerializer(read_only=True, many=True)
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
@@ -296,7 +318,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
             "itcurateds",
-            "abm_look_a_like",
+            "abm_look_a_like","rejected", "teams",
         )
 
     def get_delivered(self, instance):
@@ -355,6 +377,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     generated_pos = serializers.SerializerMethodField()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
     #tactics = TacticsSerializer(read_only=True, many=True)
+    teams = TeamsSerializer(read_only=True, many=True)
 
     targets = TargetSectionSerializer(read_only=True, many=True)
     tactics = serializers.SerializerMethodField()
@@ -385,7 +408,8 @@ class HourglassSerializer(serializers.ModelSerializer):
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "nurturing_parameters", "creatives", "itcurateds", "abm_look_a_like",
+            "nurturings", "nurturing_parameters", "creatives", "itcurateds",
+            "abm_look_a_like", "rejected", "teams",
         )
 
     def get_delivered(self, instance):
@@ -450,6 +474,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     total_generated = serializers.SerializerMethodField()
     pacing_type = PacingSerializer()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
+    teams = TeamsSerializer(read_only=True, many=True)
 
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
@@ -474,7 +499,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "delivered", "remaining", "in_validation", "total_generated", "sections",
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like",
+            "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
 
         )
 

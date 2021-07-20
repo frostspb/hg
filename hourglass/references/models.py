@@ -176,3 +176,21 @@ class Pacing(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Associates(models.Model):
+    name = models.CharField(max_length=250, null=True, blank=True)
+    image = models.FileField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Associates"
+        verbose_name_plural = "Associates"
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def photo_url(self):
+        if self.image:
+            return self.image.url
+

@@ -4,10 +4,13 @@ from django.utils.http import urlencode
 from django.utils.html import format_html
 from model_clone import CloneModelAdmin
 from django.contrib import admin, messages
+
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, \
+    Teams
+
 
 
 from ajax_select import make_ajax_form
@@ -113,7 +116,6 @@ class ABMSectionAdmin(admin.TabularInline):
     insert_after = 'done_abm_percent'
 
 
-
 class LeadCascadeProgramSectionAdmin(admin.TabularInline):
     model = LeadCascadeProgramSection
     extra = 0
@@ -209,6 +211,14 @@ class CompanySizeSectionAdmin(admin.TabularInline):
     leads_company_size.short_description = "Leads Generated"
 
 
+class TeamsAdmin(admin.TabularInline):
+    model = Teams
+    extra = 0
+
+    exclude = ['__all__']
+    insert_after = 'generated_leads'
+
+
 class BANTQuestionsSectionAdmin(admin.TabularInline):
     model = BANTQuestionsSection
     extra = 0
@@ -279,11 +289,17 @@ class CampaignAdmin(CloneModelAdmin):
         (
             "Target Audience",
             {"fields": ("audience_targeted", "delivered", "remaining", "in_validation")}
-         )
+         ),
+
+        (
+            "Lets Verify",
+            {"fields": (  "rejected", "total_goal", "generated_leads")}
+        )
     )
 
     readonly_fields = [
         "id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed",
+        "generated_leads" ,"total_goal",
         "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
         "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
     ]
@@ -312,10 +328,14 @@ class CampaignAdmin(CloneModelAdmin):
         FairTradeSectionAdmin,
         NurturingSectionAdmin,
         CreativesSectionAdmin,
+        TeamsAdmin,
     ]
 
     def goal_abm(self, obj):
         return obj.goal_abm
+
+    def generated_leads(self, obj):
+        return obj.generated_leads
 
     def done_abm(self, obj):
         return obj.done_abm

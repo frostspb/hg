@@ -2,9 +2,22 @@ from rest_framework import serializers
 
 
 from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations,  Managers, \
-    ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer, IntegrationType, Pacing
+    ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer,\
+    IntegrationType, Pacing, Associates
 #from hourglass.clients.api.serializers import ClientSerializer
 
+
+class AssociatesSerializer(serializers.ModelSerializer):
+    photo_url = serializers.SerializerMethodField(allow_null=True)
+
+    class Meta:
+        model = Associates
+        fields = (
+            'id', 'name', 'photo_url'
+        )
+
+    def get_photo_url(self, instance):
+        return instance.photo_url
 
 class GeolocationsSerializer(serializers.ModelSerializer):
     class Meta:

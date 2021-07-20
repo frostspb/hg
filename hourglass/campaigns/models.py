@@ -19,7 +19,8 @@ from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, 
 from .managers import CampaignsManager
 
 from smart_selects.db_fields import ChainedForeignKey
-from hourglass.references.models import BANTQuestion, BANTAnswer, CustomAnswer, CustomQuestion, IntegrationType
+from hourglass.references.models import BANTQuestion, BANTAnswer, CustomAnswer, CustomQuestion, IntegrationType,\
+    Associates
 
 
 JOB_TITLES_SLUG = "JobTitle"
@@ -107,6 +108,7 @@ class Campaign(CloneMixin, BaseStateItem):
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
     job_titles = models.ManyToManyField(JobTitles, null=True, blank=True)
     base_velocity = models.IntegerField("Leads Generated per Minute Speed", default=0)
+
     top_percent = models.FloatField("Top Leads Percent", null=True, blank=True)
     middle_percent = models.FloatField("Middle Leads Percent",  null=True, blank=True)
     bottom_percent = models.FloatField("Bottom Leads Percent", null=True, blank=True)
@@ -122,6 +124,7 @@ class Campaign(CloneMixin, BaseStateItem):
     )
     remaining_admin_percent = models.PositiveSmallIntegerField(default=0)
     in_progress_admin_percent = models.PositiveSmallIntegerField(default=0)
+    rejected = models.PositiveSmallIntegerField(default=0)
 
     intent_feed_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
     intent_feed_done_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
@@ -132,7 +135,7 @@ class Campaign(CloneMixin, BaseStateItem):
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
         "intents", "titles", "assets", "targets", "sections", "creatives", "nurturings", "itcurateds",
-        "lead_cascades", "ibs", "fair_trades", "abms", "sups"
+        "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams"
     ]
 
     _clone_m2m_fields = ["tactics"]
@@ -202,7 +205,7 @@ class Campaign(CloneMixin, BaseStateItem):
         res = self.targets.filter().aggregate(Sum('leads_goal')).get('leads_goal__sum', 0)
         if not res:
             res = 0
-        return round(res,2)
+        return round(res, 2)
 
     @property
     def total_generated(self):
@@ -249,6 +252,11 @@ class Campaign(CloneMixin, BaseStateItem):
     def in_validation(self):
         if self.total_goal:
             return int(((self.total_goal - self.total_generated) / self.total_goal) * self.in_progress_admin_percent)
+
+    @property
+    def generated_leads(self):
+        if self.delivered:
+            return self.delivered + self.rejected
 
     @property
     def generated(self):
@@ -343,9 +351,6 @@ class TargetSection(CloneMixin, BaseStateItem):
     def __str__(self):
         return f"#{self.id}"
 
-    # @property
-    # def execution_time
-
 
 class AssetsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Asset Name", max_length=200)
@@ -374,7 +379,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 
     name = models.CharField("Intent topic", max_length=200)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
-    company = models.ManyToManyField(Company, null=True, blank=True, verbose_name="Companies")
+    company = models.ManyToManyField(Company, null=True, blank=True, verbose_name="Companies", related_name="companies")
     kind = models.CharField(" Integration Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
     companies_count = models.PositiveSmallIntegerField("Companies Generated", default=0)
 
@@ -493,7 +498,6 @@ class ABMSection(CloneMixin, BaseStateItem):
     title = models.CharField(max_length=128)
     accounts_value = models.PositiveSmallIntegerField()
 
-
     class Meta:
         verbose_name = "ABM"
         verbose_name_plural = "ABM"
@@ -608,6 +612,25 @@ class CustomQuestionsSection(CloneMixin, BaseStateItem):
 
     def __str__(self):
         return f"{self.id}"
+
+
+class Teams(CloneMixin, models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="teams", null=True, blank=True)
+    name = models.CharField(max_length=250)
+    team_lead = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='team_lead', null=True, blank=True)
+    team_member1 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member1', null=True, blank=True)
+    team_member2 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member2', null=True, blank=True)
+    team_member3 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member3', null=True, blank=True)
+    team_member4 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member4', null=True, blank=True)
+    delivered = models.PositiveSmallIntegerField(default=0)
+    rejected = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Teams"
+        verbose_name_plural = "Teams"
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 @receiver(post_save, sender=Campaign)
