@@ -136,14 +136,15 @@ class RevenueSectionSerializer(serializers.ModelSerializer):
 class CompanySizeSectionSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='company_size')
     leads_company_size = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = CompanySizeSection
         fields = (
-            "id", "name", "campaign",
+            "id", "name", "campaign", "leads_company_size",
         )
+
     def get_leads_company_size(self, instance):
         return instance.leads_company_size
-
 
 
 class GeolocationsSectionSerializer(serializers.ModelSerializer):
@@ -188,6 +189,7 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
 class ABMSectionSerializer(serializers.ModelSerializer):
     leads = serializers.SerializerMethodField(read_only=True)
     file = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = ABMSection
         fields = (
