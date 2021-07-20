@@ -305,6 +305,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     #start_date = serializers.DateField(format='%d-%m-%Y')
+    suppression_list = SuppresionListSectionSerializer(sourse='sups', many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -318,7 +319,8 @@ class CampaignSerializer(serializers.ModelSerializer):
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
             "itcurateds",
-            "abm_look_a_like","rejected", "teams",
+            "abm_look_a_like", "rejected", "teams",
+            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent",  "suppression_list",
         )
 
     def get_delivered(self, instance):
@@ -399,6 +401,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     pacing_type = PacingSerializer()
+    suppression_list = SuppresionListSectionSerializer(sourse='sups', many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -409,7 +412,8 @@ class HourglassSerializer(serializers.ModelSerializer):
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "itcurateds",
-            "abm_look_a_like", "rejected", "teams",
+            "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent",
+            "intent_feed_done_percent", "abm_goal_percent", "suppression_list",
         )
 
     def get_delivered(self, instance):
@@ -491,6 +495,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
+    suppression_list = SuppresionListSectionSerializer(sourse='sups', many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -500,6 +505,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
+            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "suppression_list"
 
         )
 
