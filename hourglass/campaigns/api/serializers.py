@@ -107,6 +107,7 @@ class JobTitlesSectionSerializer(serializers.ModelSerializer):
 
 class IndustriesSectionSerializer(serializers.ModelSerializer):
     leads_industry = serializers.SerializerMethodField(read_only=True)
+    name = serializers.CharField(source='industry__name')
 
     class Meta:
         model = IndustriesSection
