@@ -120,27 +120,47 @@ class IndustriesSectionSerializer(serializers.ModelSerializer):
 
 
 class RevenueSectionSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='revenue')
+    leads_revenue = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = RevenueSection
         fields = (
-            "id", "name", "campaign",
+            "id", "name", "campaign", "leads_revenue",
         )
+
+    def get_leads_revenue(self, instance):
+        return instance.leads_revenue
 
 
 class CompanySizeSectionSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='company_size')
+    leads_company_size = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = CompanySizeSection
         fields = (
             "id", "name", "campaign",
         )
+    def get_leads_company_size(self, instance):
+        return instance.leads_company_size
+
 
 
 class GeolocationsSectionSerializer(serializers.ModelSerializer):
+    leads_geolocation = serializers.SerializerMethodField(read_only=True)
+
+    name = serializers.CharField(source='geolocation')
+    code = serializers.CharField(source='geolocation')
+
     class Meta:
         model = GeolocationsSection
         fields = (
-            "id", "name", "geolocation", "campaign",
+            "id", "name", "geolocation", "campaign", "goal_per_geo" , "leads_geolocation",
+            "name", "code"
         )
+
+    def get_leads_geolocation(self, instance):
+        return instance.leads_geolocation
 
 
 class BANTQuestionsSectionSerializer(serializers.ModelSerializer):
@@ -166,16 +186,20 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
 
 
 class ABMSectionSerializer(serializers.ModelSerializer):
-
-
+    leads = serializers.SerializerMethodField(read_only=True)
+    file = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = ABMSection
         fields = (
-            "id", "campaign", "title", "accounts_value",
+            "id", "campaign", "title", "accounts_value", "file"
         )
 
     def get_leads(self, instance):
         return instance.leads
+
+    def get_file(self, instance):
+        if instance.file:
+            return instance.file.url
 
 
 class InstallBaseSectionSerializer(serializers.ModelSerializer):
