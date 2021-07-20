@@ -187,17 +187,17 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
 
 
 class ABMSectionSerializer(serializers.ModelSerializer):
-    leads = serializers.SerializerMethodField(read_only=True)
+    #leads = serializers.SerializerMethodField(read_only=True)
     file = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = ABMSection
         fields = (
-            "id", "campaign", "title", "accounts_value", "file", "leads"
+            "id", "campaign", "title", "accounts_value", "file", #"leads"
         )
 
-    def get_leads(self, instance):
-        return instance.leads
+    #def get_leads(self, instance):
+    #    return instance.leads
 
     def get_file(self, instance):
         if instance.file:
