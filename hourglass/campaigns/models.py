@@ -106,7 +106,7 @@ class Campaign(CloneMixin, BaseStateItem):
         Pacing, on_delete=models.CASCADE, verbose_name="Pacing")
     tactics = models.ManyToManyField(Tactics, null=True, blank=True)
     job_titles = models.ManyToManyField(JobTitles, null=True, blank=True)
-    base_velocity = models.IntegerField("Base Velocity", default=0)
+    base_velocity = models.IntegerField("Leads Generated per Minute Speed", default=0)
     top_percent = models.FloatField("Top Leads Percent", null=True, blank=True)
     middle_percent = models.FloatField("Middle Leads Percent",  null=True, blank=True)
     bottom_percent = models.FloatField("Bottom Leads Percent", null=True, blank=True)
