@@ -481,6 +481,10 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     def get_delivered(self, instance):
         return instance.delivered
 
+    def get_created(self, instance):
+        if instance.created:
+            return instance.created.strftime(settings.ENDPOINT_DATE_FORMAT)
+
     def get_remaining(self, instance):
         return instance.remaining
 
