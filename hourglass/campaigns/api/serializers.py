@@ -98,7 +98,7 @@ class JobTitlesSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobTitlesSection
         fields = (
-            "id", "job_title", "campaign",   "leads_generated",
+            "id", "job_title", "campaign",   "leads_generated", "state",
         )
 
     def get_leads_generated(self, instance):
@@ -112,7 +112,7 @@ class IndustriesSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndustriesSection
         fields = (
-            "id", "name", "campaign", "leads_industry"
+            "id", "name", "campaign", "leads_industry", "state",
         )
 
     def get_leads_industry(self, instance):
@@ -126,7 +126,8 @@ class RevenueSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueSection
         fields = (
-            "id", "name", "campaign", "leads_revenue",
+            "id", "name", "campaign", "leads_revenue", "state",
+
         )
 
     def get_leads_revenue(self, instance):
@@ -140,7 +141,7 @@ class CompanySizeSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanySizeSection
         fields = (
-            "id", "name", "campaign", "leads_company_size",
+            "id", "name", "campaign", "leads_company_size", "state",
         )
 
     def get_leads_company_size(self, instance):
@@ -157,7 +158,7 @@ class GeolocationsSectionSerializer(serializers.ModelSerializer):
         model = GeolocationsSection
         fields = (
             "id", "name", "geolocation", "campaign", "goal_per_geo" , "leads_geolocation",
-            "name", "code"
+            "name", "code", "state",
         )
 
     def get_leads_geolocation(self, instance):
@@ -193,7 +194,7 @@ class ABMSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ABMSection
         fields = (
-            "id", "campaign", "title", "accounts_value", "file", #"leads"
+            "id", "campaign", "title", "accounts_value", "file", "state",
         )
 
     #def get_leads(self, instance):
@@ -210,7 +211,7 @@ class InstallBaseSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallBaseSection
         fields = (
-            "id",  "campaign", "name",  "leads_installbase"
+            "id",  "campaign", "name",  "leads_installbase", "state",
         )
 
     def get_leads_installbase(self, instance):
@@ -222,7 +223,7 @@ class FairTradeSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FairTradeSection
         fields = (
-            "id",  "campaign", "name", "value"
+            "id",  "campaign", "name", "value", "state",
         )
 
 
@@ -232,7 +233,7 @@ class LeadCascadeProgramSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeadCascadeProgramSection
         fields = (
-            "id", "campaign", "name", "percent", 'leads_cascade'
+            "id", "campaign", "name", "percent", 'leads_cascade', "state",
         )
 
     def get_leads_cascade(self, instance):
@@ -254,7 +255,8 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
             "campaign_type",
             "assets",
             "link",
-            "generated_leads"
+            "generated_leads",
+            "state",
         )
 
     def get_link(self, instance):
@@ -287,7 +289,7 @@ class SuppresionListSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SuppresionListSection
         fields = (
-            "id",  "campaign", "title", "accounts_value",
+            "id",  "campaign", "title", "accounts_value", "state",
         )
 
 
