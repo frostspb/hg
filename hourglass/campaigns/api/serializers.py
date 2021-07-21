@@ -98,7 +98,7 @@ class JobTitlesSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobTitlesSection
         fields = (
-            "id", "job_title", "campaign",   "leads_generated", "state",
+            "id", "job_title", "campaign",   "leads_generated", "state", "percent", "goal",
         )
 
     def get_leads_generated(self, instance):
@@ -112,7 +112,7 @@ class IndustriesSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndustriesSection
         fields = (
-            "id", "name", "campaign", "leads_industry", "state",
+            "id", "name", "campaign", "leads_industry", "state", "percent",
         )
 
     def get_leads_industry(self, instance):
@@ -126,7 +126,7 @@ class RevenueSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueSection
         fields = (
-            "id", "name", "campaign", "leads_revenue", "state",
+            "id", "name", "campaign", "leads_revenue", "state", "percent",
 
         )
 
@@ -141,7 +141,7 @@ class CompanySizeSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanySizeSection
         fields = (
-            "id", "name", "campaign", "leads_company_size", "state",
+            "id", "name", "campaign", "leads_company_size", "state", "percent",
         )
 
     def get_leads_company_size(self, instance):
@@ -158,7 +158,7 @@ class GeolocationsSectionSerializer(serializers.ModelSerializer):
         model = GeolocationsSection
         fields = (
             "id", "name", "geolocation", "campaign", "goal_per_geo" , "leads_geolocation",
-            "name", "code", "state",
+            "name", "code", "state", "percent"
         )
 
     def get_leads_geolocation(self, instance):
