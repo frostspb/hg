@@ -66,6 +66,10 @@ NURTURING_NAME = "Nurturing"
 CREATIVES_NAME = "Creatives"
 
 
+def format_leads(percent, value):
+    return int(round((percent / 100) * value, 0))
+
+
 class Campaign(CloneMixin, BaseStateItem):
     class CampaignKinds(models.TextChoices):
         STANDARD = 'standard', 'Standard'
@@ -149,7 +153,7 @@ class Campaign(CloneMixin, BaseStateItem):
 
     @property
     def goal_abm(self):
-        return round((self.abm_goal_percent / 100) * self.total_goal, 2)
+        return format_leads(self.abm_goal_percent, self.total_goal)
 
     @property
     def done_abm(self):
@@ -241,7 +245,8 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def delivered(self):
         if self.total_goal:
-            return int((self.total_generated/self.total_goal) * 100)
+
+            return int(round((self.total_generated/self.total_goal) * 100, 0))
 
     @property
     def remaining(self):
@@ -368,8 +373,7 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_assets(self):
-        #return int((self.percent / 100) * self.campaign.total_generated)
-        return round((self.percent / 100) * self.campaign.total_generated, 0)
+        return format_leads(self.percent, self.campaign.total_generated)
 
 
 class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
@@ -393,11 +397,12 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_generated(self):
-        return int((self.percent/100 ) * self.campaign.done_intent_feed)
+        #return format_leads(self.percent, self.campaign.total_generated)
+        return format_leads(self.percent, self.campaign.done_intent_feed)
 
     @property
     def goal_intent_feed(self):
-        return int((self.percent / 100) * self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_goal)
 
 
 class JobTitlesSection(CloneMixin, BaseReportPercentItem):
@@ -416,7 +421,7 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_generated(self):
-        return int((self.generated / 100) * self.campaign.total_goal)
+        return format_leads(self.generated, self.campaign.total_goal)
 
 
 class SuppresionListSection(CloneMixin, BaseStateItem):
@@ -439,7 +444,8 @@ class IndustriesSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_industry(self):
-        return int((self.percent / 100) * self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_goal)
+        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class GeolocationsSection(CloneMixin, BaseReportPercentItem):
@@ -457,7 +463,8 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_geolocation(self):
-        return int((self.percent / 100) * self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_goal)
+        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class RevenueSection(CloneMixin, BaseReportPercentItem):
@@ -474,7 +481,8 @@ class RevenueSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_revenue(self):
-        return int((self.percent / 100) * self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_goal)
+        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class CompanySizeSection(CloneMixin, BaseReportPercentItem):
@@ -490,7 +498,8 @@ class CompanySizeSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_company_size(self):
-        return int((self.percent / 100) * self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_goal)
+        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class ABMSection(CloneMixin, BaseStateItem):
@@ -505,7 +514,8 @@ class ABMSection(CloneMixin, BaseStateItem):
 
     @property
     def leads(self):
-        return int((self.percent/100) * self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_goal)
+        #return int((self.percent/100) * self.campaign.total_goal)
 
 
 class FairTradeSection(CloneMixin, BaseStateItem):
@@ -520,7 +530,8 @@ class InstallBaseSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_installbase (self):
-        return int((self.percent / 100) * self.campaign.total_generated)
+        return format_leads(self.percent, self.campaign.total_generated)
+        #return int((self.percent / 100) * self.campaign.total_generated)
 
 
 class LeadCascadeProgramSection(CloneMixin, BaseReportPercentItem):
@@ -529,7 +540,8 @@ class LeadCascadeProgramSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_cascade (self):
-        return int((self.percent / 100) * self.campaign.total_generated)
+        return format_leads(self.percent, self.campaign.total_generated)
+        #return int((self.percent / 100) * self.campaign.total_generated)
 
 
 class NurturingSection(CloneMixin, BaseStateItem):
