@@ -532,7 +532,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
 
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
-    artificial_titles = JobTitlesSerializer(source='jt', many=True, read_only=True)
+    artificial_titles = JobTitlesSerializer(source='job_titles', many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
     industries = IndustriesSectionSerializer(many=True, read_only=True)
     revenues = RevenueSectionSerializer(many=True, read_only=True)
