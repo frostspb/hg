@@ -256,6 +256,7 @@ class CampaignAdmin(CloneModelAdmin):
                 "pending",
                 #"accepted", "remaining",
                 "pacing_type",
+                "job_titles",
                 "dashboard_string_count", "ta_volume", "remaining_admin_percent", "in_progress_admin_percent",
 
 
