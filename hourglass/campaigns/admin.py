@@ -240,6 +240,10 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 
 @admin.register(Campaign)
 class CampaignAdmin(CloneModelAdmin):
+    form = make_ajax_form(Campaign, {
+        'job_titles': 'titles_campaign',  # ManyToManyField
+
+    })
     list_display = [
         "id", "name_link", "client",  "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
         "total_goal", "generated", "start_date_admin", "end_date_admin",
