@@ -393,7 +393,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Intent topic", max_length=200)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
     company = models.ManyToManyField(Company, null=True, blank=True, verbose_name="Companies", related_name="companies")
-    kind = models.CharField(" Integration Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
+    kind = models.CharField("Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
     companies_count = models.PositiveSmallIntegerField("Companies Generated", default=0)
 
     class Meta:
