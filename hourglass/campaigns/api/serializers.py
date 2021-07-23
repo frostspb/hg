@@ -348,7 +348,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "id", "client",
             "created", "active", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order", "managed_by", "targets", "sections",
-            "delivered", "remaining", "in_validation", "total_generated",
+            "delivered", "remaining", "in_validation", "total_generated", "audience_targeted",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
             "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents",
             "artificial_titles","titles",
@@ -454,7 +454,7 @@ class HourglassSerializer(serializers.ModelSerializer):
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents",  "artificial_titles","titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
-            "nurturings", "nurturing_parameters", "creatives", "itcurateds",
+            "nurturings", "nurturing_parameters", "creatives", "itcurateds", "audience_targeted",
             "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent",
             "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list",
         )
@@ -552,7 +552,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = (
             "client", "start_date", "created" , "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
-            "delivered", "remaining", "in_validation", "total_generated", "sections",
+            "delivered", "remaining", "in_validation", "total_generated", "audience_targeted", "sections",
             "assets", "intents", "artificial_titles", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
