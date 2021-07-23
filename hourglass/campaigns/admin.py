@@ -110,7 +110,7 @@ class FairTradeSectionAdmin(admin.TabularInline):
 class ABMSectionAdmin(admin.TabularInline):
     model = ABMSection
     extra = 0
-    exclude = ['execution_time', 'started_at']
+    exclude = ['execution_time', 'started_at', 'name']
     classes = ['collapse']
 
     insert_after = 'done_abm_percent'

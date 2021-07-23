@@ -503,7 +503,8 @@ class CompanySizeSection(CloneMixin, BaseReportPercentItem):
         #return int((self.percent / 100) * self.campaign.total_goal)
 
 
-class ABMSection(CloneMixin, BaseStateItem):
+class ABMSection(CloneMixin, BaseReportPercentItem):
+    name = models.CharField("ABM", max_length=200, blank=True, null=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="abms")
     file = models.FileField("List")
     title = models.CharField(max_length=128)

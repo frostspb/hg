@@ -19,6 +19,7 @@ class AssociatesSerializer(serializers.ModelSerializer):
     def get_photo_url(self, instance):
         return instance.photo_url
 
+
 class GeolocationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Geolocations

@@ -194,7 +194,7 @@ class ABMSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ABMSection
         fields = (
-            "id", "campaign", "title", "accounts_value", "file", "state",
+            "id", "campaign", "title", "accounts_value", "file", "state", "percent",
         )
 
     #def get_leads(self, instance):
