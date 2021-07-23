@@ -472,7 +472,8 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_geolocation(self):
-        return format_leads(self.percent, self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_generated)
+        #return format_leads(self.percent, self.campaign.total_goal)
         #return int((self.percent / 100) * self.campaign.total_goal)
 
 
@@ -490,7 +491,8 @@ class RevenueSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_revenue(self):
-        return format_leads(self.percent, self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_generated)
+        #return format_leads(self.percent, self.campaign.total_goal)
         #return int((self.percent / 100) * self.campaign.total_goal)
 
 
@@ -507,7 +509,8 @@ class CompanySizeSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_company_size(self):
-        return format_leads(self.percent, self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_generated)
+        #return format_leads(self.percent, self.campaign.total_goal)
         #return int((self.percent / 100) * self.campaign.total_goal)
 
 

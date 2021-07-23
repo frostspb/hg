@@ -178,7 +178,7 @@ class GeolocationsSectionAdmin(admin.TabularInline):
     model = GeolocationsSection
     extra = 0
     classes = ['collapse']
-    fields = ['state', 'percent', 'name', 'leads_geolocation', 'geolocation' ]
+    fields = ['state', 'percent', 'name', 'goal_per_geo', 'leads_geolocation', 'geolocation',]
     readonly_fields = ['leads_geolocation', ]
 
     def leads_geolocation(self, obj):
