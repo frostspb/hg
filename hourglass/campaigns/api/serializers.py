@@ -354,8 +354,14 @@ class CampaignSerializer(serializers.ModelSerializer):
             "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
             "itcurateds",
             "abm_look_a_like", "rejected", "teams",
-            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent",  "suppression_list",
+            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list",
         )
+
+    def get_goal_abm(self, instance):
+        return instance.goal_abm
+
+    def get_done_abm(self, instance):
+        return instance.done_abm
 
     def get_delivered(self, instance):
         return instance.delivered
@@ -447,8 +453,15 @@ class HourglassSerializer(serializers.ModelSerializer):
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "itcurateds",
             "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent",
-            "intent_feed_done_percent", "abm_goal_percent", "suppression_list",
+            "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list",
         )
+
+    def get_goal_abm(self, instance):
+        return instance.goal_abm
+
+    def get_done_abm(self, instance):
+
+        return instance.done_abm
 
     def get_delivered(self, instance):
         return instance.delivered
@@ -539,9 +552,15 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
-            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "suppression_list"
+            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm", "done_abm", "suppression_list"
 
         )
+
+    def get_goal_abm(self, instance):
+        return instance.goal_abm
+
+    def get_done_abm(self, instance):
+        return instance.done_abm
 
     def get_delivered(self, instance):
         return instance.delivered
