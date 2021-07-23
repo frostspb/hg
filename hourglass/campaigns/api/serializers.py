@@ -324,6 +324,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     teams = TeamsSerializer(read_only=True, many=True)
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
+    artificial_titles = JobTitlesSerializer(source='jt', many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
     industries = IndustriesSectionSerializer(many=True, read_only=True)
     revenues = RevenueSectionSerializer(many=True, read_only=True)
@@ -349,7 +350,8 @@ class CampaignSerializer(serializers.ModelSerializer):
             "name", "campaign_type", "order", "managed_by", "targets", "sections",
             "delivered", "remaining", "in_validation", "total_generated",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
-            "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents", "titles",
+            "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents",
+            "artificial_titles","titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
             "itcurateds",
@@ -426,6 +428,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     managed_by = ManagersSerializer(read_only=True)
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
+    artificial_titles = JobTitlesSerializer(source='jt', many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
     industries = IndustriesSectionSerializer(many=True, read_only=True)
     revenues = RevenueSectionSerializer(many=True, read_only=True)
@@ -449,7 +452,7 @@ class HourglassSerializer(serializers.ModelSerializer):
             "end_date", "TA", "duration", "state", "velocity", "ta_volume", "pacing_type", "integration_type", "managed_by",
             "delivered", "remaining", "in_validation", "total_generated", "targets",
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
-            "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
+            "assets", "intents",  "artificial_titles","titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "itcurateds",
             "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent",
@@ -529,6 +532,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
 
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
+    artificial_titles = JobTitlesSerializer(source='jt', many=True, read_only=True)
     titles = JobTitlesSectionSerializer(many=True, read_only=True)
     industries = IndustriesSectionSerializer(many=True, read_only=True)
     revenues = RevenueSectionSerializer(many=True, read_only=True)
@@ -549,7 +553,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
         fields = (
             "client", "start_date", "created" , "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
             "delivered", "remaining", "in_validation", "total_generated", "sections",
-            "assets", "intents", "titles", "industries", "revenues", "companies_size", "geolocations",
+            "assets", "intents", "artificial_titles", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm", "done_abm", "suppression_list"
