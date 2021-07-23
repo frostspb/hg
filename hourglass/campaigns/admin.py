@@ -36,7 +36,7 @@ class TargetSectionAdmin(admin.TabularInline):
     model = TargetSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'velocity']
-    fields = [ 'state', 'campaign_pos_type', 'leads_goal', 'leads_generated', 'percent_completion', 'remaining_leads']
+    fields = [ 'state', 'campaign_pos_type', 'grade', 'leads_goal', 'leads_generated', 'percent_completion', 'remaining_leads']
     readonly_fields = ['percent_completion', 'remaining_leads']
 
     def percent_completion(self, obj):

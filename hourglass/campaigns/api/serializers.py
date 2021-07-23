@@ -35,7 +35,7 @@ class TargetSectionSerializer(serializers.ModelSerializer):
         model = TargetSection
         fields = (
             'type_name',
-            'leads_goal', 'leads_generated', 'velocity', 'percent_completion', 'remaining_leads'
+            'leads_goal', 'leads_generated', 'velocity', 'percent_completion', 'remaining_leads', 'grade',
         )
 
     def get_percent_completion(self, instance):
