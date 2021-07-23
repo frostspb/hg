@@ -298,7 +298,7 @@ class CampaignAdmin(CloneModelAdmin):
 
         (
             "Lets Verify",
-            {"fields": (  "rejected", "total_goal", "generated_leads")}
+            {"fields": ("rejected", "total_goal", "generated_leads")}
         )
     )
 
