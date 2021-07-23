@@ -421,7 +421,8 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_generated(self):
-        return format_leads(self.generated, self.campaign.total_goal)
+        #return format_leads(self.generated, self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_goal)
 
 
 class SuppresionListSection(CloneMixin, BaseStateItem):
