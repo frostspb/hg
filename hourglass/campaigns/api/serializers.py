@@ -310,37 +310,42 @@ class TeamsSerializer(serializers.ModelSerializer):
 #TODO 1 serializer
 class CampaignSerializer(serializers.ModelSerializer):
     start_date = serializers.SerializerMethodField()
-    end_date = serializers.SerializerMethodField()
+    end_date = serializers.SerializerMethodField() #
     created = serializers.SerializerMethodField()
+
     kind = serializers.CharField(default=Campaign.CampaignKinds.USER)
-    delivered = serializers.SerializerMethodField()
-    remaining = serializers.SerializerMethodField()
-    in_validation = serializers.SerializerMethodField()
-    total_generated = serializers.SerializerMethodField()
-    integration_type = IntegrationTypeSerializer()
-    pacing_type = PacingSerializer()
-    sections = SectionsSettingsSerializer(read_only=True, many=True)
-    targets = TargetSectionSerializer(read_only=True, many=True)
-    teams = TeamsSerializer(read_only=True, many=True)
-    assets = AssetsSectionSerializer(many=True, read_only=True)
-    intents = IntentFeedsSectionSerializer(many=True, read_only=True)
-    artificial_titles = JobTitlesSerializer(source='jt', many=True, read_only=True)
-    titles = JobTitlesSectionSerializer(many=True, read_only=True)
-    industries = IndustriesSectionSerializer(many=True, read_only=True)
-    revenues = RevenueSectionSerializer(many=True, read_only=True)
-    companies_size = CompanySizeSectionSerializer(source="companies", many=True, read_only=True)
-    geolocations = GeolocationsSectionSerializer(many=True, read_only=True)
-    bants = BANTQuestionsSectionSerializer(many=True, read_only=True)
-    custom_questions = CustomQuestionsSectionSerializer(source="cqs", many=True, read_only=True)
-    abms = ABMSectionSerializer(many=True, read_only=True)
-    install_base = InstallBaseSectionSerializer(source="ibs", many=True, read_only=True)
-    fair_trades = FairTradeSectionSerializer(many=True, read_only=True)
-    lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True)
-    nurturings = NurturingSectionSerializer(many=True, read_only=True)
-    creatives = CreativesSectionSerializer(many=True, read_only=True)
-    itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
-    #start_date = serializers.DateField(format='%d-%m-%Y')
-    suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
+
+    remaining = serializers.SerializerMethodField() #
+    in_validation = serializers.SerializerMethodField() #
+    delivered = serializers.SerializerMethodField() #
+    total_generated = serializers.SerializerMethodField() #
+
+    integration_type = IntegrationTypeSerializer() #
+    pacing_type = PacingSerializer() #
+
+    teams = TeamsSerializer(read_only=True, many=True) #
+
+    sections = SectionsSettingsSerializer(read_only=True, many=True) #
+    targets = TargetSectionSerializer(read_only=True, many=True) #
+
+    assets = AssetsSectionSerializer(many=True, read_only=True) #
+    intents = IntentFeedsSectionSerializer(many=True, read_only=True) #
+    artificial_titles = JobTitlesSerializer(source='jt', many=True, read_only=True) #
+    titles = JobTitlesSectionSerializer(many=True, read_only=True) #
+    industries = IndustriesSectionSerializer(many=True, read_only=True) #
+    revenues = RevenueSectionSerializer(many=True, read_only=True) #
+    companies_size = CompanySizeSectionSerializer(source="companies", many=True, read_only=True) #
+    geolocations = GeolocationsSectionSerializer(many=True, read_only=True) #
+    bants = BANTQuestionsSectionSerializer(many=True, read_only=True) #
+    custom_questions = CustomQuestionsSectionSerializer(source="cqs", many=True, read_only=True) #
+    abms = ABMSectionSerializer(many=True, read_only=True) #
+    install_base = InstallBaseSectionSerializer(source="ibs", many=True, read_only=True) #
+    fair_trades = FairTradeSectionSerializer(many=True, read_only=True) #
+    lead_cascades = LeadCascadeProgramSectionSerializer(many=True, read_only=True) #
+    nurturings = NurturingSectionSerializer(many=True, read_only=True) #
+    creatives = CreativesSectionSerializer(many=True, read_only=True) #
+    itcurateds = ITCuratedSectionSerializer(many=True, read_only=True) #
+    suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True) #
 
     class Meta:
         model = Campaign
@@ -406,26 +411,33 @@ class CampaignSerializer(serializers.ModelSerializer):
 
 class HourglassSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
+
     delivered = serializers.SerializerMethodField()
     remaining = serializers.SerializerMethodField()
     in_validation = serializers.SerializerMethodField()
     total_generated = serializers.SerializerMethodField()
+
     integration_type = IntegrationTypeSerializer()
+    pacing_type = PacingSerializer()
 
     TA = serializers.SerializerMethodField()
+
     duration = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
     velocity = serializers.SerializerMethodField()
     total_goal = serializers.SerializerMethodField()
     generated = serializers.SerializerMethodField()
     generated_pos = serializers.SerializerMethodField()
-    sections = SectionsSettingsSerializer(read_only=True, many=True)
+
     #tactics = TacticsSerializer(read_only=True, many=True)
     teams = TeamsSerializer(read_only=True, many=True)
 
+    sections = SectionsSettingsSerializer(read_only=True, many=True)
     targets = TargetSectionSerializer(read_only=True, many=True)
     tactics = serializers.SerializerMethodField()
+
     managed_by = ManagersSerializer(read_only=True)
+
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     artificial_titles = JobTitlesSerializer(source='jt', many=True, read_only=True)
@@ -443,7 +455,6 @@ class HourglassSerializer(serializers.ModelSerializer):
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
-    pacing_type = PacingSerializer()
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
 
     class Meta:
