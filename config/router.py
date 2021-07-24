@@ -2,10 +2,10 @@ from hourglass.contrib.rest import OptionalSlashDefaultRouter
 
 from hourglass.clients.api.views import ClientsViewSet
 from hourglass.campaigns.api.views import CampaignViewSet, CustomQuestionsSectionViewSet, BANTQuestionsSectionViewSet,\
-GeolocationsSectionViewSet, CompanySizeSectionViewSet, RevenueSectionViewSet, IndustriesSectionViewSet, \
-JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet, SectionSettingsViewSet,\
-CreativesSectionViewSet, NurturingSectionViewSet, LeadCascadeProgramSectionViewSet, FairTradeSectionViewSet,\
-InstallBaseSectionViewSet, ABMSectionViewSet, ITCuratedSectionViewSet, SuppresionListSectionViewSet
+    GeolocationsSectionViewSet, CompanySizeSectionViewSet, RevenueSectionViewSet, IndustriesSectionViewSet, \
+    JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet, SectionSettingsViewSet,\
+    CreativesSectionViewSet, NurturingSectionViewSet, LeadCascadeProgramSectionViewSet, FairTradeSectionViewSet,\
+    InstallBaseSectionViewSet, ABMSectionViewSet, ITCuratedSectionViewSet, SuppresionListSectionViewSet
 
 from hourglass.references.api.views import ReferencesViewSet
 

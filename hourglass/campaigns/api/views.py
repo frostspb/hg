@@ -6,20 +6,20 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from hourglass.references.models import CampaignTypes, JobTitles, Geolocations, Managers
-from hourglass.references.api.serializers import ManagersSerializer
+from hourglass.references.models import  Managers
+
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
-from .serializers import TargetSectionSerializer, CampaignSerializer , AssetsSectionSerializer,\
-    CampaignTypesSerializer, CampaignCopySerializer, SectionsSettingsSerializer, HourglassSerializer,\
-    CampaignSettingsSerializer, GeolocationsSectionSerializer, JobTitlesSerializer,CustomQuestionsSectionSerializer,\
-    CustomQuestionsSection, BANTQuestionsSectionSerializer, GeolocationsSectionSerializer,\
+from .serializers import CampaignSerializer, AssetsSectionSerializer,\
+    CampaignCopySerializer, SectionsSettingsSerializer, HourglassSerializer,\
+    CampaignSettingsSerializer, CustomQuestionsSectionSerializer,\
+    BANTQuestionsSectionSerializer, GeolocationsSectionSerializer,\
     CompanySizeSectionSerializer, RevenueSectionSerializer, IndustriesSectionSerializer,\
     JobTitlesSectionSerializer, IntentFeedsSectionSerializer, ABMSectionSerializer,\
     InstallBaseSectionSerializer, FairTradeSectionSerializer,LeadCascadeProgramSectionSerializer,\
     NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer
 
-from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
+from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
@@ -34,7 +34,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
         serializer.save(managed_by=manager)
-
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):
@@ -76,7 +75,7 @@ class AssetsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin
 
 
 class IntentFeedsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                                DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = IntentFeedsSectionSerializer
     queryset = IntentFeedsSection.objects.all()
@@ -84,7 +83,7 @@ class IntentFeedsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModel
 
 
 class JobTitlesSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                              DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = JobTitlesSectionSerializer
     queryset = JobTitlesSection.objects.all()
@@ -92,7 +91,7 @@ class JobTitlesSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMi
 
 
 class IndustriesSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                               DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = IndustriesSectionSerializer
     queryset = IndustriesSection.objects.all()
@@ -100,7 +99,7 @@ class IndustriesSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelM
 
 
 class RevenueSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                            DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = RevenueSectionSerializer
     queryset = RevenueSection.objects.all()
@@ -108,7 +107,7 @@ class RevenueSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixi
 
 
 class CompanySizeSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                                DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = CompanySizeSectionSerializer
     queryset = CompanySizeSection.objects.all()
@@ -116,7 +115,7 @@ class CompanySizeSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModel
 
 
 class GeolocationsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                                 DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = GeolocationsSectionSerializer
     queryset = GeolocationsSection.objects.all()
@@ -124,7 +123,7 @@ class GeolocationsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveMode
 
 
 class BANTQuestionsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                                  DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = BANTQuestionsSectionSerializer
     queryset = BANTQuestionsSection.objects.all()
@@ -132,7 +131,7 @@ class BANTQuestionsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveMod
 
 
 class CustomQuestionsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                                    DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = CustomQuestionsSectionSerializer
     queryset = CustomQuestionsSection.objects.all()
@@ -140,7 +139,7 @@ class CustomQuestionsSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveM
 
 
 class ABMSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                        DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = ABMSectionSerializer
     queryset = ABMSection.objects.all()
@@ -148,7 +147,7 @@ class ABMSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, G
 
 
 class InstallBaseSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                                DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = InstallBaseSectionSerializer
     queryset = InstallBaseSection.objects.all()
@@ -156,7 +155,7 @@ class InstallBaseSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModel
 
 
 class FairTradeSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
-                           DestroyModelMixin):
+                              DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = FairTradeSectionSerializer
     queryset = FairTradeSection.objects.all()
@@ -164,8 +163,8 @@ class FairTradeSectionViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMi
 
 
 class LeadCascadeProgramSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet,
-                                    CreateModelMixin,
-                                    DestroyModelMixin):
+                                       CreateModelMixin,
+                                       DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = LeadCascadeProgramSectionSerializer
     queryset = LeadCascadeProgramSection.objects.all()
@@ -173,8 +172,8 @@ class LeadCascadeProgramSectionViewSet(ListModelMixin, UpdateModelMixin, Retriev
 
 
 class NurturingSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet,
-                                    CreateModelMixin,
-                                    DestroyModelMixin):
+                              CreateModelMixin,
+                              DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = NurturingSectionSerializer
     queryset = NurturingSection.objects.all()
@@ -182,8 +181,8 @@ class NurturingSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMix
 
 
 class CreativesSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet,
-                                    CreateModelMixin,
-                                    DestroyModelMixin):
+                              CreateModelMixin,
+                              DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = CreativesSectionSerializer
     queryset = CreativesSection.objects.all()
@@ -191,8 +190,8 @@ class CreativesSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMix
 
 
 class ITCuratedSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet,
-                                    CreateModelMixin,
-                                    DestroyModelMixin):
+                              CreateModelMixin,
+                              DestroyModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = ITCuratedSectionSerializer
     queryset = ITCuratedSection.objects.all()
@@ -200,8 +199,9 @@ class ITCuratedSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMix
 
 
 class SuppresionListSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet,
-                                    CreateModelMixin,
-                                    DestroyModelMixin):
+                                   CreateModelMixin,
+                                   DestroyModelMixin
+                                   ):
     permission_classes = [IsAuthenticated]
     serializer_class = SuppresionListSectionSerializer
     queryset = SuppresionListSection.objects.all()

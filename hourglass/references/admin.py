@@ -115,11 +115,10 @@ class IntegrationTypeAdmin(admin.ModelAdmin):
 @admin.register(Pacing)
 class PacingAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
-    fields = ["name",]
+    fields = ["name", ]
 
 
 @admin.register(Associates)
 class AssociatesAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
-    fields = ["name", "image",]
-
+    fields = ["name", "image", ]

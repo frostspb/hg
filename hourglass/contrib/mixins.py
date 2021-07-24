@@ -1,5 +1,4 @@
-from django_fsm import FSMField, transition
-from django.db import models
+from django_fsm import transition
 
 
 class StateMixin:
@@ -22,5 +21,3 @@ class StateMixin:
     @transition(field='state', source=States.STATE_RUNNING, target=States.STATE_PAUSE)
     def pause(self):
         pass
-
-

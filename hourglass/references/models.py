@@ -1,9 +1,4 @@
-from datetime import timedelta
 from django.db import models
-from django.contrib.postgres.fields import JSONField
-from django.utils.timezone import now
-from django_extensions.db.models import TimeStampedModel
-from django_fsm import FSMField
 
 
 class CampaignTypes(models.Model):
@@ -193,4 +188,3 @@ class Associates(models.Model):
     def photo_url(self):
         if self.image:
             return self.image.url
-

@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 
-#from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -40,7 +39,6 @@ urlpatterns = [
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-   # path("select2/", include("django_select2.urls")),
     url(r'^chaining/', include('smart_selects.urls')),
 ]
 

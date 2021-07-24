@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from factory import DjangoModelFactory, RelatedFactory, Faker, post_generation, Sequence
+from factory import DjangoModelFactory
 from factory import fuzzy
 
 

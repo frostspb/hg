@@ -1,9 +1,8 @@
 from django.http import Http404
 from django.urls import reverse
-from django.utils.http import urlencode
 from django.utils.html import format_html
 from model_clone import CloneModelAdmin
-from django.contrib import admin, messages
+from django.contrib import admin
 from ajax_select import make_ajax_form
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
@@ -225,7 +224,7 @@ class CompanySizeSectionAdmin(admin.TabularInline):
     readonly_fields = ['leads_company_size', ]
     classes = ['collapse']
     formset = ComponentInlineFormSet
-    
+
     def leads_company_size(self, obj):
         return obj.leads_company_size
 

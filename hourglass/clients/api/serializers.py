@@ -30,6 +30,3 @@ class ClientSerializer(serializers.ModelSerializer):
 
     def get_current_campaigns(self, instance):
         return instance.current_campaigns
-
-
-

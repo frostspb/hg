@@ -44,9 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'drf_yasg',
-
     'ajax_select',
-    #'django_select2',
     'smart_selects',
     'rest_framework',
     'corsheaders',
@@ -103,13 +101,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'PAGE_SIZE': 100,
-    #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S",
     'DATE_FORMAT': "%d-%m-%Y",
     'DATE_INPUT_FORMATS': ["%d-%m-%Y"],
@@ -216,26 +212,4 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
-
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://redis:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     },
-#     "select2": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://redis:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     }
-# }
-
-# Tell select2 which cache configuration to use:
-#SELECT2_CACHE_BACKEND = "select2"
-
-#JQUERY_URL = True
 USE_DJANGO_JQUERY = True

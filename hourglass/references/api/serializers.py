@@ -1,10 +1,9 @@
 from rest_framework import serializers
 
 
-from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations,  Managers, \
+from hourglass.references.models import CampaignTypes,  JobTitles, Geolocations,  Managers, \
     ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer,\
     IntegrationType, Pacing, Associates
-#from hourglass.clients.api.serializers import ClientSerializer
 
 
 class AssociatesSerializer(serializers.ModelSerializer):

@@ -2,21 +2,13 @@ from rest_framework import serializers
 from django.conf import settings
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
-    CustomQuestionsSection,ABMSection, InstallBaseSection, FairTradeSection, \
+    CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams
-from hourglass.references.models import CampaignTypes, Tactics, JobTitles, Geolocations, Managers
+from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
-
-
-# class CampaignTypesSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = CampaignTypes
-#         fields = (
-#             'id', 'name',
-#         )
 
 
 class CampaignCopySerializer(serializers.Serializer):
