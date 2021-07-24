@@ -276,9 +276,12 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def generated_pos(self):
         return {
-            'top': self.generated * self.top_percent/100,
-            'middle': self.generated * self.middle_percent/100,
-            'bottom': self.generated * self.bottom_percent/100,
+            'top_value': self.generated * self.top_percent/100,
+            'middle_value': self.generated * self.middle_percent/100,
+            'bottom_value': self.generated * self.bottom_percent/100,
+            'top': self.top_percent,
+            'middle': self.middle_percent,
+            'bottom': self.bottom_percent,
         }
 
     @property
