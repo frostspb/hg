@@ -4,6 +4,9 @@ from django.utils.http import urlencode
 from django.utils.html import format_html
 from model_clone import CloneModelAdmin
 from django.contrib import admin, messages
+from ajax_select import make_ajax_form
+from django.forms.models import BaseInlineFormSet
+from django.core.exceptions import ValidationError
 
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
@@ -12,8 +15,16 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     Teams
 
 
+class ComponentInlineFormSet(BaseInlineFormSet):
 
-from ajax_select import make_ajax_form
+    def clean(self):
+        """Check that sum of components is 100%"""
+        if any(self.errors):
+            # Don't bother validating the formset unless each form is valid on its own
+            return
+        total_sum = sum(form.cleaned_data['percent'] for form in self.forms)
+        if total_sum > 100:
+            raise ValidationError('Sum of components must be  less than or equal to 100%')
 
 
 class SectionSettingsAdmin(admin.TabularInline):
@@ -48,6 +59,7 @@ class TargetSectionAdmin(admin.TabularInline):
     classes = ['collapse']
 
 
+
 class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
     extra = 0
@@ -59,6 +71,7 @@ class AssetsSectionAdmin(admin.TabularInline):
 
     })
     classes = ['collapse']
+    formset = ComponentInlineFormSet
 
     def leads_assets(self, obj):
         return obj.leads_assets
@@ -122,6 +135,7 @@ class LeadCascadeProgramSectionAdmin(admin.TabularInline):
     fields = ['state', 'percent', 'name',  'leads_cascade', ]
     readonly_fields = ['leads_cascade',]
     classes = ['collapse']
+    formset = ComponentInlineFormSet
 
     def leads_cascade(self, obj):
         return obj.leads_cascade
@@ -133,6 +147,7 @@ class InstallBaseSectionAdmin(admin.TabularInline):
     fields = ['state', 'percent', 'name', 'leads_installbase', ]
     readonly_fields = ['leads_installbase', ]
     classes = ['collapse']
+    formset = ComponentInlineFormSet
 
     def leads_installbase(self, obj):
         return obj.leads_installbase
@@ -145,6 +160,7 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     readonly_fields = ['leads_generated']
     classes = ['collapse']
     insert_after = 'total_intent_feed_aberdeen'
+    formset = ComponentInlineFormSet
 
     def leads_generated(self, obj):
         return obj.leads_generated
@@ -156,6 +172,7 @@ class JobTitlesSectionAdmin(admin.TabularInline):
     fields = ['state', 'job_title', 'leads_generated', 'goal', 'percent', ]
     readonly_fields = ['leads_generated', ]
     classes = ['collapse']
+    formset = ComponentInlineFormSet
 
     def leads_generated(self, obj):
         return obj.leads_generated
@@ -167,6 +184,7 @@ class IndustriesSectionAdmin(admin.TabularInline):
     fields = ['state', 'industry', 'leads_industry',  'percent', ]
     readonly_fields = ['leads_industry', ]
     classes = ['collapse']
+    formset = ComponentInlineFormSet
 
     def leads_industry(self, obj):
         return obj.leads_industry
@@ -180,6 +198,7 @@ class GeolocationsSectionAdmin(admin.TabularInline):
     classes = ['collapse']
     fields = ['state', 'percent', 'name', 'goal_per_geo', 'leads_geolocation', 'geolocation',]
     readonly_fields = ['leads_geolocation', ]
+    formset = ComponentInlineFormSet
 
     def leads_geolocation(self, obj):
         return obj.leads_geolocation
@@ -191,6 +210,7 @@ class RevenueSectionAdmin(admin.TabularInline):
     fields = ['state',  'revenue', 'leads_revenue', 'percent',]
     readonly_fields = ['leads_revenue', ]
     classes = ['collapse']
+    formset = ComponentInlineFormSet
 
     def leads_revenue(self, obj):
         return obj.leads_revenue
@@ -204,7 +224,8 @@ class CompanySizeSectionAdmin(admin.TabularInline):
     fields = ['state',  'company_size', 'leads_company_size', 'percent']
     readonly_fields = ['leads_company_size', ]
     classes = ['collapse']
-
+    formset = ComponentInlineFormSet
+    
     def leads_company_size(self, obj):
         return obj.leads_company_size
 
