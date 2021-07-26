@@ -29,6 +29,7 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 SITE_ORIGIN = os.environ.get('SITE_ORIGIN')
 SITE_ADDR = os.environ.get('SITE_ADDR')
+STORAGE_ADDR = os.environ.get('STORAGE_ADDR')
 FRONT_ADDR = os.environ.get('FRONT_ADDR')
 
 ENDPOINT_DATE_FORMAT = '%d/%m/%Y'

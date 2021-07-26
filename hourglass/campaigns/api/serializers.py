@@ -68,7 +68,7 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
 
         if instance.landing_page:
             photo_url = instance.landing_page.url
-            return f"{settings.SITE_ADDR}{photo_url}"
+            return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
 class IntentFeedsSectionSerializer(serializers.ModelSerializer):
@@ -203,7 +203,7 @@ class ABMSectionSerializer(serializers.ModelSerializer):
         if instance.file:
 
             photo_url = instance.file.url
-            return f"{settings.SITE_ADDR}{photo_url}"
+            return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
 class InstallBaseSectionSerializer(serializers.ModelSerializer):
