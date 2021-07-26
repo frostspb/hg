@@ -65,6 +65,7 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
         )
 
     def get_landing_page(self, instance):
+        return
         if instance.landing_page:
             request = self.context.get('request')
             photo_url = instance.landing_page.url
@@ -200,11 +201,11 @@ class ABMSectionSerializer(serializers.ModelSerializer):
     #    return instance.leads
 
     def get_file(self, instance):
+        return
         if instance.file:
             request = self.context.get('request')
             photo_url = instance.file.url
             return request.build_absolute_uri(photo_url)
-
 
 
 class InstallBaseSectionSerializer(serializers.ModelSerializer):
