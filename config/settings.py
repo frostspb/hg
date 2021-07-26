@@ -213,3 +213,6 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
 USE_DJANGO_JQUERY = True
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 500000
+FILE_UPLOAD_MAX_MEMORY_SIZE = 500000
