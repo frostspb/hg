@@ -57,11 +57,18 @@ class TacticsSerializer(serializers.ModelSerializer):
 class AssetsSectionSerializer(serializers.ModelSerializer):
     titles = JobTitlesSerializer(allow_null=True, many=True)
 
+    landing_page = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = AssetsSection
         fields = (
             "id", "name", "landing_page",  "percent", "campaign", "titles", "state"
         )
+
+    def get_landing_page(self, instance):
+        if instance.file:
+            request = self.context.get('request')
+            photo_url = instance.landing_page.url
+            return request.build_absolute_uri(photo_url)
 
 
 class IntentFeedsSectionSerializer(serializers.ModelSerializer):
@@ -194,7 +201,10 @@ class ABMSectionSerializer(serializers.ModelSerializer):
 
     def get_file(self, instance):
         if instance.file:
-            return instance.file.url
+            request = self.context.get('request')
+            photo_url = instance.file.url
+            return request.build_absolute_uri(photo_url)
+
 
 
 class InstallBaseSectionSerializer(serializers.ModelSerializer):
