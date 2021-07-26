@@ -31,6 +31,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     queryset = Campaign.objects.filter(active=True)
     filterset_fields = ('client',)
 
+    def get_serializer_context(self):
+        context = super(CampaignViewSet, self).get_serializer_context()
+        context.update({"request": self.request})
+        return context
+
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
         serializer.save(managed_by=manager)
