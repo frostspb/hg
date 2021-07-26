@@ -65,7 +65,7 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
         )
 
     def get_landing_page(self, instance):
-        if instance.file:
+        if instance.landing_page:
             request = self.context.get('request')
             photo_url = instance.landing_page.url
             return request.build_absolute_uri(photo_url)
