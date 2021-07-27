@@ -32,7 +32,7 @@ SITE_ADDR = os.environ.get('SITE_ADDR')
 STORAGE_ADDR = os.environ.get('STORAGE_ADDR')
 FRONT_ADDR = os.environ.get('FRONT_ADDR')
 
-ENDPOINT_DATE_FORMAT = '%d/%m/%Y'
+ENDPOINT_DATE_FORMAT = '%m/%d/%Y'
 
 # Application definition
 

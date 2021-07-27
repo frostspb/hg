@@ -530,7 +530,8 @@ class ABMSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads(self):
-        return format_leads(self.percent, self.campaign.total_goal)
+        #return format_leads(self.percent, self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.goal_abm)
         #return int((self.percent/100) * self.campaign.total_goal)
 
 
