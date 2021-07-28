@@ -40,7 +40,7 @@ class TargetSectionSerializer(serializers.ModelSerializer):
 class SectionsSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionSettings
-        ordering = ('-name',)
+        ordering = ('-pos',)
         fields = (
             "id", "name", "slug", "enabled", "can_enabled"
         )

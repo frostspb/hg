@@ -50,9 +50,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             send_status_email.delay(subj='hourglass', to=[email], msg='test', addr_from=settings.MAIL_FROM)
 
 
-
-
-
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):
         return Response(data=Campaign.CampaignKinds.choices)

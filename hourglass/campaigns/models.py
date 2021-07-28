@@ -329,6 +329,7 @@ class SectionSettings(CloneMixin, models.Model):
     delta_v_per_row = models.IntegerField("Speed Change by Each Line", default=0)
     quality_sector = models.IntegerField("Change of Quality by Sector", null=True, blank=True)
     quality_per_row = models.IntegerField("Change of Quality by Each Line", null=True, blank=True)
+    pos = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
         verbose_name = "Section Settings"
@@ -679,25 +680,25 @@ def create_settings(sender, instance, created, **kwargs):
 
     sections = [
 
-        {'name': ASSETS_NAME, 'slug': ASSETS_SLUG},
-        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG},
-        {'name': ABM_NAME, 'slug': ABM_SLUG},
-        {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG},
-        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG},
-        {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG},
-        {'name': GEO_NAME, 'slug': GEO_SLUG},
-        {'name': REVENUE_NAME, 'slug': REVENUE_SLUG},
-        {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG},
-        {'name': BANT_NAME, 'slug': BANT_SLUG},
-        {'name': CQ_NAME, 'slug': CQ_SLUG},
-        {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG},
+        {'name': ASSETS_NAME, 'slug': ASSETS_SLUG, 'pos': 0},
+        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1 },
+        {'name': ABM_NAME, 'slug': ABM_SLUG, 'pos': 2},
+        {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG, 'pos': 3},
+        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG, 'pos': 4},
+        {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG, 'pos': 5},
+        {'name': GEO_NAME, 'slug': GEO_SLUG, 'pos': 6},
+        {'name': REVENUE_NAME, 'slug': REVENUE_SLUG, 'pos': 7},
+        {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG, 'pos': 8},
+        {'name': BANT_NAME, 'slug': BANT_SLUG, 'pos': 9},
+        {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10},
+        {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG, 'pos': 11},
         #{'name': CN_NAME, 'slug': CN_SLUG},
         #{'name': TACTICS_NAME, 'slug': TACTICS_SLUG},
-        {'name': ITC_NAME, 'slug': ITC_SLUG},
-        {'name': FT_NAME, 'slug': FT_SLUG},
-        {'name': LCP_NAME, 'slug': LCP_SLUG},
-        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG},
-        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG},
+        {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 12},
+        {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 13},
+        {'name': LCP_NAME, 'slug': LCP_SLUG, 'pos': 14},
+        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 15},
+        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 16},
     ]
 
     if created:
