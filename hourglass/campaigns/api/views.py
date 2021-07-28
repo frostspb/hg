@@ -45,7 +45,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             email = serializer.data.get('email')
             #from django.core.mail import send_mail
             #send_mail('hourglass', 'test', settings.MAIL_FROM, [email], fail_silently=False  # , html_message=msg
-            #          )
+                      #)
 
             send_status_email.delay(subj='hourglass', to=[email], msg='test', addr_from=settings.MAIL_FROM)
 
