@@ -321,8 +321,8 @@ class CampaignSerializer(serializers.ModelSerializer):
     delivered = serializers.SerializerMethodField() #
     total_generated = serializers.SerializerMethodField() #
 
-    integration_type = IntegrationTypeSerializer() #
-    pacing_type = PacingSerializer() #
+    integration_type = IntegrationTypeSerializer(allow_null=True, required=False) #
+    pacing_type = PacingSerializer(allow_null=True, required=False) #
 
     teams = TeamsSerializer(read_only=True, many=True) #
 

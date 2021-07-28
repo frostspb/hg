@@ -5,9 +5,10 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateMode
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.conf import settings
 
 from hourglass.references.models import  Managers
-
+from hourglass.campaigns.tasks import send_status_email
 from hourglass.settings.api.serializers import HourglassSettingsSerializer
 from hourglass.settings.models import HourglassSettings
 from .serializers import CampaignSerializer, AssetsSectionSerializer,\
@@ -39,6 +40,18 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
         serializer.save(managed_by=manager)
+
+        if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
+            email = serializer.data.get('email')
+            #from django.core.mail import send_mail
+            #send_mail('hourglass', 'test', settings.MAIL_FROM, [email], fail_silently=False  # , html_message=msg
+            #          )
+
+            send_status_email.delay(subj='hourglass', to=[email], msg='test', addr_from=settings.MAIL_FROM)
+
+
+
+
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):

@@ -218,3 +218,21 @@ USE_DJANGO_JQUERY = True
 DATA_UPLOAD_MAX_MEMORY_SIZE = 7500000
 FILE_UPLOAD_MAX_MEMORY_SIZE = 7500000
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000
+
+MAIL_HOST = 'infusemedia.com'
+MAIL_PWD = 'themostsecurepwd21'
+MAIL_FROM = 'hourglass@infusemedia.com'
+
+# MAIL_HOST=(str, 'localhost'),
+# MAIL_PORT=(int, 1025),
+# MAIL_FROM=(str, 'grader@infusemedia.com'),
+# MAIL_HOST_USER = (str, ''),
+# MAIL_HOST_PASSWORD = (str, ''),
+# FRONT_ADDR = os.environ.get('FRONT_ADDR')
+# EMAIL_HOST = MAIL_HOST
+# EMAIL_PORT = MAIL_PORT
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('MAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = False
