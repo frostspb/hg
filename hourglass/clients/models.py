@@ -43,7 +43,7 @@ class Client(TimeStampedModel):
 
 class Company(TimeStampedModel):
     name = models.CharField(max_length=50)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = "Company"
