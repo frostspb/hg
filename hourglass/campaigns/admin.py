@@ -21,7 +21,7 @@ class ComponentInlineFormSet(BaseInlineFormSet):
         if any(self.errors):
             # Don't bother validating the formset unless each form is valid on its own
             return
-        total_sum = sum(form.cleaned_data['percent'] for form in self.forms)
+        total_sum = sum(form.cleaned_data.get('percent', 0) for form in self.forms)
         if total_sum > 100:
             raise ValidationError('Sum of components must be  less than or equal to 100%')
 
