@@ -32,23 +32,30 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     queryset = Campaign.objects.filter(active=True)
     filterset_fields = ('client',)
 
-    def get_serializer_context(self):
-        context = super(CampaignViewSet, self).get_serializer_context()
-        context.update({"request": self.request})
-        return context
+    # def get_serializer_context(self):
+    #     context = super(CampaignViewSet, self).get_serializer_context()
+    #     context.update({"request": self.request})
+    #     return context
 
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
         serializer.save(managed_by=manager)
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
+            obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
             email = serializer.data.get('email')
-            from django.core.mail import send_mail
-            send_mail('hourglass', 'test', settings.MAIL_FROM, [email], fail_silently=False  # , html_message=msg
-                      )
-
-            #send_status_email.delay(subj='hourglass', to=[email], msg='test', addr_from=settings.MAIL_FROM)
-
+            if obj and email:
+                msg = f"Customer information {obj.customer_information} \n" \
+                      f"Contact name {obj.contact_name} \n" \
+                      f"Campaign name {obj.name} \n" \
+                      f"Campaign start date {obj.start_date} \n" \
+                      f"Campaign end date {obj.end_date} \n" \
+                      f"Campaign type {obj.campaign_type} \n" \
+                      f"Purchase order {obj.order} \n" \
+                      f"Campaign guarantees {obj.guarantees} \n" \
+                      f"Campaign details {obj.details} \n" \
+                      f"Notes {obj.note} \n"
+                send_status_email.delay(subj='hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):

@@ -411,6 +411,19 @@ class CampaignSerializer(serializers.ModelSerializer):
         if res:
             return res.strftime(settings.ENDPOINT_DATE_FORMAT)
 
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        from datetime import datetime
+        if 'end_date' in self.initial_data:
+            self.instance.end_date = datetime.strptime(self.initial_data['end_date'], '%Y-%m-%d')
+            self.instance.save()
+
+        if 'start_date' in self.initial_data:
+            self.instance.end_date = datetime.strptime(self.initial_data['start_date'], '%Y-%m-%d')
+            self.instance.save()
+
+        return self.instance
+
 
 class HourglassSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
