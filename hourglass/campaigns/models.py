@@ -457,7 +457,7 @@ class IndustriesSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_industry(self):
-        return format_leads(self.percent, self.campaign.total_goal)
+        return format_leads(self.percent, self.campaign.total_generated)
         #return int((self.percent / 100) * self.campaign.total_goal)
 
 
