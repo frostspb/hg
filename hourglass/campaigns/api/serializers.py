@@ -7,7 +7,7 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
 from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
-    IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer
+    IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
@@ -56,8 +56,8 @@ class TacticsSerializer(serializers.ModelSerializer):
 
 class AssetsSectionSerializer(serializers.ModelSerializer):
     titles = JobTitlesSerializer(allow_null=True, many=True)
-
     landing_page = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = AssetsSection
         fields = (
@@ -74,7 +74,7 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
 class IntentFeedsSectionSerializer(serializers.ModelSerializer):
     leads_generated = serializers.SerializerMethodField(read_only=True)
     goal_intent_feed = serializers.SerializerMethodField(read_only=True)
-    company = CompanySerializer(many=True)
+    company = CompanyRefSerializer(many=True)
 
     class Meta:
         model = IntentFeedsSection

@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from hourglass.references.models import CampaignTypes,  JobTitles, Geolocations,  Managers, \
     ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer,\
-    IntegrationType, Pacing, Associates
+    IntegrationType, Pacing, Associates, CompanyRef
 
 
 class AssociatesSerializer(serializers.ModelSerializer):
@@ -22,6 +22,14 @@ class AssociatesSerializer(serializers.ModelSerializer):
 class GeolocationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Geolocations
+        fields = (
+            'id', 'name',
+        )
+
+
+class CompanyRefSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyRef
         fields = (
             'id', 'name',
         )

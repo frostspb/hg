@@ -438,5 +438,21 @@
         "name": "Front-Load"
 
     }
-}
+},
+    {
+      "model": "references.CompanyRef",
+      "pk": 1,
+      "fields": {
+          "name": "Company2"
+
+      }
+  },
+  {
+      "model": "references.CompanyRef",
+      "pk": 2,
+      "fields": {
+          "name": "Company2"
+
+      }
+  }
 ]

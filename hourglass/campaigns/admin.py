@@ -160,6 +160,10 @@ class IntentFeedsSectionAdmin(admin.TabularInline):
     classes = ['collapse']
     insert_after = 'total_intent_feed_aberdeen'
     formset = ComponentInlineFormSet
+    form = make_ajax_form(IntentFeedsSection, {
+        'company': 'company_ref',  # ManyToManyField
+
+    })
 
     def leads_generated(self, obj):
         return obj.leads_generated

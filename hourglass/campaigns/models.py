@@ -14,7 +14,7 @@ from hourglass.clients.models import Client, Company
 from .base import BaseStateItem, BaseReportPercentItem
 
 from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Managers, ITCurated,\
-    Industry, Revenue, CompanySize, Pacing
+    Industry, Revenue, CompanySize, Pacing, CompanyRef
 
 from .managers import CampaignsManager
 
@@ -396,7 +396,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 
     name = models.CharField("Intent topic", max_length=200)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
-    company = models.ManyToManyField(Company, null=True, blank=True, verbose_name="Companies", related_name="companies")
+    company = models.ManyToManyField(CompanyRef, null=True, blank=True, verbose_name="Companies", related_name="companies")
     kind = models.CharField("Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
     companies_count = models.PositiveIntegerField("Companies Generated", default=0)
 

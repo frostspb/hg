@@ -188,3 +188,14 @@ class Associates(models.Model):
     def photo_url(self):
         if self.image:
             return self.image.url
+
+
+class CompanyRef(models.Model):
+    name = models.CharField("Company", max_length=250)
+
+    class Meta:
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
+
+    def __str__(self):
+        return self.name
