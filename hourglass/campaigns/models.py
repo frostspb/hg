@@ -101,13 +101,13 @@ class Campaign(CloneMixin, BaseStateItem):
 
     # admin
     managed_by = models.ForeignKey(Managers, on_delete=models.CASCADE, null=True)
-    start_offset = models.PositiveSmallIntegerField("Start Date offset in days", default=0)
-    end_offset = models.PositiveSmallIntegerField("End Date offset in days", default=0)
+    start_offset = models.PositiveIntegerField("Start Date offset in days", default=0)
+    end_offset = models.PositiveIntegerField("End Date offset in days", default=0)
     audience_targeted = models.IntegerField("Base Target Audience", default=0)
     integration_type = models.ForeignKey(
         IntegrationType, on_delete=models.CASCADE, verbose_name="Integration", blank=True, null=True)
 
-    pending = models.PositiveSmallIntegerField("Pending in Integration", blank=True, null=True)
+    pending = models.PositiveIntegerField("Pending in Integration", blank=True, null=True)
 
     pacing_type = models.ForeignKey(
         Pacing, on_delete=models.CASCADE, verbose_name="Pacing" , blank=True, null=True)
@@ -119,7 +119,7 @@ class Campaign(CloneMixin, BaseStateItem):
     top_percent = models.FloatField("Top Leads Percent", null=True, blank=True)
     middle_percent = models.FloatField("Middle Leads Percent",  null=True, blank=True)
     bottom_percent = models.FloatField("Bottom Leads Percent", null=True, blank=True)
-    dashboard_string_count = models.PositiveSmallIntegerField(
+    dashboard_string_count = models.PositiveIntegerField(
         "Lead Goal Lower Lines (Dashboard View)",
         default=1,
         validators=[MinValueValidator(1), MaxValueValidator(6)]
@@ -129,14 +129,14 @@ class Campaign(CloneMixin, BaseStateItem):
         default=0,
 
     )
-    remaining_admin_percent = models.PositiveSmallIntegerField(default=0)
-    in_progress_admin_percent = models.PositiveSmallIntegerField(default=0)
-    rejected = models.PositiveSmallIntegerField(default=0)
+    remaining_admin_percent = models.PositiveIntegerField(default=0)
+    in_progress_admin_percent = models.PositiveIntegerField(default=0)
+    rejected = models.PositiveIntegerField(default=0)
 
-    intent_feed_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
-    intent_feed_done_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
-    abm_look_a_like = models.PositiveSmallIntegerField("Look-a-like", blank=True, null=True)
-    abm_goal_percent = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    intent_feed_goal_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
+    intent_feed_done_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
+    abm_look_a_like = models.PositiveIntegerField("Look-a-like", blank=True, null=True)
+    abm_goal_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     nurturing_parameters = models.CharField(max_length=250, null=True, blank=True)
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
@@ -329,7 +329,7 @@ class SectionSettings(CloneMixin, models.Model):
     delta_v_per_row = models.IntegerField("Speed Change by Each Line", default=0)
     quality_sector = models.IntegerField("Change of Quality by Sector", null=True, blank=True)
     quality_per_row = models.IntegerField("Change of Quality by Each Line", null=True, blank=True)
-    pos = models.PositiveSmallIntegerField(default=0)
+    pos = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = "Section Settings"
@@ -348,7 +348,7 @@ class TargetSection(CloneMixin, BaseStateItem):
     campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
     leads_goal = models.PositiveIntegerField('Leads goal', default=0)
     leads_generated = models.PositiveIntegerField('Leads Generated', default=0)
-    velocity = models.PositiveSmallIntegerField("Velocity", default=0)
+    velocity = models.PositiveIntegerField("Velocity", default=0)
     grade = models.CharField(max_length=16, choices=CampaignGrade.choices, default=CampaignGrade.TOP)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="targets")
 
@@ -398,7 +398,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="intents")
     company = models.ManyToManyField(Company, null=True, blank=True, verbose_name="Companies", related_name="companies")
     kind = models.CharField("Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
-    companies_count = models.PositiveSmallIntegerField("Companies Generated", default=0)
+    companies_count = models.PositiveIntegerField("Companies Generated", default=0)
 
     class Meta:
         verbose_name = "Intent Feed"
@@ -420,9 +420,9 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 class JobTitlesSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Name", max_length=200, null=True, blank=True)
     job_title = models.ForeignKey(JobTitles, on_delete=models.CASCADE, verbose_name="Title Captured")
-    generated = models.PositiveSmallIntegerField("Leads Generated", default=0)
+    generated = models.PositiveIntegerField("Leads Generated", default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="titles")
-    goal = models.PositiveSmallIntegerField(null=True, blank=True)
+    goal = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Job Title"
@@ -440,7 +440,7 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
 class SuppresionListSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sups")
     title = models.CharField(max_length=128)
-    accounts_value = models.PositiveSmallIntegerField()
+    accounts_value = models.PositiveIntegerField()
 
 
 class IndustriesSection(CloneMixin, BaseReportPercentItem):
@@ -523,7 +523,7 @@ class ABMSection(CloneMixin, BaseReportPercentItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="abms")
     file = models.FileField("List")
     title = models.CharField(max_length=128)
-    accounts_value = models.PositiveSmallIntegerField()
+    accounts_value = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = "ABM"
@@ -653,8 +653,8 @@ class Teams(CloneMixin, models.Model):
     team_member2 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member2', null=True, blank=True)
     team_member3 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member3', null=True, blank=True)
     team_member4 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member4', null=True, blank=True)
-    delivered = models.PositiveSmallIntegerField(default=0)
-    rejected = models.PositiveSmallIntegerField(default=0)
+    delivered = models.PositiveIntegerField(default=0)
+    rejected = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = "Teams"
