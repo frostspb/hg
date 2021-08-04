@@ -270,6 +270,7 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
 class CreativesSectionSerializer(serializers.ModelSerializer):
     landing_page = serializers.SerializerMethodField(read_only=True)
     banners = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = CreativesSection
         fields = (
@@ -283,7 +284,7 @@ class CreativesSectionSerializer(serializers.ModelSerializer):
             return f"{settings.STORAGE_ADDR}{photo_url}"
 
     def get_landing_page(self, instance):
-        if instance.banners:
+        if instance.landing_page:
 
             photo_url = instance.landing_page.url
             return f"{settings.STORAGE_ADDR}{photo_url}"

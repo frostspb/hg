@@ -16,8 +16,8 @@ class AssociatesSerializer(serializers.ModelSerializer):
         )
 
     def get_photo_url(self, instance):
-        if instance.photo_url:
-            photo_url = instance.photo_url.url
+        if instance.image:
+            photo_url = instance.image.url
             return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
@@ -63,8 +63,8 @@ class ManagersSerializer(serializers.ModelSerializer):
         )
 
     def get_photo_url(self, instance):
-        if instance.photo_url:
-            photo_url = instance.photo_url.url
+        if instance.photo:
+            photo_url = instance.photo.url
             return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
