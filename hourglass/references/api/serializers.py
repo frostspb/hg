@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.conf import settings
 
 from hourglass.references.models import CampaignTypes,  JobTitles, Geolocations,  Managers, \
     ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer,\
@@ -16,7 +16,9 @@ class AssociatesSerializer(serializers.ModelSerializer):
         )
 
     def get_photo_url(self, instance):
-        return instance.photo_url
+        if instance.photo_url:
+            photo_url = instance.photo_url.url
+            return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
 class GeolocationsSerializer(serializers.ModelSerializer):
@@ -61,7 +63,9 @@ class ManagersSerializer(serializers.ModelSerializer):
         )
 
     def get_photo_url(self, instance):
-        return instance.photo_url
+        if instance.photo_url:
+            photo_url = instance.photo_url.url
+            return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
 class CampaignTypesSerializer(serializers.ModelSerializer):

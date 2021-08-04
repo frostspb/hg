@@ -212,7 +212,7 @@ class InstallBaseSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallBaseSection
         fields = (
-            "id",  "campaign", "name",  "leads_installbase", "state",
+            "id",  "campaign", "name",  "leads_installbase", "state", "percent"
         )
 
     def get_leads_installbase(self, instance):
