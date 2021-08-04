@@ -268,12 +268,25 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
 
 
 class CreativesSectionSerializer(serializers.ModelSerializer):
-
+    landing_page = serializers.SerializerMethodField(read_only=True)
+    banners = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = CreativesSection
         fields = (
             "id", "subject_line", "email_text", "landing_page", "banners"
         )
+
+    def get_banners(self, instance):
+        if instance.banners:
+
+            photo_url = instance.banners.url
+            return f"{settings.STORAGE_ADDR}{photo_url}"
+
+    def get_landing_page(self, instance):
+        if instance.banners:
+
+            photo_url = instance.landing_page.url
+            return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
 class ITCuratedSectionSerializer(serializers.ModelSerializer):
