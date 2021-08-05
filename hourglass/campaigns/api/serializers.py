@@ -339,7 +339,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     pacing_type = PacingSerializer(allow_null=True, required=False) #
 
     teams = TeamsSerializer(read_only=True, many=True) #
-
+    tactics = TacticsSerializer(read_only=True, many=True)
     sections = SectionsSettingsSerializer(read_only=True, many=True) #
     targets = TargetSectionSerializer(read_only=True, many=True) #
 
@@ -377,7 +377,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
             "itcurateds",
-            "abm_look_a_like", "rejected", "teams",
+            "abm_look_a_like", "rejected", "teams", "tactics",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list",
         )
 
