@@ -39,7 +39,7 @@ class SectionSettingsAdmin(admin.TabularInline):
         return False
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        return True
 
 
 class TargetSectionAdmin(admin.TabularInline):

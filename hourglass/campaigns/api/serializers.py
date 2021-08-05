@@ -363,7 +363,6 @@ class CampaignSerializer(serializers.ModelSerializer):
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True) #
 
 
-
     class Meta:
         model = Campaign
         fields = (
@@ -373,7 +372,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "delivered", "remaining", "in_validation", "total_generated", "audience_targeted",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
             "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents",
-            "artificial_titles","titles",
+            "artificial_titles", "titles",
             "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
             "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
             "itcurateds",

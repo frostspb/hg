@@ -76,8 +76,6 @@ class Campaign(CloneMixin, BaseStateItem):
         USER = 'copy', 'Copy'
         CONTRACT = 'contract', 'Contract'
 
-
-
     # front
 
     contact_name = models.CharField(max_length=255, blank=True, null=True)
