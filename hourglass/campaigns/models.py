@@ -673,10 +673,7 @@ def create_curated(sender, instance, created, **kwargs):
         ITCuratedSection.objects.bulk_create(for_create)
 
 
-@receiver(post_save, sender=Campaign)
-def create_settings(sender, instance, created, **kwargs):
-
-    sections = [
+sections = [
 
         {'name': ASSETS_NAME, 'slug': ASSETS_SLUG, 'pos': 0},
         {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1 },
@@ -697,7 +694,12 @@ def create_settings(sender, instance, created, **kwargs):
         {'name': LCP_NAME, 'slug': LCP_SLUG, 'pos': 14},
         {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 15},
         {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 16},
+        {'name': 'Lets Verify', 'slug': 'lets_verify', 'pos': 17},
     ]
+
+
+@receiver(post_save, sender=Campaign)
+def create_settings(sender, instance, created, **kwargs):
 
     if created:
         for_create = [SectionSettings(slug=i.get('slug'), campaign=instance, name=i.get('name')) for i in sections]
