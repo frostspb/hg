@@ -57,7 +57,7 @@ BANT_NAME = "BANT questions"
 CQ_NAME = "Custom Questions"
 INSTALL_BASE_NAME = "Install Base"
 CN_NAME = "CN"
-TACTICS_NAME = "Tactics"
+TACTICS_NAME = "Tactics Activated"
 
 ITC_NAME = "IT Curated"
 FT_NAME = "Fair-Trade Lead Qualification"
