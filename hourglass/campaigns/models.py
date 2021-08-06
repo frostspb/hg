@@ -688,13 +688,14 @@ sections = [
         {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10},
         {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG, 'pos': 11},
         #{'name': CN_NAME, 'slug': CN_SLUG},
-        {'name': TACTICS_NAME, 'slug': TACTICS_SLUG},
-        {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 12},
-        {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 13},
-        {'name': LCP_NAME, 'slug': LCP_SLUG, 'pos': 14},
-        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 15},
-        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 16},
+        {'name': TACTICS_NAME, 'slug': TACTICS_SLUG, 'pos': 12},
+        {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 13},
+        {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 14},
+        {'name': LCP_NAME, 'slug': LCP_SLUG, 'pos': 15},
+        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 16},
         {'name': 'Lets Verify', 'slug': 'lets_verify', 'pos': 17},
+        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 18},
+
     ]
 
 
