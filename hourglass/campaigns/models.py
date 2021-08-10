@@ -273,10 +273,14 @@ class Campaign(CloneMixin, BaseStateItem):
 
     @property
     def generated_pos(self):
+        top_percent = 0 if not self.top_percent else self.top_percent
+        middle_percent = 0 if not self.middle_percent else self.middle_percent
+        bottom_percent = 0 if not self.bottom_percent else self.bottom_percent
+
         return {
-            'top_value': self.generated * self.top_percent/100,
-            'middle_value': self.generated * self.middle_percent/100,
-            'bottom_value': self.generated * self.bottom_percent/100,
+            'top_value': self.generated * top_percent/100,
+            'middle_value': self.generated * middle_percent/100,
+            'bottom_value': self.generated * bottom_percent/100,
             'top': self.top_percent,
             'middle': self.middle_percent,
             'bottom': self.bottom_percent,
