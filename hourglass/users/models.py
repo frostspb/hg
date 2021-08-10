@@ -7,6 +7,9 @@ class User(AbstractUser):
     phone = models.CharField(max_length=21, null=True, blank=True)
     location = models.CharField(max_length=32, null=True, blank=True)
     photo = models.FileField(null=True, blank=True)
+    first_name = models.CharField('First name', max_length=30)
+    last_name = models.CharField('Last name', max_length=150)
+    email = models.EmailField('Email address')
 
     @property
     def photo_url(self):

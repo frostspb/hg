@@ -43,7 +43,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
             obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
-            email = serializer.data.get('email')
+            email = self.request.user.email
             if obj and email:
                 msg = f"Customer information {obj.customer_information} \n" \
                       f"Contact name {obj.contact_name} \n" \

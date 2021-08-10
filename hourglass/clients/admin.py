@@ -11,7 +11,7 @@ class ClientAdmin(admin.ModelAdmin):
         "current_campaigns", "current_leads_goals",  "active", "created"
     ]
     search_fields = ["name", "id"]
-    fields = ["name", "client_type", "total_campaigns", "leads_generated", "client_since", "active"]
+    fields = ["name", "client_type", "owner", "total_campaigns", "leads_generated", "client_since", "active"]
     ordering = ("-created",)
 
     def current_campaigns(self, obj):

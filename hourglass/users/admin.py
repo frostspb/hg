@@ -18,6 +18,6 @@ class UserAdmin(auth_admin.UserAdmin):
             "User", {"fields": ("note", "phone", "photo")}
         ),
     )
-    list_display = ["username", "is_superuser", "is_active", "date_joined", "last_login", "phone"]
+    list_display = ["username", "is_superuser", "is_active", "date_joined", "last_login", "email"]
     search_fields = ["username", "email", "id", ]
     ordering = ('-date_joined',)

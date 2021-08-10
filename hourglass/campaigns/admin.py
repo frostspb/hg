@@ -58,7 +58,6 @@ class TargetSectionAdmin(admin.TabularInline):
     classes = ['collapse']
 
 
-
 class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
     extra = 0

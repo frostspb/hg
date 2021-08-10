@@ -13,6 +13,12 @@ class ClientsViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, Updat
     serializer_class = ClientSerializer
     queryset = Client.objects.filter(active=True)
 
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
     @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated])
     def company(self, request, *args, **kwargs):
         return Response(data=CompanySerializer(self.get_object().company_set.all(), many=True).data)

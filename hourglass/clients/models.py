@@ -2,7 +2,9 @@ from django.db import models
 from django.utils.timezone import now
 from django_extensions.db.models import TimeStampedModel
 from django.core import validators
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 def validate_date(date):
     if date > now().date():
@@ -21,6 +23,7 @@ class Client(TimeStampedModel):
     leads_generated = models.IntegerField("Leads Generated Totally", default=0)
     client_since = models.DateField("Our Client since", null=True, blank=True, validators=[validate_date])
     active = models.BooleanField(default=True)
+    owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Client"

@@ -18,7 +18,7 @@ class ClientSerializer(serializers.ModelSerializer):
         model = Client
         fields = (
             'id', 'name', 'client_type', 'total_campaigns', 'leads_generated', 'client_since',
-            'current_leads_goals', 'current_campaigns',
+            'current_leads_goals', 'current_campaigns', 'owner',
         )
 
     def get_client_since(self, instance):
