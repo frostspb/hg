@@ -175,6 +175,7 @@ class JobTitlesSectionAdmin(admin.TabularInline):
     readonly_fields = ['leads_generated', ]
     classes = ['collapse']
     formset = ComponentInlineFormSet
+    insert_after = "job_titles"
 
     def leads_generated(self, obj):
         return obj.leads_generated
@@ -281,7 +282,7 @@ class CampaignAdmin(CloneModelAdmin):
                 "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration_type",
                 "pending",
                 "pacing_type",
-                "job_titles",
+
                 "dashboard_string_count", "ta_volume", "remaining_admin_percent", "in_progress_admin_percent",
 
 
@@ -307,6 +308,13 @@ class CampaignAdmin(CloneModelAdmin):
         ("Nurturing settings", {
             "fields": (
                 "nurturing_parameters",
+
+            )
+        }
+         ),
+        ("Job Titles", {
+            "fields": (
+                "job_titles",
 
             )
         }
