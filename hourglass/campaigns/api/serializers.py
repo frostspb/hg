@@ -277,6 +277,10 @@ class CreativesSectionSerializer(serializers.ModelSerializer):
             "id", "subject_line", "email_text", "landing_page", "banners"
         )
 
+    def get_email_text(self, instance):
+        if instance.email_text:
+            return instance.email_text
+
     def get_banners(self, instance):
         if instance.banners:
 
