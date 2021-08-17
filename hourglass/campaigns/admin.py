@@ -11,7 +11,7 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, \
-    Teams
+    Teams, CampaignClient
 
 
 class ComponentInlineFormSet(BaseInlineFormSet):
@@ -262,6 +262,230 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
     classes = ['collapse']
 
 
+######## USER CAMPAIGN ################
+
+@admin.register(CampaignClient)
+class CampaignClientAdmin(CloneModelAdmin):
+    form = make_ajax_form(Campaign, {
+        'job_titles': 'titles_campaign',  # ManyToManyField
+
+    })
+    list_display = [
+        "id", "name_link", "client", "created", "active", "customer_information", "state", "ta", "velocity", "duration",
+        "total_goal", "generated", "start_date_admin", "end_date_admin",
+    ]
+    search_fields = ["client__name", "id"]
+
+    fieldsets = (
+        ("Customer", {"fields": ("customer_information", "managed_by", "client", "owner")}),
+        ("Campaign admin settings", {
+            "fields": (
+                "name", "state",
+                "tactics", "integration_type",
+                "pending",
+                "pacing_type",
+
+            )
+        }),
+        ("Intent Feed Total settings", {
+            "fields": (
+                "intent_feed_goal_percent", "intent_feed_done_percent", "goal_intent_feed", "done_intent_feed",
+                "total_intent_feed", "total_intent_feed_infusemedia", "total_intent_feed_bombora",
+                "total_intent_feed_aberdeen",
+            )
+        }
+         ),
+
+        ("ABM Total settings", {
+            "fields": (
+                "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent", "abm_look_a_like"
+
+            )
+        }
+         ),
+
+        ("Nurturing settings", {
+            "fields": (
+                "nurturing_parameters",
+
+            )
+        }
+         ),
+        ("Job Titles", {
+            "fields": (
+                "job_titles",
+
+            )
+        }
+         ),
+
+        (
+            "Target Audience",
+            {"fields": ("audience_targeted", "delivered", "remaining", "in_validation")}
+        ),
+
+        (
+            "Lets Verify",
+            {"fields": ("rejected", "total_goal", "generated_leads")}
+        )
+    )
+
+    readonly_fields = [
+        "id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed",
+        "generated_leads", "total_goal",
+        "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
+        "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
+    ]
+
+    ordering = ("-created",)
+
+    actions = ["start", "pause", ]
+
+    inlines = [
+        TargetSectionAdmin,
+        AssetsSectionAdmin,
+        IntentFeedsSectionAdmin,
+        ABMSectionAdmin,
+        SuppresionListSectionAdmin,
+        JobTitlesSectionAdmin,
+        IndustriesSectionAdmin,
+        GeolocationsSectionAdmin,
+        RevenueSectionAdmin,
+        CompanySizeSectionAdmin,
+        BANTQuestionsSectionAdmin,
+        CustomQuestionsSectionAdmin,
+        InstallBaseSectionAdmin,
+        ITCuratedSectionAdmin,
+        LeadCascadeProgramSectionAdmin,
+        FairTradeSectionAdmin,
+        NurturingSectionAdmin,
+        CreativesSectionAdmin,
+        TeamsAdmin,
+    ]
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_queryset(self, request):
+        qs = super(CampaignClientAdmin, self).get_queryset(request)
+        qs = qs.filter(kind=Campaign.CampaignKinds.USER)
+        return qs
+
+    def goal_abm(self, obj):
+        return obj.goal_abm
+
+    def generated_leads(self, obj):
+        return obj.generated_leads
+
+    def done_abm(self, obj):
+        return obj.done_abm
+
+    def done_abm_percent(self, obj):
+        return obj.done_abm_percent
+
+    def total_intent_feed(self, obj):
+        return obj.total_intent_feed
+
+    def total_intent_feed_infusemedia(self, obj):
+        return obj.total_intent_feed_infusemedia
+
+    def total_intent_feed_bombora(self, obj):
+        return obj.total_intent_feed_bombora
+
+    def total_intent_feed_aberdeen(self, obj):
+        return obj.total_intent_feed_aberdeen
+
+    def goal_intent_feed(self, obj):
+        return obj.goal_intent_feed
+
+    def done_intent_feed(self, obj):
+        return obj.done_intent_feed
+
+    def name_link(self, obj):
+        url = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=[obj.id])
+        return format_html('<a href="{}">{}</a>', url, obj.name)
+
+    name_link.short_description = "Campaign Name"
+
+    def delivered(self, obj):
+        return obj.delivered
+
+    def remaining(self, obj):
+        return obj.remaining
+
+    def in_validation(self, obj):
+        return obj.in_validation
+
+    def start_date_admin(self, obj):
+        return obj.initial_start_date
+
+    def end_date_admin(self, obj):
+        return obj.initial_end_date
+
+    def ta(self, obj):
+        return obj.ta
+
+    def velocity(self, obj):
+        return obj.velocity
+
+    def duration(self, obj):
+        return obj.duration
+
+    def total_goal(self, obj):
+        return obj.total_goal
+
+    def generated(self, obj):
+        return obj.generated
+
+    def pause(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+
+        for i in qs:
+            i.pause()
+            i.save()
+
+    def resume(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+
+        for i in qs:
+            i.resume()
+            i.save()
+
+    def stop(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+
+        for i in qs:
+            i.stop()
+            i.save()
+
+    def start(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+        for i in qs:
+            i.start()
+            i.save()
+
+    change_form_template = 'admin/custom/change_form.html'
+
+    class Media:
+        css = {
+            'all': (
+                'css/admin.css',
+            )
+        }
+
+
+##########3 STANDARD CAMPAIGN ########
+
 @admin.register(Campaign)
 class CampaignAdmin(CloneModelAdmin):
     form = make_ajax_form(Campaign, {
@@ -364,6 +588,11 @@ class CampaignAdmin(CloneModelAdmin):
         CreativesSectionAdmin,
         TeamsAdmin,
     ]
+
+    def get_queryset(self, request):
+        qs = super(CampaignAdmin, self).get_queryset(request)
+        qs = qs.filter(kind=Campaign.CampaignKinds.STANDARD)
+        return qs
 
     def goal_abm(self, obj):
         return obj.goal_abm

@@ -7,6 +7,7 @@ from django.contrib.postgres.fields import JSONField
 from django.utils.timezone import now
 from django_extensions.db.models import TimeStampedModel
 from django_fsm import FSMField
+from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from model_clone import CloneMixin
 from hourglass.clients.models import Client, Company
@@ -22,6 +23,7 @@ from smart_selects.db_fields import ChainedForeignKey
 from hourglass.references.models import BANTQuestion, BANTAnswer, CustomAnswer, CustomQuestion, IntegrationType,\
     Associates
 
+User = get_user_model()
 
 JOB_TITLES_SLUG = "JobTitle"
 ASSETS_SLUG = "Assets"
@@ -96,7 +98,7 @@ class Campaign(CloneMixin, BaseStateItem):
     # sys
     active = models.BooleanField(default=True)
     kind = models.CharField(max_length=16, choices=CampaignKinds.choices, default=CampaignKinds.STANDARD)
-
+    owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     # admin
     managed_by = models.ForeignKey(Managers, on_delete=models.CASCADE, null=True)
     start_offset = models.PositiveIntegerField("Start Date offset in days", default=0)
@@ -701,6 +703,13 @@ sections = [
         {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 18},
 
     ]
+
+
+class CampaignClient(Campaign):
+    class Meta:
+        proxy = True
+        verbose_name = "User Campaign"
+        verbose_name_plural = "User Campaigns"
 
 
 @receiver(post_save, sender=Campaign)

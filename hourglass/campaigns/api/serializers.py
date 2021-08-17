@@ -616,7 +616,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
 
     def get_velocity(self, instance):
         return instance.velocity
-    
+
     def get_created(self, instance):
         if instance.created:
             return instance.created.strftime(settings.ENDPOINT_DATE_FORMAT)

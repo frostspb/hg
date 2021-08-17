@@ -6,6 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.conf import settings
+from django.db.models import Q
 
 from hourglass.references.models import  Managers
 from hourglass.campaigns.tasks import send_status_email
@@ -37,9 +38,12 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     #     context.update({"request": self.request})
     #     return context
 
+    def get_queryset(self):
+        return self.queryset.filter(Q(owner__isnull=True) | Q(owner=self.request.user))
+
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
-        serializer.save(managed_by=manager)
+        serializer.save(managed_by=manager, owner=self.request.user)
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
             obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
