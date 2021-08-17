@@ -271,22 +271,15 @@ class CampaignClientAdmin(CloneModelAdmin):
 
     })
     list_display = [
-        "id", "name_link", "client", "created", "active", "customer_information", "state", "ta", "velocity", "duration",
-        "total_goal", "generated", "start_date_admin", "end_date_admin",
+        "id", "name_link", "client", "created", "active", "customer_information", "state",
+        "start_date", "end_date",
     ]
     search_fields = ["client__name", "id"]
 
     fieldsets = (
-        ("Customer", {"fields": ("customer_information", "managed_by", "client", "owner")}),
-        ("Campaign admin settings", {
-            "fields": (
-                "name", "state",
-                "tactics", "integration_type",
-                "pending",
-                "pacing_type",
+        ("Customer", {"fields": ("customer_information", "managed_by", "client", "owner", "order", "details",
+                                 "guarantees", "email", "note" )}),
 
-            )
-        }),
         ("Intent Feed Total settings", {
             "fields": (
                 "intent_feed_goal_percent", "intent_feed_done_percent", "goal_intent_feed", "done_intent_feed",
