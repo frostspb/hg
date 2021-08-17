@@ -26,7 +26,7 @@ class ComponentInlineFormSet(BaseInlineFormSet):
             raise ValidationError('Sum of components must be  less than or equal to 100%')
 
 
-class SectionSettingsAdmin(admin.StackedInline):
+class SectionSettingsAdmin(admin.TabularInline):
     model = SectionSettings
     extra = 0
     fields = [
@@ -42,7 +42,7 @@ class SectionSettingsAdmin(admin.StackedInline):
         return True
 
 
-class TargetSectionAdmin(admin.StackedInline):
+class TargetSectionAdmin(admin.TabularInline):
     model = TargetSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'velocity']
@@ -58,7 +58,7 @@ class TargetSectionAdmin(admin.StackedInline):
     classes = ['collapse']
 
 
-class AssetsSectionAdmin(admin.StackedInline):
+class AssetsSectionAdmin(admin.TabularInline):
     model = AssetsSection
     extra = 0
     exclude = ['execution_time', 'started_at']
@@ -75,13 +75,13 @@ class AssetsSectionAdmin(admin.StackedInline):
         return obj.leads_assets
 
 
-class ITCuratedSectionAdmin(admin.StackedInline):
+class ITCuratedSectionAdmin(admin.TabularInline):
     model = ITCuratedSection
     extra = 0
     classes = ['collapse']
 
 
-class NurturingSectionAdmin(admin.StackedInline):
+class NurturingSectionAdmin(admin.TabularInline):
     model = NurturingSection
     extra = 0
     exclude = ['execution_time', 'started_at']
@@ -97,7 +97,7 @@ class NurturingSectionAdmin(admin.StackedInline):
         return obj.link
 
 
-class CreativesSectionAdmin(admin.StackedInline):
+class CreativesSectionAdmin(admin.TabularInline):
     model = CreativesSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'state']
@@ -111,14 +111,14 @@ class SuppresionListSectionAdmin(admin.TabularInline):
     classes = ['collapse']
 
 
-class FairTradeSectionAdmin(admin.StackedInline):
+class FairTradeSectionAdmin(admin.TabularInline):
     model = FairTradeSection
     extra = 0
     exclude = ['execution_time', 'started_at']
     classes = ['collapse']
 
 
-class ABMSectionAdmin(admin.StackedInline):
+class ABMSectionAdmin(admin.TabularInline):
     model = ABMSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'name']
@@ -127,7 +127,7 @@ class ABMSectionAdmin(admin.StackedInline):
     insert_after = 'done_abm_percent'
 
 
-class LeadCascadeProgramSectionAdmin(admin.StackedInline):
+class LeadCascadeProgramSectionAdmin(admin.TabularInline):
     model = LeadCascadeProgramSection
     extra = 0
     fields = ['state', 'percent', 'name',  'leads_cascade', ]
@@ -139,7 +139,7 @@ class LeadCascadeProgramSectionAdmin(admin.StackedInline):
         return obj.leads_cascade
 
 
-class InstallBaseSectionAdmin(admin.StackedInline):
+class InstallBaseSectionAdmin(admin.TabularInline):
     model = InstallBaseSection
     extra = 0
     fields = ['state', 'percent', 'name', 'leads_installbase', ]
@@ -151,7 +151,7 @@ class InstallBaseSectionAdmin(admin.StackedInline):
         return obj.leads_installbase
 
 
-class IntentFeedsSectionAdmin(admin.StackedInline):
+class IntentFeedsSectionAdmin(admin.TabularInline):
     model = IntentFeedsSection
     extra = 0
     fields = ['kind', 'state', 'name', 'companies_count',  'company',  'leads_generated', 'percent',  ]
@@ -168,7 +168,7 @@ class IntentFeedsSectionAdmin(admin.StackedInline):
         return obj.leads_generated
 
 
-class JobTitlesSectionAdmin(admin.StackedInline):
+class JobTitlesSectionAdmin(admin.TabularInline):
     model = JobTitlesSection
     extra = 0
     fields = ['state', 'job_title', 'leads_generated', 'goal', 'percent', ]
@@ -181,7 +181,7 @@ class JobTitlesSectionAdmin(admin.StackedInline):
         return obj.leads_generated
 
 
-class IndustriesSectionAdmin(admin.StackedInline):
+class IndustriesSectionAdmin(admin.TabularInline):
     model = IndustriesSection
     extra = 0
     fields = ['state', 'industry', 'leads_industry',  'percent', ]
@@ -195,7 +195,7 @@ class IndustriesSectionAdmin(admin.StackedInline):
     leads_industry.short_description = "Leads Generated"
 
 
-class GeolocationsSectionAdmin(admin.StackedInline):
+class GeolocationsSectionAdmin(admin.TabularInline):
     model = GeolocationsSection
     extra = 0
     classes = ['collapse']
@@ -207,7 +207,7 @@ class GeolocationsSectionAdmin(admin.StackedInline):
         return obj.leads_geolocation
 
 
-class RevenueSectionAdmin(admin.StackedInline):
+class RevenueSectionAdmin(admin.TabularInline):
     model = RevenueSection
     extra = 0
     fields = ['state',  'revenue', 'leads_revenue', 'percent',]
@@ -221,7 +221,7 @@ class RevenueSectionAdmin(admin.StackedInline):
     leads_revenue.short_description = "Leads Generated"
 
 
-class CompanySizeSectionAdmin(admin.StackedInline):
+class CompanySizeSectionAdmin(admin.TabularInline):
     model = CompanySizeSection
     extra = 0
     fields = ['state',  'company_size', 'leads_company_size', 'percent']
@@ -235,7 +235,7 @@ class CompanySizeSectionAdmin(admin.StackedInline):
     leads_company_size.short_description = "Leads Generated"
 
 
-class TeamsAdmin(admin.StackedInline):
+class TeamsAdmin(admin.TabularInline):
     model = Teams
     extra = 0
 
@@ -243,7 +243,7 @@ class TeamsAdmin(admin.StackedInline):
     insert_after = 'generated_leads'
 
 
-class BANTQuestionsSectionAdmin(admin.StackedInline):
+class BANTQuestionsSectionAdmin(admin.TabularInline):
     model = BANTQuestionsSection
     extra = 0
     classes = ['collapse']
@@ -255,7 +255,7 @@ class BANTQuestionsSectionAdmin(admin.StackedInline):
         return obj.question.kind
 
 
-class CustomQuestionsSectionAdmin(admin.StackedInline):
+class CustomQuestionsSectionAdmin(admin.TabularInline):
     model = CustomQuestionsSection
     extra = 0
     exclude = ['question_txt', 'answer_txt', 'started_at', 'execution_time']
