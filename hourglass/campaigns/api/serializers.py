@@ -573,7 +573,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     pacing_type = PacingSerializer()
     sections = SectionsSettingsSerializer(read_only=True, many=True)
     teams = TeamsSerializer(read_only=True, many=True)
-
+    velocity = serializers.SerializerMethodField()
     assets = AssetsSectionSerializer(many=True, read_only=True)
     intents = IntentFeedsSectionSerializer(many=True, read_only=True)
     artificial_titles = JobTitlesSerializer(source='job_titles', many=True, read_only=True)
@@ -600,7 +600,8 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "assets", "intents", "artificial_titles", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
-            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm", "done_abm", "suppression_list"
+            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm", "done_abm",
+            "suppression_list", "velocity"
 
         )
 
@@ -613,6 +614,9 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     def get_delivered(self, instance):
         return instance.delivered
 
+    def get_velocity(self, instance):
+        return instance.velocity
+    
     def get_created(self, instance):
         if instance.created:
             return instance.created.strftime(settings.ENDPOINT_DATE_FORMAT)
