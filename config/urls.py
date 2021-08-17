@@ -42,5 +42,8 @@ urlpatterns = [
     url(r'^chaining/', include('smart_selects.urls')),
 ]
 
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
+
 admin.site.site_header = 'Hourglass Admin Panel'
 admin.site.site_title = 'Hourglass Admin Panel'
