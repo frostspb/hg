@@ -42,7 +42,7 @@ class SectionsSettingsSerializer(serializers.ModelSerializer):
         model = SectionSettings
         ordering = ('-pos',)
         fields = (
-            "id", "name", "slug", "enabled", "can_enabled"
+            "id", "name", "slug", "enabled", "can_enabled", "delta_v_sector", "delta_v_per_row"
         )
 
 
