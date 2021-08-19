@@ -376,7 +376,7 @@ class TargetSection(CloneMixin, BaseStateItem):
 class AssetsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Asset Name", max_length=200)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="assets")
-    landing_page = models.FileField("Landing Page")
+    landing_page = models.FileField("Landing Page", blank=True, null=True)
     titles = models.ManyToManyField(JobTitles, blank=True)
     velocity_koeff = models.FloatField(default=1.0)
 
