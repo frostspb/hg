@@ -42,7 +42,7 @@ TACTICS_SLUG = "Tactics"
 
 ITC_SLUG = "ITCurated"
 FT_SLUG = "Fair-TradeLeadQualification"
-LCP_SLUG = "LeadCascadeProgram'"
+LCP_SLUG = "LeadCascadeProgram"
 NURTURING_SLUG = "Nurturing"
 CREATIVES_SLUG = "Creatives"
 
