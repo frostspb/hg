@@ -570,6 +570,7 @@ class NurturingSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="nurturings")
     campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, verbose_name="Type")
     assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
+    lead_goal = models.IntegerField(null=True, blank=True)
 
     @property
     def link(self):

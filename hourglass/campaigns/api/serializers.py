@@ -258,6 +258,7 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
             "link",
             "generated_leads",
             "state",
+            "lead_goal",
         )
 
     def get_link(self, instance):

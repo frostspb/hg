@@ -85,7 +85,7 @@ class NurturingSectionAdmin(admin.TabularInline):
     model = NurturingSection
     extra = 0
     exclude = ['execution_time', 'started_at']
-    fields = ['state', 'campaign_type', 'assets', 'link', 'generated_leads']
+    fields = ['state', 'campaign_type', 'assets', 'link', 'generated_leads', 'lead_goal']
     readonly_fields = ['generated_leads', 'link']
     classes = ['collapse']
     insert_after = "nurturing_parameters"
