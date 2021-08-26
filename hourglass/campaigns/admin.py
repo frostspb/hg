@@ -478,6 +478,7 @@ class CampaignClientAdmin(CloneModelAdmin):
 
 @admin.register(Campaign)
 class CampaignAdmin(CloneModelAdmin):
+    save_on_top = True
     form = make_ajax_form(Campaign, {
         'job_titles': 'titles_campaign',  # ManyToManyField
 
