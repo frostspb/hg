@@ -96,6 +96,18 @@ class NurturingSectionAdmin(admin.TabularInline):
     def link(self, obj):
         return obj.link
 
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+
+        field = super(NurturingSectionAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+        if db_field.name == 'assets':
+            if request._obj_ is not None:
+                field.queryset = field.queryset.filter(campaign=request._obj_)
+            else:
+                field.queryset = field.queryset.none()
+
+        return field
+
 
 class CreativesSectionAdmin(admin.TabularInline):
     model = CreativesSection
@@ -466,6 +478,10 @@ class CampaignClientAdmin(CloneModelAdmin):
 
     change_form_template = 'admin/custom/change_form.html'
 
+    def get_form(self, request, obj=None, **kwargs):
+        # just save obj reference for future processing in Inline
+        request._obj_ = obj
+        return super(CampaignClientAdmin, self).get_form(request, obj, **kwargs)
     class Media:
         css = {
             'all': (
@@ -579,6 +595,11 @@ class CampaignAdmin(CloneModelAdmin):
         CreativesSectionAdmin,
         TeamsAdmin,
     ]
+
+    def get_form(self, request, obj=None, **kwargs):
+        # just save obj reference for future processing in Inline
+        request._obj_ = obj
+        return super(CampaignAdmin, self).get_form(request, obj, **kwargs)
 
     def get_queryset(self, request):
         qs = super(CampaignAdmin, self).get_queryset(request)

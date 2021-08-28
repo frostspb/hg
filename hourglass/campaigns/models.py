@@ -385,7 +385,7 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
         verbose_name_plural = "Assets"
 
     def __str__(self):
-        return f"Asset {self.id}"
+        return f"{self.name}"
 
     @property
     def leads_assets(self):
@@ -525,7 +525,7 @@ class CompanySizeSection(CloneMixin, BaseReportPercentItem):
 class ABMSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("ABM", max_length=200, blank=True, null=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="abms")
-    file = models.FileField("List")
+    file = models.FileField("List", null=True, blank=True)
     title = models.CharField(max_length=128)
     accounts_value = models.PositiveIntegerField()
 
