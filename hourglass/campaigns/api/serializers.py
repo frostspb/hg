@@ -565,6 +565,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     end_date = serializers.SerializerMethodField()
     created = serializers.SerializerMethodField()
     client = ClientSerializer(read_only=True, many=False)
+    TA = serializers.SerializerMethodField()
     targets = TargetSectionSerializer(read_only=True, many=True)
     tactics = serializers.SerializerMethodField()
     integration_type = IntegrationTypeSerializer()
@@ -598,7 +599,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "client", "start_date", "created" , "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
+            "client", "TA", "start_date", "created" , "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
             "delivered", "remaining", "in_validation", "total_generated", "audience_targeted", "sections",
             "assets", "intents", "artificial_titles", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
@@ -608,6 +609,9 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "suppression_list", "velocity", "state"
 
         )
+
+    def get_TA(self, instance):
+        return instance.ta
 
     def get_goal_abm(self, instance):
         return instance.goal_abm
