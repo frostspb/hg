@@ -683,7 +683,7 @@ def create_curated(sender, instance, created, **kwargs):
 sections = [
 
         {'name': ASSETS_NAME, 'slug': ASSETS_SLUG, 'pos': 0},
-        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1 },
+        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1},
         {'name': ABM_NAME, 'slug': ABM_SLUG, 'pos': 2},
         {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG, 'pos': 3},
         {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG, 'pos': 4},

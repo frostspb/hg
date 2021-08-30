@@ -382,7 +382,8 @@ class CampaignSerializer(serializers.ModelSerializer):
             "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
             "itcurateds",
             "abm_look_a_like", "rejected", "teams", "tactics",
-            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list",
+            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm",
+            "suppression_list",
         )
 
     def get_goal_abm(self, instance):
@@ -592,6 +593,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     nurturings = NurturingSectionSerializer(many=True, read_only=True)
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
+    itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -601,7 +603,8 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "assets", "intents", "artificial_titles", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
-            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm", "done_abm",
+            "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm",
+            "done_abm", "itcurateds",
             "suppression_list", "velocity"
 
         )
