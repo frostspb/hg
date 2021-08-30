@@ -605,7 +605,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm",
             "done_abm", "itcurateds",
-            "suppression_list", "velocity"
+            "suppression_list", "velocity", "state"
 
         )
 
