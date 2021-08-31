@@ -371,9 +371,6 @@ class CampaignClientAdmin(CloneModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
-
     def get_queryset(self, request):
         qs = super(CampaignClientAdmin, self).get_queryset(request)
         qs = qs.filter(kind=Campaign.CampaignKinds.USER)
