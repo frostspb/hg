@@ -298,18 +298,18 @@ class Campaign(CloneMixin, BaseStateItem):
 
         for i in sections:
             if i.name == JOB_TITLES_SLUG:
-                ta += self.titles.count() * i.delta_ta_per_row
+                ta += self.titles.count() * i.delta_ta_per_row_value
             elif i.name == REVENUE_SLUG:
-                ta += self.revenues.count() * i.delta_ta_per_row
+                ta += self.revenues.count() * i.delta_ta_per_row_value
             elif i.name == COMPANY_SIZE_SLUG:
-                ta += self.companies.count() * i.delta_ta_per_row
+                ta += self.companies.count() * i.delta_ta_per_row_value
             elif i.name == SUPP_LIST_SLUG:
                 pass
             elif i.name == ABM_SLUG:
                 #abm_ta = self.abm
                 pass
             elif i.name == INDUSTRIES_SLUG:
-                ta += self.industries.count() * i.delta_ta_per_row
+                ta += self.industries.count() * i.delta_ta_per_row_value
         return ta
 
     @property
@@ -341,6 +341,12 @@ class SectionSettings(CloneMixin, models.Model):
 
     def __str__(self):
         return f"Section {self.name}"
+
+    @property
+    def delta_ta_per_row_value(self):
+        if self.delta_ta_per_row:
+            return self.delta_ta_per_row
+        return 0
 
 
 class TargetSection(CloneMixin, BaseStateItem):
@@ -682,26 +688,26 @@ def create_curated(sender, instance, created, **kwargs):
 
 sections = [
 
-        {'name': ASSETS_NAME, 'slug': ASSETS_SLUG, 'pos': 0},
-        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1},
-        {'name': ABM_NAME, 'slug': ABM_SLUG, 'pos': 2},
-        {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG, 'pos': 3},
-        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG, 'pos': 4},
-        {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG, 'pos': 5},
-        {'name': GEO_NAME, 'slug': GEO_SLUG, 'pos': 6},
-        {'name': REVENUE_NAME, 'slug': REVENUE_SLUG, 'pos': 7},
-        {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG, 'pos': 8},
-        {'name': BANT_NAME, 'slug': BANT_SLUG, 'pos': 9},
-        {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10},
-        {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG, 'pos': 11},
+        {'name': ASSETS_NAME, 'slug': ASSETS_SLUG, 'pos': 0, 'delta_v_sector': 1, 'delta_v_per_row': 1},
+        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1, 'delta_v_sector': 1, 'delta_v_per_row': 1},
+        {'name': ABM_NAME, 'slug': ABM_SLUG, 'pos': 2, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG, 'pos': 3, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG, 'pos': 4, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG, 'pos': 5, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': GEO_NAME, 'slug': GEO_SLUG, 'pos': 6, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': REVENUE_NAME, 'slug': REVENUE_SLUG, 'pos': 7, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG, 'pos': 8, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': BANT_NAME, 'slug': BANT_SLUG, 'pos': 9, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'quality_sector': 1, 'quality_per_row': 1},
+        {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'quality_sector': 1, 'quality_per_row': 1},
+        {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG, 'pos': 11, 'delta_v_sector': 1, 'delta_v_per_row': 1},
         #{'name': CN_NAME, 'slug': CN_SLUG},
         {'name': TACTICS_NAME, 'slug': TACTICS_SLUG, 'pos': 12},
-        {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 13},
-        {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 14},
+        {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 13, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
+        {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 14, 'delta_v_sector': 1, 'delta_v_per_row': 1},
         {'name': LCP_NAME, 'slug': LCP_SLUG, 'pos': 15},
-        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 16},
+        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 16, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'quality_sector': 1, 'quality_per_row': 1},
         {'name': 'Lets Verify', 'slug': 'lets_verify', 'pos': 17},
-        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 18},
+        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 18, 'delta_v_sector': 1, 'delta_v_per_row': 1},
 
     ]
 
@@ -717,5 +723,17 @@ class CampaignClient(Campaign):
 def create_settings(sender, instance, created, **kwargs):
 
     if created:
-        for_create = [SectionSettings(slug=i.get('slug'), campaign=instance, name=i.get('name')) for i in sections]
+        for_create = [
+            SectionSettings(
+                slug=i.get('slug'),
+                campaign=instance,
+                name=i.get('name'),
+                delta_v_sector=i.get('delta_v_sector',0),
+                delta_v_per_row=i.get('delta_v_per_row', 0),
+                delta_ta_sector=i.get('delta_ta_sector', 0),
+                delta_ta_per_row=i.get('delta_ta_per_row', 0),
+                quality_sector=i.get('quality_sector'),
+                quality_per_row=i.get('quality_per_row'),
+            ) for i in sections
+        ]
         SectionSettings.objects.bulk_create(for_create)
