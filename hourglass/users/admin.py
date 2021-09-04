@@ -12,7 +12,7 @@ User = get_user_model()
 class UserAdmin(auth_admin.UserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
-
+    readonly_fields = ['last_login']
     fieldsets = auth_admin.UserAdmin.fieldsets + (
         (
             "User", {"fields": ("note", "phone", "photo")}

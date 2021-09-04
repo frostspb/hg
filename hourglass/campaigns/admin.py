@@ -6,12 +6,14 @@ from django.contrib import admin
 from ajax_select import make_ajax_form
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, \
     Teams, CampaignClient
+
+
 
 
 class ComponentInlineFormSet(BaseInlineFormSet):
@@ -30,7 +32,7 @@ class SectionSettingsAdmin(admin.TabularInline):
     model = SectionSettings
     extra = 0
     fields = [
-        'enabled',  'delta_v_sector', 'delta_v_per_row', 'delta_ta_sector', 'delta_ta_per_row',
+        'enabled',  'delta_v_sector', 'delta_ta_sector', 'delta_ta_per_row',
         'quality_sector', 'quality_per_row',
     ]
     classes = ['collapse']
@@ -85,7 +87,8 @@ class NurturingSectionAdmin(admin.TabularInline):
     model = NurturingSection
     extra = 0
     exclude = ['execution_time', 'started_at']
-    fields = ['state', 'campaign_type', 'assets', 'link', 'generated_leads', 'lead_goal']
+    fields = ['state', 'campaign_type', 'assets', 'link', #'generated_leads', 'lead_goal'
+              ]
     readonly_fields = ['generated_leads', 'link']
     classes = ['collapse']
     insert_after = "nurturing_parameters"
@@ -507,7 +510,7 @@ class CampaignAdmin(CloneModelAdmin):
         ("Campaign admin settings", {
             "fields": (
                 "name", "start_offset", "end_offset",   "state",
-                "base_velocity", "top_percent", "middle_percent", "bottom_percent", "tactics", "integration_type",
+                "base_velocity",  "tactics", "integration_type",
                 "pending",
                 "pacing_type",
 
