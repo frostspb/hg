@@ -3,6 +3,7 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateMode
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.db.models import Q
 
 from .serializers import ClientSerializer, CompanySerializer
 from ..models import Client
@@ -14,7 +15,7 @@ class ClientsViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, Updat
     queryset = Client.objects.filter(active=True)
 
     def get_queryset(self):
-        return self.queryset.filter(owner=self.request.user)
+        return self.queryset.filter(Q(owner__isnull=True) | Q(owner=self.request.user))
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
