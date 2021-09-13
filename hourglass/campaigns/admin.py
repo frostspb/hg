@@ -519,7 +519,7 @@ class CampaignAdmin(CloneModelAdmin):
 
             )
         }),
-        ("Intent Feed Total settings", {
+        ("Data Signal Streams Total settings", {
             "fields": (
                 "intent_feed_goal_percent", "intent_feed_done_percent", "goal_intent_feed", "done_intent_feed",
                 "total_intent_feed", "total_intent_feed_infusemedia", "total_intent_feed_bombora",

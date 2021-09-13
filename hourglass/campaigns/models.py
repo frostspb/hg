@@ -46,9 +46,9 @@ LCP_SLUG = "LeadCascadeProgram"
 NURTURING_SLUG = "Nurturing"
 CREATIVES_SLUG = "Creatives"
 
-JOB_TITLES_NAME = "Job Title"
+JOB_TITLES_NAME = "Job Titles"
 ASSETS_NAME = "Assets"
-INTENT_FEED_NAME = "Intent Feed"
+INTENT_FEED_NAME = "Data Signal Streams"
 ABM_NAME = "ABM"
 SUPP_LIST_NAME = "Suppression list(s)"
 INDUSTRIES_NAME = "Industries"
@@ -411,8 +411,8 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     companies_count = models.PositiveIntegerField("Companies Generated", default=0)
 
     class Meta:
-        verbose_name = "Intent Feed"
-        verbose_name_plural = "Intent Feeds"
+        verbose_name = "Data Signal Stream"
+        verbose_name_plural = "Data Signal Streams"
 
     def __str__(self):
         return f"{self.id}"
