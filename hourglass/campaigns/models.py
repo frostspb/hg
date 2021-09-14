@@ -213,10 +213,11 @@ class Campaign(CloneMixin, BaseStateItem):
         # if not res:
         #     res = 0
         # return res
-        res = 0
-        for team in self.teams.all():
-            res += team.rejected
-        return round(res, 2)
+        # res = 0
+        # for team in self.teams.all():
+        #     res += team.rejected
+        # return round(res, 2)
+        return 0
 
     @property
     def total_goal(self):
