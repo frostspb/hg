@@ -254,9 +254,16 @@ class TeamsAdmin(admin.TabularInline):
     model = Teams
     extra = 0
 
-    exclude = ['__all__']
+    fields = ['name', 'team_lead', 'team_member1', 'team_member2', 'team_member3', 'team_member4',
+              'rejected_percent', 'leads_rejected', 'leads_delivered']
+    readonly_fields = ['leads_rejected', 'leads_delivered']
     insert_after = 'generated_leads'
 
+    def leads_delivered(self, obj):
+        return obj.delivered
+
+    def leads_rejected(self, obj):
+        return obj.rejected
 
 class BANTQuestionsSectionAdmin(admin.TabularInline):
     model = BANTQuestionsSection
