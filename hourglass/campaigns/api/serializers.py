@@ -320,13 +320,21 @@ class TeamsSerializer(serializers.ModelSerializer):
     team_member2 = AssociatesSerializer(read_only=True, many=False)
     team_member3 = AssociatesSerializer(read_only=True, many=False)
     team_member4 = AssociatesSerializer(read_only=True, many=False)
+    delivered = serializers.SerializerMethodField(read_only=True)
+    rejected = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Teams
         fields = (
             "id",  "name", "team_lead", "team_member1", "team_member2",
-            "team_member3", "team_member4", "delivered", "rejected",
+            "team_member3", "team_member4", "delivered", "rejected", "rejected_percent"
         )
+
+    def get_delivered(self, instance):
+        return instance.delivered
+
+    def get_rejected(self, instance):
+        return instance.rejected
 
 #TODO 1 serializer
 class CampaignSerializer(serializers.ModelSerializer):

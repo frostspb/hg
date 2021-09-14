@@ -336,7 +336,7 @@ class CampaignClientAdmin(CloneModelAdmin):
     )
 
     readonly_fields = [
-        "id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed",
+        "id", "created", "kind","rejected", "delivered", "remaining", "in_validation", "goal_intent_feed",
         "generated_leads", "total_goal",
         "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
         "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
@@ -382,6 +382,9 @@ class CampaignClientAdmin(CloneModelAdmin):
     def goal_abm(self, obj):
         return obj.goal_abm
 
+    def rejected(self, obj):
+        return obj.rejected
+
     def generated_leads(self, obj):
         return obj.generated_leads
 
@@ -413,7 +416,9 @@ class CampaignClientAdmin(CloneModelAdmin):
         url = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=[obj.id])
         return format_html('<a href="{}">{}</a>', url, obj.name)
 
+    generated_leads.short_description = "Generated leads (Delivered + Rejected)"
     name_link.short_description = "Campaign Name"
+    generated_leads.short_description = "Leads Generated (Delivered + Rejected)"
 
     def delivered(self, obj):
         return obj.delivered
@@ -564,7 +569,7 @@ class CampaignAdmin(CloneModelAdmin):
 
     readonly_fields = [
         "id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed",
-        "generated_leads" ,"total_goal",
+        "rejected", "generated_leads" ,"total_goal",
         "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
         "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
     ]
@@ -606,6 +611,9 @@ class CampaignAdmin(CloneModelAdmin):
         qs = qs.filter(kind=Campaign.CampaignKinds.STANDARD)
         return qs
 
+    def rejected(self, obj):
+        return obj.rejected
+
     def goal_abm(self, obj):
         return obj.goal_abm
 
@@ -641,6 +649,7 @@ class CampaignAdmin(CloneModelAdmin):
         return format_html('<a href="{}">{}</a>', url, obj.name)
 
     name_link.short_description = "Campaign Name"
+    generated_leads.short_description = "Leads Generated (Delivered + Rejected)"
 
     def delivered(self, obj):
         return obj.delivered

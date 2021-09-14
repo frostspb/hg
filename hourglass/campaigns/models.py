@@ -133,8 +133,6 @@ class Campaign(CloneMixin, BaseStateItem):
 
     in_progress_admin_percent = models.PositiveIntegerField(default=0)
 
-    rejected = models.PositiveIntegerField(default=0)
-
     intent_feed_goal_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     intent_feed_done_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     abm_look_a_like = models.PositiveIntegerField("Look-a-like", blank=True, null=True)
@@ -210,8 +208,19 @@ class Campaign(CloneMixin, BaseStateItem):
         return round((self.intent_feed_done_percent / 100) * self.goal_intent_feed, 2)
 
     @property
+    def rejected(self):
+        # res = self.teams.filter().aggregate(Sum('rejected')).get('rejected__sum', 0)
+        # if not res:
+        #     res = 0
+        # return res
+        res = 0
+        for team in self.teams.all():
+            res += team.rejected
+        return round(res, 2)
+
+    @property
     def total_goal(self):
-        res = self.targets.filter().aggregate(Sum('leads_goal')).get('leads_goal__sum', 0)
+        res = self.targets.filter().aggregate(Sum('leads_generated')).get('leads_generated__sum', 0)
         if not res:
             res = 0
         return round(res, 2)
@@ -250,7 +259,6 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def delivered(self):
         if self.total_goal:
-
             return int(round((self.total_generated/self.total_goal) * 100, 0))
 
     @property
@@ -266,7 +274,9 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def generated_leads(self):
         if self.delivered:
-            return self.delivered + self.rejected
+            return self.delivered + self.rejected_leads
+        else:
+            return 0
 
     @property
     def generated(self):
@@ -662,8 +672,7 @@ class Teams(CloneMixin, models.Model):
     team_member2 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member2', null=True, blank=True)
     team_member3 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member3', null=True, blank=True)
     team_member4 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member4', null=True, blank=True)
-    delivered = models.PositiveIntegerField(default=0)
-    rejected = models.PositiveIntegerField(default=0)
+    rejected_percent = models.PositiveIntegerField("% of Leads Rejected", default=0)
 
     class Meta:
         verbose_name = "Teams"
@@ -671,6 +680,18 @@ class Teams(CloneMixin, models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    @property
+    def delivered(self):
+        cnt = self.campaign.teams.all().count()
+        if cnt:
+            return self.campaign.total_goal/cnt
+        else:
+            return 0
+
+    @property
+    def rejected(self):
+        return self.campaign.generated_leads * (self.rejected_percent/100)
 
 
 @receiver(post_save, sender=Campaign)
