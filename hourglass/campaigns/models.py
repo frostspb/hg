@@ -213,11 +213,11 @@ class Campaign(CloneMixin, BaseStateItem):
         # if not res:
         #     res = 0
         # return res
-        # res = 0
-        # for team in self.teams.all():
-        #     res += team.rejected
-        # return round(res, 2)
-        return 0
+        res = 0
+        for team in self.teams.all():
+            res += team.rejected
+        return round(res, 2)
+
 
     @property
     def total_goal(self):
@@ -692,7 +692,7 @@ class Teams(CloneMixin, models.Model):
 
     @property
     def rejected(self):
-        return self.campaign.generated_leads * (self.rejected_percent/100)
+        return self.campaign.total_goal * (self.rejected_percent/100)
 
 
 @receiver(post_save, sender=Campaign)
