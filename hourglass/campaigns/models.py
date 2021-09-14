@@ -142,7 +142,7 @@ class Campaign(CloneMixin, BaseStateItem):
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
         "intents", "titles", "assets", "targets",  "creatives", "nurturings", #  "itcurateds",
-        "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams"
+        "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams", "jt",
     ]
 
     _clone_m2m_fields = ["tactics"]
@@ -383,8 +383,11 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Asset Name", max_length=200)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="assets")
     landing_page = models.FileField("Landing Page", blank=True, null=True)
-    titles = models.ManyToManyField(JobTitles, blank=True)
+    titles = models.ManyToManyField(JobTitles, blank=True, related_name="jt_as")
     velocity_koeff = models.FloatField(default=1.0)
+    _clone_m2o_or_o2m_fields = [
+        "jt_as"
+    ]
 
     class Meta:
         verbose_name = "Asset"
@@ -410,6 +413,10 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     kind = models.CharField("Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
     companies_count = models.PositiveIntegerField("Companies Generated", default=0)
 
+    _clone_m2o_or_o2m_fields = [
+        "companies"
+    ]
+
     class Meta:
         verbose_name = "Data Signal Stream"
         verbose_name_plural = "Data Signal Streams"
@@ -419,7 +426,6 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_generated(self):
-        #return format_leads(self.percent, self.campaign.total_generated)
         return format_leads(self.percent, self.campaign.done_intent_feed)
 
     @property
@@ -443,7 +449,6 @@ class JobTitlesSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads_generated(self):
-        #return format_leads(self.generated, self.campaign.total_goal)
         return format_leads(self.percent, self.campaign.total_goal)
 
 
@@ -468,7 +473,6 @@ class IndustriesSection(CloneMixin, BaseReportPercentItem):
     @property
     def leads_industry(self):
         return format_leads(self.percent, self.campaign.total_generated)
-        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class GeolocationsSection(CloneMixin, BaseReportPercentItem):
@@ -487,8 +491,6 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
     @property
     def leads_geolocation(self):
         return format_leads(self.percent, self.campaign.total_generated)
-        #return format_leads(self.percent, self.campaign.total_goal)
-        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class RevenueSection(CloneMixin, BaseReportPercentItem):
@@ -506,8 +508,6 @@ class RevenueSection(CloneMixin, BaseReportPercentItem):
     @property
     def leads_revenue(self):
         return format_leads(self.percent, self.campaign.total_generated)
-        #return format_leads(self.percent, self.campaign.total_goal)
-        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class CompanySizeSection(CloneMixin, BaseReportPercentItem):
@@ -524,8 +524,6 @@ class CompanySizeSection(CloneMixin, BaseReportPercentItem):
     @property
     def leads_company_size(self):
         return format_leads(self.percent, self.campaign.total_generated)
-        #return format_leads(self.percent, self.campaign.total_goal)
-        #return int((self.percent / 100) * self.campaign.total_goal)
 
 
 class ABMSection(CloneMixin, BaseReportPercentItem):
@@ -541,9 +539,7 @@ class ABMSection(CloneMixin, BaseReportPercentItem):
 
     @property
     def leads(self):
-        #return format_leads(self.percent, self.campaign.total_goal)
         return format_leads(self.percent, self.campaign.goal_abm)
-        #return int((self.percent/100) * self.campaign.total_goal)
 
 
 class FairTradeSection(CloneMixin, BaseStateItem):
