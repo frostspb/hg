@@ -130,7 +130,9 @@ class Campaign(CloneMixin, BaseStateItem):
 
     )
     remaining_admin_percent = models.PositiveIntegerField(default=0)
+
     in_progress_admin_percent = models.PositiveIntegerField(default=0)
+
     rejected = models.PositiveIntegerField(default=0)
 
     intent_feed_goal_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
@@ -142,10 +144,10 @@ class Campaign(CloneMixin, BaseStateItem):
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
         "intents", "titles", "assets", "targets",  "creatives", "nurturings", #  "itcurateds",
-        "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams", "jt",
+        "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams",
     ]
 
-    _clone_m2m_fields = ["tactics"]
+    _clone_m2m_fields = ["tactics", "jt"]
 
     class Meta:
         verbose_name = "Campaign"
@@ -385,7 +387,7 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
     landing_page = models.FileField("Landing Page", blank=True, null=True)
     titles = models.ManyToManyField(JobTitles, blank=True, related_name="jt_as")
     velocity_koeff = models.FloatField(default=1.0)
-    _clone_m2o_or_o2m_fields = [
+    _clone_m2m_fields = [
         "jt_as"
     ]
 
@@ -413,7 +415,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     kind = models.CharField("Platform", max_length=32, choices=Kinds.choices, default=Kinds.INFUSEMEDIA)
     companies_count = models.PositiveIntegerField("Companies Generated", default=0)
 
-    _clone_m2o_or_o2m_fields = [
+    _clone_m2m_fields = [
         "companies"
     ]
 
