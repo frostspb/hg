@@ -274,7 +274,7 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def generated_leads(self):
         if self.delivered:
-            return self.delivered + self.rejected_leads
+            return self.delivered + self.rejected
         else:
             return 0
 
