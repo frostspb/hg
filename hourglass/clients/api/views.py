@@ -15,7 +15,9 @@ class ClientsViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, Updat
     queryset = Client.objects.filter(active=True)
 
     def get_queryset(self):
-        return self.queryset.filter(Q(owner__isnull=True) | Q(owner=self.request.user))
+        return self.queryset.filter(
+            Q(owner__isnull=True) | Q(owner=self.request.user) | Q(client_type=Client.ClientTypes.STANDARD)
+        )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
