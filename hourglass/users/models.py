@@ -21,6 +21,7 @@ class User(AbstractUser):
             'unique': "A user with that username already exists.",
         },
     )
+
     @property
     def photo_url(self):
         if self.photo:

@@ -7,6 +7,7 @@ from django.contrib.postgres.fields import JSONField
 from django.utils.timezone import now
 from django_extensions.db.models import TimeStampedModel
 from django_fsm import FSMField
+import math
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from model_clone import CloneMixin
@@ -216,15 +217,21 @@ class Campaign(CloneMixin, BaseStateItem):
         res = 0
         for team in self.teams.all():
             res += team.rejected
-        return round(res, 2)
-
+        return int(round(res, 2))
 
     @property
     def total_goal(self):
         res = self.targets.filter().aggregate(Sum('leads_generated')).get('leads_generated__sum', 0)
         if not res:
             res = 0
-        return round(res, 2)
+        return int(math.floor(res))
+
+    @property
+    def total_generated_goal(self):
+        res = self.targets.filter().aggregate(Sum('leads_goal')).get('leads_goal__sum', 0)
+        if not res:
+            res = 0
+        return int(round(res, 2))
 
     @property
     def total_generated(self):
@@ -275,15 +282,15 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def generated_leads(self):
         if self.delivered:
-            return self.delivered + self.rejected
+            return int(self.delivered + self.rejected)
         else:
             return 0
 
     @property
     def generated(self):
         res = self.velocity * self.duration
-        if res >= self.total_goal:
-            res = self.total_goal
+        if res >= self.total_generated_goal:
+            res = self.total_generated_goal
         return res
 
     @property
@@ -572,6 +579,7 @@ class InstallBaseSection(CloneMixin, BaseReportPercentItem):
 
 
 class LeadCascadeProgramSection(CloneMixin, BaseReportPercentItem):
+    percent = models.FloatField(default=0)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="lead_cascades")
     name = models.CharField("Leads Description", max_length=256)
 

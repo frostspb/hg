@@ -12,12 +12,14 @@ User = get_user_model()
 class UserAdmin(auth_admin.UserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
-    readonly_fields = ['last_login']
+    readonly_fields = ['last_login', 'date_joined']
     fieldsets = auth_admin.UserAdmin.fieldsets + (
+
+
         (
-            "User", {"fields": ("note", "phone", "photo")}
+            "Personal Info", {"fields": ("note", "phone",)}
         ),
     )
-    list_display = ["username", "is_superuser", "is_active", "date_joined", "last_login", "email"]
+    list_display = ["username", "is_staff", "is_active", "date_joined", "last_login", "email"]
     search_fields = ["username", "email", "id", ]
     ordering = ('-date_joined',)
