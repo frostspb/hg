@@ -381,7 +381,7 @@ class CampaignSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = (
             "id", "client",
-            "created", "active", "base_velocity", "base_quality", "customer_information", "contact_name", "email", "note",
+            "created", "active", "pending","base_velocity", "base_quality", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order", "managed_by", "targets", "sections",
             "delivered", "remaining", "in_validation", "total_generated", "audience_targeted",
             "start_date", "end_date", "kind", "dashboard_string_count", "ta_volume",
@@ -504,7 +504,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "end_date", "TA", "base_velocity",  "base_quality", "duration", "state", "velocity", "ta_volume", "pacing_type", "integration_type", "managed_by",
+            "end_date", "TA", "base_velocity", "pending",  "base_quality", "duration", "state", "velocity", "ta_volume", "pacing_type", "integration_type", "managed_by",
             "delivered", "remaining", "in_validation", "total_generated", "targets",
             "kind", "total_goal", "generated", "generated_pos", "sections", "tactics", "dashboard_string_count",
             "assets", "intents",  "artificial_titles","titles", "industries", "revenues", "companies_size", "geolocations",
@@ -608,7 +608,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "client", "TA", "base_velocity", "base_quality",  "start_date", "created" , "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
+            "client", "TA", "base_velocity", "pending", "base_quality",  "start_date", "created" , "end_date", "name", "integration_type",  "pacing_type", "targets", "tactics",
             "delivered", "remaining", "in_validation", "total_generated", "audience_targeted", "sections",
             "assets", "intents", "artificial_titles", "titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
