@@ -673,6 +673,12 @@ class CustomQuestionsSection(CloneMixin, BaseStateItem):
         return f"{self.id}"
 
 
+class Message(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="messages", null=True, blank=True)
+    message = models.CharField(max_length=1024, blank=True, null=True)
+    manager = models.ForeignKey(Managers, on_delete=models.CASCADE,)
+
+
 class Teams(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="teams", null=True, blank=True)
     name = models.CharField(max_length=250)

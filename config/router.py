@@ -5,7 +5,7 @@ from hourglass.campaigns.api.views import CampaignViewSet, CustomQuestionsSectio
     GeolocationsSectionViewSet, CompanySizeSectionViewSet, RevenueSectionViewSet, IndustriesSectionViewSet, \
     JobTitlesSectionViewSet,  IntentFeedsSectionViewSet, AssetsSectionViewSet, SectionSettingsViewSet,\
     CreativesSectionViewSet, NurturingSectionViewSet, LeadCascadeProgramSectionViewSet, FairTradeSectionViewSet,\
-    InstallBaseSectionViewSet, ABMSectionViewSet, ITCuratedSectionViewSet, SuppresionListSectionViewSet
+    InstallBaseSectionViewSet, ABMSectionViewSet, ITCuratedSectionViewSet, SuppresionListSectionViewSet, MessageViewSet
 
 from hourglass.references.api.views import ReferencesViewSet
 
@@ -16,6 +16,7 @@ router.register("campaign", CampaignViewSet, basename="campaign")
 router.register("section_settings", SectionSettingsViewSet, basename="section_settings")
 router.register("references", ReferencesViewSet, basename="references")
 router.register("campaign_settings/custom_questions", CustomQuestionsSectionViewSet, basename="questions")
+router.register("campaign_settings/message", MessageViewSet, basename="message")
 router.register("campaign_settings/bant_questions", BANTQuestionsSectionViewSet, basename="bant")
 router.register("campaign_settings/geolocations", GeolocationsSectionViewSet, basename="geolocations")
 router.register("campaign_settings/company_size", CompanySizeSectionViewSet, basename="company_size")

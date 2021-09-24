@@ -3,7 +3,7 @@ from django.conf import settings
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams, Message
 from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
@@ -676,3 +676,8 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             i['active'] = True if i.get('id') in model_tactics else False
         return t
 
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ("id", "campaign", "message", "manager")

@@ -19,13 +19,15 @@ from .serializers import CampaignSerializer, AssetsSectionSerializer,\
     CompanySizeSectionSerializer, RevenueSectionSerializer, IndustriesSectionSerializer,\
     JobTitlesSectionSerializer, IntentFeedsSectionSerializer, ABMSectionSerializer,\
     InstallBaseSectionSerializer, FairTradeSectionSerializer,LeadCascadeProgramSectionSerializer,\
-    NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer
+    NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer,\
+    MessageSerializer
+
 
 
 from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Message
 
 
 class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin):
@@ -232,4 +234,12 @@ class SuppresionListSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveMod
     permission_classes = [IsAuthenticated]
     serializer_class = SuppresionListSectionSerializer
     queryset = SuppresionListSection.objects.all()
+    filterset_fields = ('campaign',)
+
+
+class MessageViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin,
+                           DestroyModelMixin):
+    permission_classes = [IsAuthenticated]
+    serializer_class = MessageSerializer
+    queryset = Message.objects.all()
     filterset_fields = ('campaign',)
