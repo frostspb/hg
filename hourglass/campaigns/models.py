@@ -340,6 +340,23 @@ class Campaign(CloneMixin, BaseStateItem):
     def is_standard(self):
         return self.kind == self.CampaignKinds.STANDARD
 
+    def reset_settings(self):
+        self.sections.all().delete()
+        for_create = [
+            SectionSettings(
+                slug=i.get('slug'),
+                campaign=self,
+                name=i.get('name'),
+                delta_v_sector=i.get('delta_v_sector', 0),
+                delta_v_per_row=i.get('delta_v_per_row', 0),
+                delta_ta_sector=i.get('delta_ta_sector', 0),
+                delta_ta_per_row=i.get('delta_ta_per_row', 0),
+                quality_sector=i.get('quality_sector'),
+                quality_per_row=i.get('quality_per_row'),
+            ) for i in sections
+        ]
+        SectionSettings.objects.bulk_create(for_create)
+
 
 class SectionSettings(CloneMixin, models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="sections")

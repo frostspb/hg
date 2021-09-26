@@ -583,7 +583,7 @@ class CampaignAdmin(CloneModelAdmin):
 
     ordering = ("-created",)
 
-    actions = ["start", "pause", ]
+    actions = ["start", "pause", "reset_settings"]
 
     inlines = [
         SectionSettingsAdmin,
@@ -688,7 +688,14 @@ class CampaignAdmin(CloneModelAdmin):
     def generated(self, obj):
         return obj.generated
 
+    def reset_settings(self, request, qs):
+        if not request.user.is_staff:
+            raise Http404
+        for i in qs:
+            i.reset_settings()
+
     def pause(self, request, qs):
+
         if not request.user.is_staff:
             raise Http404
 
