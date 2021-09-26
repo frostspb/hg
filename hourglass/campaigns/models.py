@@ -287,6 +287,15 @@ class Campaign(CloneMixin, BaseStateItem):
             return 0
 
     @property
+    def duration(self):
+        if self.velocity:
+            return (self.total_goal - self.total_generated) / self.velocity
+                    # if self.state == self.States.STATE_RUNNING and self.started_at:
+        #     return self.execution_time + int((now() - self.started_at).total_seconds() / 60) % 60
+        # else:
+        #     return self.execution_time
+
+    @property
     def generated(self):
         res = self.velocity * self.duration
         if res >= self.total_generated_goal:

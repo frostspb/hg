@@ -683,10 +683,10 @@ class CampaignAdmin(CloneModelAdmin):
         return obj.duration
 
     def total_goal(self, obj):
-        return obj.total_goal
+        return obj.total_generated_goal
 
     def generated(self, obj):
-        return obj.generated
+        return obj.total_goal
 
     def reset_settings(self, request, qs):
         if not request.user.is_staff:
