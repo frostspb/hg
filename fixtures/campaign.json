@@ -151,23 +151,6 @@
     }
 },
 
-
-{
-    "model": "references.Managers",
-    "pk": 1,
-    "fields": {
-
-        "name": "Manager1"
-    }
-},
-{
-    "model": "references.Managers",
-    "pk": 2,
-    "fields": {
-
-        "name": "Manager2"
-    }
-},
 {
     "model": "references.Revenue",
     "pk": 1,
