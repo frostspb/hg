@@ -14,7 +14,35 @@
       }
   },
 
+{
+      "model": "clients.Client",
+      "pk": 2,
+      "fields": {
+          "name": "Monetaric",
+          "active": true,
+          "client_type": "standard",
+          "total_campaigns": 8,
+          "leads_generated": 458,
+          "created": "2021-01-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client_since": "2020-07-21"
+      }
+  },
 
+  {
+      "model": "clients.Client",
+      "pk": 3,
+      "fields": {
+          "name": "Financial Wing",
+          "active": true,
+          "client_type": "standard",
+          "total_campaigns": 23,
+          "leads_generated": 9650,
+          "created": "2021-03-01T14:46:56.090Z",
+          "modified": "2021-01-01T14:46:56.090Z",
+          "client_since": "2018-12-04"
+      }
+  },
    {
       "model": "clients.Company",
       "pk": 1,
