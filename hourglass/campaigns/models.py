@@ -246,16 +246,16 @@ class Campaign(CloneMixin, BaseStateItem):
 
     @property
     def velocity(self):
-        sections = self.sections.filter(enabled=True)
+        #sections = self.sections.filter(enabled=True)
         sections_v = self.sections.filter(enabled=True).aggregate(Sum('delta_v_sector'))
         _velocity = self.base_velocity + sections_v.get('delta_v_sector__sum', 0)
-        for i in sections:
-            if i.name == ASSETS_SLUG:
-                _velocity += self.assets.count() * i.delta_v_per_row
-            elif i.name == BANT_SLUG:
-                _velocity += self.bants.count() * i.delta_v_per_row
-            elif i.name == CQ_SLUG:
-                _velocity += self.cqs.count() * i.delta_v_per_row
+        # for i in sections:
+        #     if i.name == ASSETS_SLUG:
+        #         _velocity += self.assets.count() * i.delta_v_per_row
+        #     elif i.name == BANT_SLUG:
+        #         _velocity += self.bants.count() * i.delta_v_per_row
+        #     elif i.name == CQ_SLUG:
+        #         _velocity += self.cqs.count() * i.delta_v_per_row
         targets_velocity = self.targets.filter(state=BaseStateItem.States.STATE_RUNNING).aggregate(Sum('velocity'))
 
         if targets_velocity:
@@ -722,26 +722,26 @@ def create_curated(sender, instance, created, **kwargs):
 
 sections = [
 
-        {'name': ASSETS_NAME, 'slug': ASSETS_SLUG, 'pos': 0, 'delta_v_sector': 1, 'delta_v_per_row': 1},
-        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1, 'delta_v_sector': 1, 'delta_v_per_row': 1},
-        {'name': ABM_NAME, 'slug': ABM_SLUG, 'pos': 2, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG, 'pos': 3, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG, 'pos': 4, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG, 'pos': 5, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': GEO_NAME, 'slug': GEO_SLUG, 'pos': 6, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': REVENUE_NAME, 'slug': REVENUE_SLUG, 'pos': 7, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG, 'pos': 8, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': BANT_NAME, 'slug': BANT_SLUG, 'pos': 9, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'quality_sector': 1, 'quality_per_row': 1},
-        {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'quality_sector': 1, 'quality_per_row': 1},
-        {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG, 'pos': 11, 'delta_v_sector': 1, 'delta_v_per_row': 1},
-        #{'name': CN_NAME, 'slug': CN_SLUG},
+        {'name': ASSETS_NAME, 'slug': ASSETS_SLUG, 'pos': 0, 'delta_v_sector': 1, 'delta_v_per_row': 0},
+        {'name': INTENT_FEED_NAME, 'slug': INTENT_FEED_SLUG, 'pos': 1, 'delta_v_sector': 1, 'delta_v_per_row': 0},
+        {'name': ABM_NAME, 'slug': ABM_SLUG, 'pos': 2, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
+        {'name': SUPP_LIST_NAME, 'slug': SUPP_LIST_SLUG, 'pos': 3, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
+        {'name': JOB_TITLES_NAME, 'slug': JOB_TITLES_SLUG, 'pos': 4, 'delta_ta_sector': -6, 'delta_ta_per_row': 3},
+        {'name': INDUSTRIES_NAME, 'slug': INDUSTRIES_SLUG, 'pos': 5, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
+        {'name': GEO_NAME, 'slug': GEO_SLUG, 'pos': 6, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
+        {'name': REVENUE_NAME, 'slug': REVENUE_SLUG, 'pos': 7, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
+        {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG, 'pos': 8, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
+
+        {'name': BANT_NAME, 'slug': BANT_SLUG, 'pos': 9, 'delta_v_sector': -1,  'quality_sector': 100, },
+        {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10, 'delta_v_sector': 1,  'quality_sector': 25, },
+        {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG, 'pos': 11, 'delta_v_sector': -1, },
         {'name': TACTICS_NAME, 'slug': TACTICS_SLUG, 'pos': 12},
-        {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 13, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'delta_ta_sector': 1, 'delta_ta_per_row': 1},
-        {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 14, 'delta_v_sector': 1, 'delta_v_per_row': 1},
+        {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 13, 'delta_v_sector': 0,  'delta_ta_sector': 0, 'delta_ta_per_row': 0},
+        {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 14, 'delta_v_sector': 1, },
         {'name': LCP_NAME, 'slug': LCP_SLUG, 'pos': 15},
-        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 16, 'delta_v_sector': 1, 'delta_v_per_row': 1, 'quality_sector': 1, 'quality_per_row': 1},
-        {'name': 'Lets Verify', 'slug': 'lets_verify', 'pos': 17},
-        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 18, 'delta_v_sector': 1, 'delta_v_per_row': 1},
+        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 16, 'delta_v_sector': -1,  'quality_sector': 25, },
+        {'name': 'Lets Verify', 'slug': 'lets_verify', 'pos': 17,'delta_v_sector': -3, },
+        {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 18, 'delta_v_sector': 2, },
 
     ]
 

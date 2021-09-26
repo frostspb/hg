@@ -33,7 +33,7 @@ class SectionSettingsAdmin(admin.TabularInline):
     extra = 0
     fields = [
         'enabled',  'delta_v_sector', 'delta_ta_sector', 'delta_ta_per_row',
-        'quality_sector', 'quality_per_row',
+        'quality_sector',
     ]
     classes = ['collapse']
 
