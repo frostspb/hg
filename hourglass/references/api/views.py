@@ -4,16 +4,20 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
-    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef
+    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages
 
 from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, \
     ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer,\
-    CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer, PacingSerializer, CompanyRefSerializer
+    CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer, PacingSerializer, CompanyRefSerializer, NurturingStagesSerializer
 
 
 class ReferencesViewSet(GenericViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = CampaignTypesSerializer
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def nurturing_stages(self, request):
+        return Response(data=NurturingStagesSerializer(NurturingStages.objects.filter(active=True), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def types(self, request):

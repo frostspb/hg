@@ -7,7 +7,8 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
 from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
-    IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer
+    IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
+    NurturingStagesSerializer
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
@@ -248,6 +249,7 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
     link = serializers.SerializerMethodField(read_only=True)
     generated_leads = serializers.SerializerMethodField(read_only=True)
     campaign_type = CampaignTypesSerializer()
+    nurturing_stages = NurturingStagesSerializer()
 
     class Meta:
         model = NurturingSection
@@ -260,6 +262,7 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
             "generated_leads",
             "state",
             "lead_goal",
+            "nurturing_stages",
         )
 
     def get_link(self, instance):

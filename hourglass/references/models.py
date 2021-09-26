@@ -13,6 +13,18 @@ class CampaignTypes(models.Model):
         return self.name
 
 
+class NurturingStages(models.Model):
+    name = models.CharField("Type", max_length=64)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Nurturing Stage"
+        verbose_name_plural = "Nurturing Stages"
+
+    def __str__(self):
+        return self.name
+
+
 class Geolocations(models.Model):
     name = models.CharField("Geolocation", max_length=64)
     code = models.CharField("Code", max_length=16, null=True, blank=True)

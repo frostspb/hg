@@ -16,7 +16,7 @@ from hourglass.clients.models import Client, Company
 from .base import BaseStateItem, BaseReportPercentItem
 
 from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Managers, ITCurated,\
-    Industry, Revenue, CompanySize, Pacing, CompanyRef
+    Industry, Revenue, CompanySize, Pacing, CompanyRef, NurturingStages
 
 from .managers import CampaignsManager
 
@@ -393,6 +393,7 @@ class TargetSection(CloneMixin, BaseStateItem):
         BOTTOM = 'Bottom', 'Bottom'
 
     campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
+
     leads_goal = models.PositiveIntegerField('Leads goal', default=0)
     leads_generated = models.PositiveIntegerField('Leads Generated', default=0)
     velocity = models.PositiveIntegerField("Velocity", default=0)
@@ -611,6 +612,7 @@ class NurturingSection(CloneMixin, BaseStateItem):
     campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, verbose_name="Type")
     assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
     lead_goal = models.IntegerField(null=True, blank=True)
+    nurturing_stages = models.ForeignKey(NurturingStages, on_delete=models.CASCADE)
 
     @property
     def link(self):

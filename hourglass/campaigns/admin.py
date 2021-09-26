@@ -48,7 +48,7 @@ class TargetSectionAdmin(admin.TabularInline):
     model = TargetSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'velocity']
-    fields = [ 'state', 'campaign_pos_type', 'grade', 'leads_goal', 'leads_generated', 'percent_completion', 'remaining_leads']
+    fields = ['state', 'campaign_pos_type',  'grade', 'leads_goal', 'leads_generated', 'percent_completion', 'remaining_leads']
     readonly_fields = ['percent_completion', 'remaining_leads']
 
     def percent_completion(self, obj):
@@ -87,7 +87,7 @@ class NurturingSectionAdmin(admin.TabularInline):
     model = NurturingSection
     extra = 0
     exclude = ['execution_time', 'started_at']
-    fields = ['state', 'campaign_type', 'assets', 'link', #'generated_leads', 'lead_goal'
+    fields = ['state', 'campaign_type', 'nurturing_stages', 'assets', 'link', #'generated_leads', 'lead_goal'
               ]
     readonly_fields = ['generated_leads', 'link']
     classes = ['collapse']

@@ -2,11 +2,19 @@ from django.contrib import admin
 
 from .models import CampaignTypes, Geolocations, Tactics, Managers, JobTitles,\
     ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer,\
-    IntegrationType, Pacing, Associates, CompanyRef
+    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages
 
 
 @admin.register(CampaignTypes)
 class CampaignTypesAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    search_fields = ["name", "id"]
+    fields = ["name", "active"]
+    ordering = ("name",)
+
+
+@admin.register(NurturingStages)
+class NurturingStagesAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
     search_fields = ["name", "id"]
     fields = ["name", "active"]

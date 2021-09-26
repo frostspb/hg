@@ -80,6 +80,43 @@
     }
 },
 
+    {
+    "model": "references.NurturingStages",
+    "pk": 1,
+    "fields": {
+        "name": "First Touch",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.NurturingStages",
+    "pk": 2,
+    "fields": {
+        "name": "Second Touch",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.NurturingStages",
+    "pk": 3,
+    "fields": {
+        "name": "Third Touch",
+        "active": true
+
+    }
+},
+    {
+    "model": "references.NurturingStages",
+    "pk": 4,
+    "fields": {
+        "name": "Fourth Touch",
+        "active": true
+
+    }
+},
+
   {
     "model": "references.JobTitles",
     "pk": 1,
