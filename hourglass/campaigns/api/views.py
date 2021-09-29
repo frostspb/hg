@@ -243,3 +243,12 @@ class MessageViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gene
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
     filterset_fields = ('campaign',)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+        obj = Message.objects.filter(id=serializer.data.get('id')).first()
+        email = self.request.user.email
+        if obj and email:
+            msg = obj.message
+            send_status_email.delay(subj='hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
