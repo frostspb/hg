@@ -130,6 +130,12 @@ class Campaign(CloneMixin, BaseStateItem):
         default=0,
 
     )
+    maximum_campaign_completeness = models.PositiveIntegerField(
+        validators=[MaxValueValidator(100)], null=True, blank=True
+    )
+    engagement_in_process = models.PositiveIntegerField(
+        validators=[MaxValueValidator(100)], null=True, blank=True
+    )
     remaining_admin_percent = models.PositiveIntegerField(default=0)
 
     in_progress_admin_percent = models.PositiveIntegerField(default=0)
@@ -154,6 +160,10 @@ class Campaign(CloneMixin, BaseStateItem):
 
     def __str__(self):
         return f"Campaign{self.id}"
+
+    @property
+    def engagement_in_process_value(self):
+        return self.engagement_in_process * self.audience_targeted
 
     @property
     def goal_abm(self):

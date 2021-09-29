@@ -521,12 +521,12 @@ class CampaignAdmin(CloneModelAdmin):
         ("Customer", {"fields": ("customer_information", "managed_by", "client")}),
         ("Campaign admin settings", {
             "fields": (
-                "name", "start_offset", "end_offset",   "state",
+                "name", "start_offset", "end_offset",   "state", "maximum_campaign_completeness",
                 "base_velocity", "base_quality", "tactics", "integration_type",
                 "pending",
                 "pacing_type",
 
-                "dashboard_string_count", "ta_volume", "remaining_admin_percent", "in_progress_admin_percent",
+                "dashboard_string_count", "ta_volume", #"remaining_admin_percent", "in_progress_admin_percent",
 
 
             )
@@ -565,7 +565,7 @@ class CampaignAdmin(CloneModelAdmin):
 
         (
             "Target Audience",
-            {"fields": ("audience_targeted", "delivered", "remaining", "in_validation")}
+            {"fields": ("audience_targeted", "engagement_in_process", "engagement_in_process_value", "delivered", "remaining", "in_validation")}
          ),
 
         (
@@ -578,7 +578,7 @@ class CampaignAdmin(CloneModelAdmin):
         "id", "created", "kind", "delivered", "remaining", "in_validation", "goal_intent_feed",
         "rejected", "generated_leads" ,"total_goal",
         "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
-        "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
+        "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent", "engagement_in_process_value"
     ]
 
     ordering = ("-created",)

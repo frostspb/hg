@@ -1,32 +1,6 @@
 [
 {
     "model": "references.CampaignTypes",
-    "pk": 1,
-    "fields": {
-        "name": "Single Touch",
-        "active": true
-    }
-},
-{
-    "model": "references.CampaignTypes",
-    "pk": 2,
-    "fields": {
-        "name": "Double Touch",
-        "active": true
-
-    }
-},
-    {
-    "model": "references.CampaignTypes",
-    "pk": 3,
-    "fields": {
-        "name": "Tripple Touch",
-        "active": true
-
-    }
-},
-    {
-    "model": "references.CampaignTypes",
     "pk": 4,
     "fields": {
         "name": "BANT",
@@ -52,29 +26,12 @@
         
     }
 },
-    {
-    "model": "references.CampaignTypes",
-    "pk": 7,
-    "fields": {
-        "name": "Live Event",
-        "active": true
-        
-    }
-},
-    {
-    "model": "references.CampaignTypes",
-    "pk": 8,
-    "fields": {
-        "name": "Live Webinar",
-        "active": true
-        
-    }
-},
+
     {
     "model": "references.CampaignTypes",
     "pk": 9,
     "fields": {
-        "name": "BANT plus",
+        "name": "BANT Plus",
         "active": true
         
     }
@@ -431,7 +388,7 @@
     "model": "references.IntegrationType",
     "pk": 4,
     "fields": {
-        "name": "Integrate"
+        "name": "Padrot"
 
     }
 },
