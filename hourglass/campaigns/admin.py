@@ -512,7 +512,7 @@ class CampaignAdmin(CloneModelAdmin):
 
     })
     list_display = [
-        "id", "name_link", "client",  "created", "active",  "customer_information", "state", "ta", "velocity", "duration",
+        "id", "name_link", "client",  "created",  "customer_information", "state", "ta", "velocity", "duration",
         "total_goal", "generated", "start_date_admin", "end_date_admin",
     ]
     search_fields = ["client__name", "id"]

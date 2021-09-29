@@ -164,7 +164,7 @@ class Campaign(CloneMixin, BaseStateItem):
     @property
     def engagement_in_process_value(self):
         if self.engagement_in_process and self.audience_targeted:
-            return self.engagement_in_process * self.audience_targeted
+            return (self.engagement_in_process/100) * self.audience_targeted
 
     @property
     def goal_abm(self):
