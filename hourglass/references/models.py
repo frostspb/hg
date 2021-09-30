@@ -98,10 +98,10 @@ class Tactics(models.Model):
 
 class BANTQuestion(models.Model):
     class SectionKind(models.TextChoices):
-        BUDGET = 'budget', 'Budget'
-        AUTHORITY = 'authority', 'Authority'
-        NEED = 'need', 'Need'
-        TIME = 'time', 'Time'
+        BUDGET = '1 - budget', 'Budget'
+        AUTHORITY = '2 - authority', 'Authority'
+        NEED = '3 - need', 'Need'
+        TIME = '4 - time', 'Time'
 
     question = models.TextField()
     kind = models.CharField(max_length=16, choices=SectionKind.choices, default=SectionKind.BUDGET)
