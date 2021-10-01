@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.urls import reverse
+from django.conf import settings
 from django.utils.html import format_html
 from model_clone import CloneModelAdmin
 from django.contrib import admin
@@ -668,10 +669,13 @@ class CampaignAdmin(CloneModelAdmin):
         return obj.in_validation
 
     def start_date_admin(self, obj):
-        return obj.initial_start_date
+        return obj.initial_start_date.strftime(settings.ENDPOINT_DATE_FORMAT)
 
     def end_date_admin(self, obj):
-        return obj.initial_end_date
+        return obj.initial_end_date.strftime(settings.ENDPOINT_DATE_FORMAT)
+
+    start_date_admin.short_description = "Start Date"
+    end_date_admin.short_description = "End Date"
 
     def ta(self, obj):
         return obj.ta
