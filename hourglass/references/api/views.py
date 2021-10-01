@@ -41,7 +41,7 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_bant(self, request):
-        return Response(data=BANTQuestionSerializer(BANTQuestion.objects.all().order_by('kind'), many=True).data)
+        return Response(data=BANTQuestionSerializer(BANTQuestion.objects.all().order_by('pos'), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_custom(self, request):

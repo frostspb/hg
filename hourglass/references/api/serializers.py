@@ -114,7 +114,7 @@ class BANTQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = BANTQuestion
         fields = (
-            'id', 'question', 'answers', 'kind'
+            'id', 'question', 'answers', 'kind', 'pos'
         )
 
 

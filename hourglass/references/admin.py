@@ -92,8 +92,8 @@ class BANTAnswerAdmin(admin.TabularInline):
 
 @admin.register(BANTQuestion)
 class BANTQuestionAdmin(admin.ModelAdmin):
-    list_display = ["id", "question"]
-    fields = ["question", "kind"]
+    list_display = ["id", "question", "pos"]
+    fields = ["question", "kind", "pos"]
 
     inlines = [BANTAnswerAdmin]
 
