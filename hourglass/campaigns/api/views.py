@@ -43,7 +43,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     def get_queryset(self):
         return self.queryset.filter(
-            Q(kind=Campaign.CampaignKinds.STANDARD)
+            Q(owner__isnull=True, kind=Campaign.CampaignKinds.STANDARD)
             | Q(kind=Campaign.CampaignKinds.USER, owner=self.request.user)
         )
 
