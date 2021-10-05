@@ -7,14 +7,11 @@ from django.contrib import admin
 from ajax_select import make_ajax_form
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, JobTitlesSection,\
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, \
     Teams, CampaignClient
-
-
 
 
 class ComponentInlineFormSet(BaseInlineFormSet):
