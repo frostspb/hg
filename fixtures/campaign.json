@@ -173,7 +173,91 @@
         "name": "Large Enterprises—Over $1B"
     }
 },
+    {
+    "model": "references.Revenue",
+    "pk": 5,
+    "fields": {
+        "name": "Large Enterprises - $10B+"
+    }
+},
+    {
+    "model": "references.Revenue",
+    "pk": 6,
+    "fields": {
+        "name": "Medium Enterprises - $5-10M"
+    }
+},
+    {
+    "model": "references.Revenue",
+    "pk": 7,
+    "fields": {
+        "name": "Small and Medium Enterprises—$1-5B"
+    }
+},
+    {
+    "model": "references.Revenue",
+    "pk": 8,
+    "fields": {
+        "name": "$1,2M - $12M"
+    }
+},
+    {
+    "model": "references.Revenue",
+    "pk": 9,
+    "fields": {
+        "name": "$1,2M+"
+    }
+},
+    {
+    "model": "references.Revenue",
+    "pk": 10,
+    "fields": {
+        "name": "$1B-5B"
+    }
+},
+    {
+    "model": "references.Revenue",
+    "pk": 11,
+    "fields": {
+        "name": "$500M-1B"
+    }
+},
+    {
+    "model": "references.Revenue",
+    "pk": 12,
+    "fields": {
+        "name": "$10B+"
+    }
+},
 
+        {
+    "model": "references.Revenue",
+    "pk": 13,
+    "fields": {
+        "name": "$100M-500M"
+    }
+},
+        {
+    "model": "references.Revenue",
+    "pk": 14,
+    "fields": {
+        "name": "$5B-10B"
+    }
+},
+        {
+    "model": "references.Revenue",
+    "pk": 15,
+    "fields": {
+        "name": "$10M-100M"
+    }
+},
+        {
+    "model": "references.Revenue",
+    "pk": 16,
+    "fields": {
+        "name": "$1-10M"
+    }
+},
 {
     "model": "references.CompanySize",
     "pk": 1,
@@ -206,21 +290,21 @@
     "model": "references.CompanySize",
     "pk": 5,
     "fields": {
-        "name": "501-1000"
+        "name": "501-1,000"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 6,
     "fields": {
-        "name": "1001-5000"
+        "name": "1,001-5,000"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 7,
     "fields": {
-        "name": "5001-10,000"
+        "name": "5,001-10,000"
     }
 },
 {
@@ -388,7 +472,7 @@
     "model": "references.IntegrationType",
     "pk": 4,
     "fields": {
-        "name": "Padrot"
+        "name": "Pardot"
 
     }
 },
