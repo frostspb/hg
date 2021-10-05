@@ -288,7 +288,7 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 class CampaignClientAdmin(CloneModelAdmin):
 
     list_display = [
-        "id", "name_link", "client", "created", "active", "customer_information", "state",
+        "id", "name_link", "client", "active", "customer_information", "state",
         "start_date", "end_date",
     ]
     search_fields = ["client__name", "id"]
@@ -510,7 +510,7 @@ class CampaignAdmin(CloneModelAdmin):
 
     })
     list_display = [
-        "id", "name_link", "client",  "created",  "customer_information", "state", "ta", "velocity", "duration",
+        "id", "name_link", "client",  "customer_information", "state", "ta", "velocity", "duration",
         "total_goal", "generated", "start_date_admin", "end_date_admin",
     ]
     search_fields = ["client__name", "id"]
