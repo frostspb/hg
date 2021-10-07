@@ -187,6 +187,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:8080',
     SITE_ADDR,
     FRONT_ADDR,
+    "http://hourglass.infusemedia.com/"
 
 )
 
@@ -196,6 +197,8 @@ CSRF_TRUSTED_ORIGINS = (
     'http://localhost:8080',
     'http://127.0.0.1:8080',
     SITE_ORIGIN,
+    SITE_ADDR,
+    "http://hourglass.infusemedia.com/"
 )
 
 SIMPLE_JWT = {
