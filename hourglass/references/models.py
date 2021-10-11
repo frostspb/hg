@@ -13,6 +13,17 @@ class CampaignTypes(models.Model):
         return self.name
 
 
+class PartOfMap(models.Model):
+    name = models.CharField("part", max_length=64)
+
+    class Meta:
+        verbose_name = "Part of the Map"
+        verbose_name_plural = "Part of the Map"
+
+    def __str__(self):
+        return self.name
+
+
 class NurturingStages(models.Model):
     name = models.CharField("Type", max_length=64)
     active = models.BooleanField(default=True)

@@ -523,7 +523,7 @@ class CampaignAdmin(CloneModelAdmin):
                 "base_velocity", "base_quality", "tactics", "integration_type",
                 "pending",
                 "pacing_type",
-
+                "part_of_the_map",
                 "dashboard_string_count", "ta_volume", #"remaining_admin_percent", "in_progress_admin_percent",
 
 

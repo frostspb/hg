@@ -3,7 +3,7 @@ from django.conf import settings
 
 from hourglass.references.models import CampaignTypes,  JobTitles, Geolocations,  Managers, \
     ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer,\
-    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages
+    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap
 
 
 class AssociatesSerializer(serializers.ModelSerializer):
@@ -155,6 +155,14 @@ class IntegrationTypeSerializer(serializers.ModelSerializer):
 class PacingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pacing
+        fields = (
+            'id', 'name'
+        )
+
+
+class PartOfMapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PartOfMap
         fields = (
             'id', 'name'
         )

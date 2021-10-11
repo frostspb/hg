@@ -16,7 +16,7 @@ from hourglass.clients.models import Client, Company
 from .base import BaseStateItem, BaseReportPercentItem
 
 from hourglass.references.models import CampaignTypes, Geolocations, JobTitles, Tactics, Managers, ITCurated,\
-    Industry, Revenue, CompanySize, Pacing, CompanyRef, NurturingStages
+    Industry, Revenue, CompanySize, Pacing, CompanyRef, NurturingStages, PartOfMap
 
 from .managers import CampaignsManager
 
@@ -145,6 +145,7 @@ class Campaign(CloneMixin, BaseStateItem):
     abm_look_a_like = models.PositiveIntegerField("Look-a-like", blank=True, null=True)
     abm_goal_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     nurturing_parameters = models.CharField(max_length=250, null=True, blank=True)
+    part_of_the_map = models.ForeignKey(PartOfMap,  null=True, blank=True, on_delete=models.CASCADE)
     objects = CampaignsManager()
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",

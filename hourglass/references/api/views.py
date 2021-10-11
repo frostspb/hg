@@ -4,11 +4,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
-    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages
+    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages, PartOfMap
 
 from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, \
     ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer,\
-    CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer, PacingSerializer, CompanyRefSerializer, NurturingStagesSerializer
+    CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer, PacingSerializer, CompanyRefSerializer,\
+    NurturingStagesSerializer, PartOfMapSerializer
 
 
 class ReferencesViewSet(GenericViewSet):
@@ -71,3 +72,7 @@ class ReferencesViewSet(GenericViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def companies(self, request):
         return Response(data=CompanyRefSerializer(CompanyRef.objects.all(), many=True).data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def part_of_map(self, request):
+        return Response(data=PartOfMapSerializer(PartOfMap.objects.all(), many=True).data)

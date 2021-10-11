@@ -8,7 +8,7 @@ from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
-    NurturingStagesSerializer
+    NurturingStagesSerializer, PartOfMapSerializer
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
@@ -378,7 +378,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True) #
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True) #
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True) #
-
+    part_of_the_map = PartOfMapSerializer()
 
     class Meta:
         model = Campaign
@@ -395,7 +395,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "itcurateds",
             "abm_look_a_like", "rejected", "teams", "tactics",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm",
-            "suppression_list",
+            "suppression_list", "part_of_the_map"
         )
 
     def get_goal_abm(self, instance):
@@ -503,6 +503,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
+    part_of_the_map = PartOfMapSerializer()
 
     class Meta:
         model = Campaign
@@ -514,7 +515,7 @@ class HourglassSerializer(serializers.ModelSerializer):
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "itcurateds", "audience_targeted",
             "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent",
-            "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list",
+            "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list", "part_of_the_map"
         )
 
     def get_goal_abm(self, instance):
@@ -607,6 +608,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
+    part_of_the_map = PartOfMapSerializer()
 
     class Meta:
         model = Campaign
@@ -618,7 +620,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm",
             "done_abm", "itcurateds",
-            "suppression_list", "velocity", "state"
+            "suppression_list", "velocity", "state", "part_of_the_map"
 
         )
 

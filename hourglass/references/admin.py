@@ -2,7 +2,15 @@ from django.contrib import admin
 
 from .models import CampaignTypes, Geolocations, Tactics, Managers, JobTitles,\
     ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer,\
-    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages
+    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap
+
+
+@admin.register(PartOfMap)
+class PartOfMapAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    search_fields = ["name", "id"]
+    fields = ["name"]
+    ordering = ("name",)
 
 
 @admin.register(CampaignTypes)

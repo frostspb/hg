@@ -515,5 +515,29 @@
           "name": "Company2"
 
       }
+  },
+    {
+      "model": "references.PartOfMap",
+      "pk":1,
+      "fields": {
+          "name": "Europe"
+
+      }
+  },
+    {
+      "model": "references.PartOfMap",
+      "pk":2,
+      "fields": {
+          "name": "USA"
+
+      }
+  },
+    {
+      "model": "references.PartOfMap",
+      "pk":3,
+      "fields": {
+          "name": "Whole World"
+
+      }
   }
 ]
