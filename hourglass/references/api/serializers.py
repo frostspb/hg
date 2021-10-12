@@ -25,7 +25,7 @@ class GeolocationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Geolocations
         fields = (
-            'id', 'name',
+            'id', 'name', 'code'
         )
 
 
