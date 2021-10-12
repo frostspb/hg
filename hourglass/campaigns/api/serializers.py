@@ -8,7 +8,7 @@ from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
-    NurturingStagesSerializer, PartOfMapSerializer
+    NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
@@ -154,6 +154,7 @@ class GeolocationsSectionSerializer(serializers.ModelSerializer):
 
     name = serializers.CharField(source='geolocation')
     code = serializers.CharField(source='geolocation')
+    geolocation = GeolocationsSerializer()
 
     class Meta:
         model = GeolocationsSection
