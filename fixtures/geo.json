@@ -303,7 +303,7 @@
   {"model": "references.Geolocations", "pk": 297, "fields": {"code": "US-WA", "name": "Washington"}},
   {"model": "references.Geolocations", "pk": 298, "fields": {"code": "US-WV", "name": "West Virginia"}},
   {"model": "references.Geolocations", "pk": 299, "fields": {"code": "US-WI", "name": "Wisconsin"}},
-  {"model": "references.Geolocations", "pk": 300, "fields": {"code": "US-WY", "name": "Wyoming"}}
+  {"model": "references.Geolocations", "pk": 300, "fields": {"code": "US-WY", "name": "Wyoming"}},
   {"model": "references.Geolocations", "pk": 301, "fields": {"code": "US-FL", "name": "Florida"}},
   {"model": "references.Geolocations", "pk": 302, "fields": {"code": "US-GA", "name": "Georgia"}},
   {"model": "references.Geolocations", "pk": 303, "fields": {"code": "US-HI", "name": "Hawaii"}}
