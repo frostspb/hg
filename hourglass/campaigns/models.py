@@ -84,7 +84,7 @@ class Campaign(CloneMixin, BaseStateItem):
     contact_name = models.CharField(max_length=255, blank=True, null=True)
     start_date = models.DateField("Start Date", null=True, blank=True)
     end_date = models.DateField("End Date", null=True, blank=True)
-    order = models.IntegerField("Purchase Order", null=True)
+    order = models.IntegerField("Purchase Order", null=True, blank=True)
     customer_information = models.CharField("Customer information", max_length=250, null=True, blank=True)
     details = models.TextField("Campaign Details", null=True, blank=True)
     guarantees = models.TextField("Campaign Guarantees", null=True, blank=True)
