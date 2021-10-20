@@ -143,6 +143,9 @@ class Campaign(CloneMixin, BaseStateItem):
     intent_feed_goal_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     intent_feed_done_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     abm_look_a_like = models.PositiveIntegerField("Look-a-like", blank=True, null=True)
+    abm_look_a_like_state = models.CharField("Look-a-like state",
+        max_length=16, choices=BaseStateItem.States.STATE_CHOICES, default=BaseStateItem.States.STATE_RUNNING
+    )
     abm_goal_percent = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     nurturing_parameters = models.CharField(max_length=250, null=True, blank=True)
     part_of_the_map = models.ForeignKey(PartOfMap,  null=True, blank=True, on_delete=models.CASCADE)

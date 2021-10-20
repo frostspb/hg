@@ -540,7 +540,7 @@ class CampaignAdmin(CloneModelAdmin):
 
         ("ABM Total settings", {
             "fields": (
-                "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent", "abm_look_a_like"
+                "abm_goal_percent", "goal_abm", "done_abm", "done_abm_percent", "abm_look_a_like", "abm_look_a_like_state",
 
             )
         }

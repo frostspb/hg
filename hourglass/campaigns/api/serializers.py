@@ -384,7 +384,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = (
-            "id", "client",
+            "id", "client", "abm_look_a_like_state",
             "created", "active", "pending","engagement_in_process_value","maximum_campaign_completeness","engagement_in_process",  "base_velocity", "base_quality", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order", "managed_by", "targets", "sections",
             "delivered", "remaining", "in_validation", "total_generated", "audience_targeted",
@@ -516,7 +516,7 @@ class HourglassSerializer(serializers.ModelSerializer):
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "itcurateds", "audience_targeted",
             "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent",
-            "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list", "part_of_the_map"
+            "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list", "part_of_the_map","abm_look_a_like_state",
         )
 
     def get_goal_abm(self, instance):
@@ -621,7 +621,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm",
             "done_abm", "itcurateds",
-            "suppression_list", "velocity", "state", "part_of_the_map"
+            "suppression_list", "velocity", "state", "part_of_the_map","abm_look_a_like_state",
 
         )
 
