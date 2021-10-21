@@ -377,6 +377,7 @@ class Campaign(CloneMixin, BaseStateItem):
                 delta_ta_per_row=i.get('delta_ta_per_row', 0),
                 quality_sector=i.get('quality_sector'),
                 quality_per_row=i.get('quality_per_row'),
+                pos=i.get('pos')
             ) for i in sections
         ]
         SectionSettings.objects.bulk_create(for_create)
@@ -811,6 +812,7 @@ def create_settings(sender, instance, created, **kwargs):
                 delta_ta_per_row=i.get('delta_ta_per_row', 0),
                 quality_sector=i.get('quality_sector'),
                 quality_per_row=i.get('quality_per_row'),
+                pos=i.get('pos')
             ) for i in sections
         ]
         SectionSettings.objects.bulk_create(for_create)
