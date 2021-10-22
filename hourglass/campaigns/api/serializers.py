@@ -8,7 +8,7 @@ from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
-    NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer, RevenueSerializer,
+    NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer, RevenueSerializer
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
