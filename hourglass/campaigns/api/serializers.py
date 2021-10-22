@@ -8,7 +8,7 @@ from hourglass.references.models import Tactics
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
-    NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer
+    NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer, RevenueSerializer,
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
@@ -123,11 +123,11 @@ class IndustriesSectionSerializer(serializers.ModelSerializer):
 class RevenueSectionSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='revenue')
     leads_revenue = serializers.SerializerMethodField(read_only=True)
-
+    revenue = RevenueSerializer()
     class Meta:
         model = RevenueSection
         fields = (
-            "id", "name", "campaign", "leads_revenue", "state", "percent",
+            "id", "name", "campaign", "leads_revenue", "state", "percent", "revenue",
 
         )
 
@@ -138,11 +138,12 @@ class RevenueSectionSerializer(serializers.ModelSerializer):
 class CompanySizeSectionSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='company_size')
     leads_company_size = serializers.SerializerMethodField(read_only=True)
+    company_size = CompanySerializer()
 
     class Meta:
         model = CompanySizeSection
         fields = (
-            "id", "name", "campaign", "leads_company_size", "state", "percent",
+            "id", "name", "campaign", "leads_company_size", "state", "percent", "company_size",
         )
 
     def get_leads_company_size(self, instance):
