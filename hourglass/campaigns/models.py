@@ -776,14 +776,14 @@ sections = [
         {'name': REVENUE_NAME, 'slug': REVENUE_SLUG, 'pos': 7, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
         {'name': COMPANY_SIZE_NAME, 'slug': COMPANY_SIZE_SLUG, 'pos': 8, 'delta_ta_sector': -6, 'delta_ta_per_row': 1},
 
-        {'name': BANT_NAME, 'slug': BANT_SLUG, 'pos': 9, 'delta_v_sector': -1,  'quality_sector': 100, },
-        {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10, 'delta_v_sector': 1,  'quality_sector': 25, },
+        {'name': BANT_NAME, 'slug': BANT_SLUG, 'pos': 9, 'delta_v_sector': -1,  'quality_sector': 0, },
+        {'name': CQ_NAME, 'slug': CQ_SLUG, 'pos': 10, 'delta_v_sector': 1,  'quality_sector': 0, },
         {'name': INSTALL_BASE_NAME, 'slug': INSTALL_BASE_SLUG, 'pos': 11, 'delta_v_sector': -1, },
         {'name': ITC_NAME, 'slug': ITC_SLUG, 'pos': 12, 'delta_v_sector': 0,  'delta_ta_sector': 0, 'delta_ta_per_row': 0},
         {'name': TACTICS_NAME, 'slug': TACTICS_SLUG, 'pos': 13},
         {'name': FT_NAME, 'slug': FT_SLUG, 'pos': 14, 'delta_v_sector': 1, },
         {'name': LCP_NAME, 'slug': LCP_SLUG, 'pos': 15},
-        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 16, 'delta_v_sector': -1,  'quality_sector': 25, },
+        {'name': NURTURING_NAME, 'slug': NURTURING_SLUG, 'pos': 16, 'delta_v_sector': -1,  'quality_sector': 0, },
         {'name': 'Lets Verify', 'slug': 'lets_verify', 'pos': 17,'delta_v_sector': -3, },
         {'name': CREATIVES_NAME, 'slug': CREATIVES_SLUG, 'pos': 18, 'delta_v_sector': 2, },
 
