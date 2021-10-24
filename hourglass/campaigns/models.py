@@ -156,7 +156,7 @@ class Campaign(CloneMixin, BaseStateItem):
         "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams",
     ]
 
-    _clone_m2m_fields = ["tactics", "jt"]
+    _clone_m2m_fields = ["tactics","job_titles"]
 
     class Meta:
         verbose_name = "Campaign"
@@ -449,7 +449,7 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
     titles = models.ManyToManyField(JobTitles, blank=True, related_name="jt_as")
     velocity_koeff = models.FloatField(default=1.0)
     _clone_m2m_fields = [
-        "jt_as"
+        "titles"
     ]
 
     class Meta:
@@ -477,7 +477,7 @@ class IntentFeedsSection(CloneMixin, BaseReportPercentItem):
     companies_count = models.PositiveIntegerField("Companies Generated", default=0)
 
     _clone_m2m_fields = [
-        "companies"
+        "company"
     ]
 
     class Meta:
