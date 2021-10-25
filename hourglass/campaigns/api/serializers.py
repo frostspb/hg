@@ -380,7 +380,7 @@ class CampaignSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True) #
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True) #
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True) #
-    part_of_the_map = PartOfMapSerializer(allow_null=True)
+    part_of_the_map = PartOfMapSerializer(allow_null=True, required=False)
 
     class Meta:
         model = Campaign
@@ -505,7 +505,7 @@ class HourglassSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
-    part_of_the_map = PartOfMapSerializer(allow_null=True)
+    part_of_the_map = PartOfMapSerializer(allow_null=True, required=False)
 
     class Meta:
         model = Campaign
@@ -610,7 +610,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     creatives = CreativesSectionSerializer(many=True, read_only=True)
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
-    part_of_the_map = PartOfMapSerializer(allow_null=True)
+    part_of_the_map = PartOfMapSerializer(allow_null=True, required=False)
 
     class Meta:
         model = Campaign
