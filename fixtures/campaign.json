@@ -156,14 +156,14 @@
     "model": "references.Revenue",
     "pk": 2,
     "fields": {
-        "name": "Small and Medium-Sized Businesses—$5-10M"
+        "name": "Small and Medium-Sized Businesses—$5M - $10M"
     }
 },
 {
     "model": "references.Revenue",
     "pk": 3,
     "fields": {
-        "name": "Small and Medium Enterprises—$10M-$1B"
+        "name": "Small and Medium Enterprises—$10M - $1B"
     }
 },
 {
@@ -175,23 +175,9 @@
 },
     {
     "model": "references.Revenue",
-    "pk": 5,
-    "fields": {
-        "name": "Large Enterprises - $10B+"
-    }
-},
-    {
-    "model": "references.Revenue",
     "pk": 6,
     "fields": {
-        "name": "Medium Enterprises - $5-10M"
-    }
-},
-    {
-    "model": "references.Revenue",
-    "pk": 7,
-    "fields": {
-        "name": "Small and Medium Enterprises—$1-5B"
+        "name": "$5M - $10M"
     }
 },
     {
@@ -212,14 +198,14 @@
     "model": "references.Revenue",
     "pk": 10,
     "fields": {
-        "name": "$1B-5B"
+        "name": "$1B - $5B"
     }
 },
     {
     "model": "references.Revenue",
     "pk": 11,
     "fields": {
-        "name": "$500M-1B"
+        "name": "$500M - $1B"
     }
 },
     {
@@ -234,77 +220,77 @@
     "model": "references.Revenue",
     "pk": 13,
     "fields": {
-        "name": "$100M-500M"
+        "name": "$100M - $500M"
     }
 },
         {
     "model": "references.Revenue",
     "pk": 14,
     "fields": {
-        "name": "$5B-10B"
+        "name": "$5B - $10B"
     }
 },
         {
     "model": "references.Revenue",
     "pk": 15,
     "fields": {
-        "name": "$10M-100M"
+        "name": "$10M - $100M"
     }
 },
         {
     "model": "references.Revenue",
     "pk": 16,
     "fields": {
-        "name": "$1-10M"
+        "name": "$1M - $10M"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 1,
     "fields": {
-        "name": "1-10"
+        "name": "1 - 10"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 2,
     "fields": {
-        "name": "11-50"
+        "name": "11 - 50"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 3,
     "fields": {
-        "name": "51-200"
+        "name": "51 - 200"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 4,
     "fields": {
-        "name": "201-500"
+        "name": "201 - 500"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 5,
     "fields": {
-        "name": "501-1,000"
+        "name": "501 - 1,000"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 6,
     "fields": {
-        "name": "1,001-5,000"
+        "name": "1,001 - 5,000"
     }
 },
 {
     "model": "references.CompanySize",
     "pk": 7,
     "fields": {
-        "name": "5,001-10,000"
+        "name": "5,001 - 10,000"
     }
 },
 {
