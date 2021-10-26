@@ -342,6 +342,8 @@ class TeamsSerializer(serializers.ModelSerializer):
         return instance.rejected
 
 #TODO 1 serializer
+
+#class CampaignCreateSerializer(serializers.ModelSerializer):
 class CampaignSerializer(serializers.ModelSerializer):
     start_date = serializers.SerializerMethodField()
     end_date = serializers.SerializerMethodField() #

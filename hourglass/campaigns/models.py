@@ -732,6 +732,7 @@ class Teams(CloneMixin, models.Model):
     team_member3 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member3', null=True, blank=True)
     team_member4 = models.ForeignKey(Associates, on_delete=models.SET_NULL, related_name='member4', null=True, blank=True)
     rejected_percent = models.PositiveIntegerField("% of Leads Rejected", default=0)
+    delivered_percent = models.PositiveIntegerField("% of Leads Delivered", default=0, validators=[MaxValueValidator(100)])
 
     class Meta:
         verbose_name = "Teams"
@@ -742,11 +743,7 @@ class Teams(CloneMixin, models.Model):
 
     @property
     def delivered(self):
-        cnt = self.campaign.teams.all().count()
-        if cnt:
-            return self.campaign.total_goal/cnt
-        else:
-            return 0
+        return self.delivered_percent
 
     @property
     def rejected(self):
