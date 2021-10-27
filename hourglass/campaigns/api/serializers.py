@@ -342,8 +342,26 @@ class TeamsSerializer(serializers.ModelSerializer):
         return instance.rejected
 
 #TODO 1 serializer
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
-#class CampaignCreateSerializer(serializers.ModelSerializer):
+class CampaignCreateSerializer(WritableNestedModelSerializer):
+    class Meta:
+        model = Campaign
+        fields = (
+
+            "client", "abm_look_a_like_state",
+            "customer_information", "contact_name", "email", "note",
+            "name", "campaign_type", "order",  "targets",
+            "start_date", "end_date",
+            "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents",
+            "artificial_titles", "titles",
+            "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
+            "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
+            "itcurateds",
+            "teams", "tactics",
+            "suppression_list",
+        )
+
 class CampaignSerializer(serializers.ModelSerializer):
     start_date = serializers.SerializerMethodField()
     end_date = serializers.SerializerMethodField() #
