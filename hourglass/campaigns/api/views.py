@@ -54,6 +54,10 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
             obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
             email = self.request.user.email
+            order = obj.order if obj.order else ''
+            note = obj.note if obj.note else ''
+            guarantees = obj.guarantees if obj.guarantees else ''
+            details = obj.details if obj.details else ''
             if obj and email:
                 msg = f"Customer information {obj.customer_information} \n" \
                       f"Contact name {obj.contact_name} \n" \
@@ -61,10 +65,10 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
                       f"Campaign start date {obj.start_date} \n" \
                       f"Campaign end date {obj.end_date} \n" \
                       f"Campaign type {obj.campaign_type} \n" \
-                      f"Purchase order {obj.order} \n" \
-                      f"Campaign guarantees {obj.guarantees} \n" \
-                      f"Campaign details {obj.details} \n" \
-                      f"Notes {obj.note} \n"
+                      f"Purchase order {order} \n" \
+                      f"Campaign guarantees {guarantees} \n" \
+                      f"Campaign details {details} \n" \
+                      f"Notes {note} \n"
                 send_status_email.delay(subj='hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
