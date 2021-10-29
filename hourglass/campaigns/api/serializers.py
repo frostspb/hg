@@ -401,11 +401,12 @@ class CampaignSerializer(serializers.ModelSerializer):
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True) #
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True) #
     part_of_the_map = PartOfMapSerializer(allow_null=True, required=False)
+    client_name = serializers.CharField(source='client.name', required=False)
 
     class Meta:
         model = Campaign
         fields = (
-            "id", "client", "abm_look_a_like_state",
+            "id", "client", "client_name", "abm_look_a_like_state",
             "created", "active", "pending","engagement_in_process_value","maximum_campaign_completeness","engagement_in_process",  "base_velocity", "base_quality", "customer_information", "contact_name", "email", "note",
             "name", "campaign_type", "order", "managed_by", "targets", "sections",
             "delivered", "remaining", "in_validation", "total_generated", "audience_targeted",
@@ -419,6 +420,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm",
             "suppression_list", "part_of_the_map"
         )
+        read_only_fields = ['client_name']
 
     def get_goal_abm(self, instance):
         return instance.goal_abm
