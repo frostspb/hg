@@ -312,6 +312,8 @@ class Campaign(CloneMixin, BaseStateItem):
 
     @property
     def generated(self):
+        if not self.velocity and not self.duration:
+            return 0
         res = self.velocity * self.duration
         if res >= self.total_generated_goal:
             res = self.total_generated_goal
