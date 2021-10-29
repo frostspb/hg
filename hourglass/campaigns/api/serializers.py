@@ -468,12 +468,18 @@ class CampaignSerializer(serializers.ModelSerializer):
         super().save(**kwargs)
         from datetime import datetime
         if 'end_date' in self.initial_data:
-            self.instance.end_date = datetime.strptime(self.initial_data['end_date'], settings.ENDPOINT_DATE_FORMAT)
-            self.instance.save()
+            try:
+                self.instance.end_date = datetime.strptime(self.initial_data['end_date'], settings.ENDPOINT_DATE_FORMAT)
+                self.instance.save()
+            except:
+                pass
 
         if 'start_date' in self.initial_data:
-            self.instance.end_date = datetime.strptime(self.initial_data['start_date'], settings.ENDPOINT_DATE_FORMAT)
-            self.instance.save()
+            try:
+                self.instance.end_date = datetime.strptime(self.initial_data['start_date'], settings.ENDPOINT_DATE_FORMAT)
+                self.instance.save()
+            except:
+                pass
 
         return self.instance
 
