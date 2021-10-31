@@ -20,7 +20,7 @@ from .serializers import CampaignSerializer, AssetsSectionSerializer,\
     JobTitlesSectionSerializer, IntentFeedsSectionSerializer, ABMSectionSerializer,\
     InstallBaseSectionSerializer, FairTradeSectionSerializer,LeadCascadeProgramSectionSerializer,\
     NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer,\
-    MessageSerializer
+    MessageSerializer, CampaignCreateSerializer
 
 
 
@@ -40,6 +40,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     #     context = super(CampaignViewSet, self).get_serializer_context()
     #     context.update({"request": self.request})
     #     return context
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return CampaignCreateSerializer
+        else:
+            return CampaignSerializer
 
     def get_queryset(self):
         return self.queryset.filter(

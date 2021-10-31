@@ -19,6 +19,15 @@ class CampaignCopySerializer(serializers.Serializer):
         return Campaign.objects.copy(campaign)
 
 
+class TargetSectionCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TargetSection
+        fields = (
+            'campaign_pos_type',
+            'leads_goal',
+        )
+
+
 class TargetSectionSerializer(serializers.ModelSerializer):
     remaining_leads = serializers.SerializerMethodField()
     percent_completion = serializers.SerializerMethodField()
@@ -56,6 +65,15 @@ class TacticsSerializer(serializers.ModelSerializer):
         )
 
 
+class AssetsCreateSectionSerializer(serializers.ModelSerializer):
+    landing_page = serializers.FileField(required=False, allow_null=True)
+    class Meta:
+        model = AssetsSection
+        fields = (
+             "name", "landing_page", "titles",
+        )
+
+
 class AssetsSectionSerializer(serializers.ModelSerializer):
     titles = JobTitlesSerializer(allow_null=True, many=True)
     landing_page = serializers.SerializerMethodField(read_only=True)
@@ -71,6 +89,15 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
         if instance.landing_page:
             photo_url = instance.landing_page.url
             return f"{settings.STORAGE_ADDR}{photo_url}"
+
+
+class IntentFeedsCreateSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntentFeedsSection
+        fields = (
+             "name", "company", "kind",
+
+        )
 
 
 class IntentFeedsSectionSerializer(serializers.ModelSerializer):
@@ -90,6 +117,15 @@ class IntentFeedsSectionSerializer(serializers.ModelSerializer):
 
     def get_goal_intent_feed(self, instance):
         return instance.goal_intent_feed
+
+
+class JobTitlesCreateSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = JobTitlesSection
+        fields = (
+             "job_title",  "goal",
+        )
 
 
 class JobTitlesSectionSerializer(serializers.ModelSerializer):
@@ -120,10 +156,21 @@ class IndustriesSectionSerializer(serializers.ModelSerializer):
         return instance.leads_industry
 
 
+class RevenueSectionCreateSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(required=False)
+    class Meta:
+        model = RevenueSection
+        fields = (
+             "revenue", "name"
+
+        )
+
+
 class RevenueSectionSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='revenue')
     leads_revenue = serializers.SerializerMethodField(read_only=True)
     revenue = RevenueSerializer()
+
     class Meta:
         model = RevenueSection
         fields = (
@@ -133,6 +180,14 @@ class RevenueSectionSerializer(serializers.ModelSerializer):
 
     def get_leads_revenue(self, instance):
         return instance.leads_revenue
+
+
+class CompanySizeCreateSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanySizeSection
+        fields = (
+            "company_size",
+        )
 
 
 class CompanySizeSectionSerializer(serializers.ModelSerializer):
@@ -148,6 +203,15 @@ class CompanySizeSectionSerializer(serializers.ModelSerializer):
 
     def get_leads_company_size(self, instance):
         return instance.leads_company_size
+
+
+class GeolocationsCreateSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = GeolocationsSection
+        fields = (
+            "name", "geolocation",
+        )
 
 
 class GeolocationsSectionSerializer(serializers.ModelSerializer):
@@ -168,6 +232,14 @@ class GeolocationsSectionSerializer(serializers.ModelSerializer):
         return instance.leads_geolocation
 
 
+class BANTQuestionsCreateSectionSerializer(serializers.ModelSerializer):
+      class Meta:
+        model = BANTQuestionsSection
+        fields = (
+            "question", "answer", "question_txt", "answer_txt"
+        )
+
+
 class BANTQuestionsSectionSerializer(serializers.ModelSerializer):
     question = BANTQuestionSerializer()
     answer = BANTAnswerSerializer()
@@ -176,6 +248,15 @@ class BANTQuestionsSectionSerializer(serializers.ModelSerializer):
         model = BANTQuestionsSection
         fields = (
             "id", "campaign", "question", "answer", "question_txt", "answer_txt"
+        )
+
+
+class CustomQuestionsCreateSectionSerializer(serializers.ModelSerializer):
+
+       class Meta:
+        model = CustomQuestionsSection
+        fields = (
+            "question", "answer", "question_txt", "answer_txt"
         )
 
 
@@ -189,6 +270,16 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
             "id", "state", "campaign", "question", "answer", "question_txt", "answer_txt"
         )
 
+
+class ABMSectionCreateSerializer(serializers.ModelSerializer):
+
+    file = serializers.FileField(allow_null=True, required=False)
+
+    class Meta:
+        model = ABMSection
+        fields = (
+            "title", "accounts_value", "file"
+        )
 
 class ABMSectionSerializer(serializers.ModelSerializer):
     #leads = serializers.SerializerMethodField(read_only=True)
@@ -210,6 +301,14 @@ class ABMSectionSerializer(serializers.ModelSerializer):
             return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
+class InstallBaseCreateSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InstallBaseSection
+        fields = (
+           "name",
+        )
+
+
 class InstallBaseSectionSerializer(serializers.ModelSerializer):
     leads_installbase = serializers.SerializerMethodField(read_only=True)
 
@@ -223,6 +322,15 @@ class InstallBaseSectionSerializer(serializers.ModelSerializer):
         return instance.leads_installbase
 
 
+class FairTradeCreateSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FairTradeSection
+        fields = (
+            "name", "value"
+        )
+
+
 class FairTradeSectionSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -231,6 +339,13 @@ class FairTradeSectionSerializer(serializers.ModelSerializer):
             "id",  "campaign", "name", "value", "state",
         )
 
+
+class LeadCascadeProgramCreateSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeadCascadeProgramSection
+        fields = (
+             "name",
+        )
 
 class LeadCascadeProgramSectionSerializer(serializers.ModelSerializer):
     leads_cascade = serializers.SerializerMethodField(read_only=True)
@@ -243,6 +358,20 @@ class LeadCascadeProgramSectionSerializer(serializers.ModelSerializer):
 
     def get_leads_cascade(self, instance):
         return instance.leads_cascade
+
+
+class NurturingCreateSectionSerializer(serializers.ModelSerializer):
+
+    assets = AssetsSectionSerializer(required=False, allow_null=True)
+
+    class Meta:
+        model = NurturingSection
+        fields = (
+            "campaign_type",
+            "assets",
+            "link",
+            "nurturing_stages",
+        )
 
 
 class NurturingSectionSerializer(serializers.ModelSerializer):
@@ -345,21 +474,45 @@ class TeamsSerializer(serializers.ModelSerializer):
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
 class CampaignCreateSerializer(WritableNestedModelSerializer):
+
+    creatives = CreativesSectionSerializer(many=True, allow_null=True, required=False)
+    assets = AssetsCreateSectionSerializer(many=True, allow_null=True, required=False)
+    intents = IntentFeedsCreateSectionSerializer(many=True, allow_null=True, required=False)
+    industries = IndustriesSectionSerializer(many=True, allow_null=True, required=False)
+    revenues = RevenueSectionCreateSerializer(many=True, allow_null=True, required=False)
+    titles = JobTitlesCreateSectionSerializer(many=True, allow_null=True, required=False)
+    companies = CompanySizeCreateSectionSerializer(many=True, allow_null=True, required=False)
+    targets = TargetSectionCreateSerializer(many=True, allow_null=True, required=False)
+    geolocations = GeolocationsCreateSectionSerializer(many=True, allow_null=True, required=False)
+    bants = BANTQuestionsCreateSectionSerializer(many=True, allow_null=True, required=False)
+    cqs = CustomQuestionsCreateSectionSerializer(many=True, allow_null=True, required=False)
+    abms = ABMSectionCreateSerializer(many=True, allow_null=True, required=False)
+    ibs = InstallBaseCreateSectionSerializer(many=True, allow_null=True, required=False)
+    fair_trades = FairTradeCreateSectionSerializer(many=True, allow_null=True, required=False)
+    lead_cascades = LeadCascadeProgramCreateSectionSerializer(many=True, allow_null=True, required=False)
+    #nurturings = NurturingCreateSectionSerializer(many=True, allow_null=True, required=False)
+
     class Meta:
         model = Campaign
         fields = (
-
-            "client", "abm_look_a_like_state",
-            "customer_information", "contact_name", "email", "note",
-            "name", "campaign_type", "order",  "targets",
-            "start_date", "end_date",
-            "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents",
-            "artificial_titles", "titles",
-            "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
-            "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
-            "itcurateds",
-            "teams", "tactics",
-            "suppression_list",
+            "email", "client", "integration_type", "pacing_type", "name", "creatives", "assets",
+            "intents", "industries", "revenues", "companies", "geolocations", "bants", "cqs", "abms",
+            "ibs", "fair_trades", "lead_cascades", #"nurturings",
+            "nurturing_parameters", "targets", "titles"
+            # "itcurateds",
+            # "teams", "tactics",
+            # "suppression_list",
+            # "client", "abm_look_a_like_state",
+            # "customer_information", "contact_name", "email", "note",
+            # "name", "campaign_type", "order",  "targets",
+            # "start_date", "end_date",
+            # "state",  "details",   "guarantees", "integration_type", "pacing_type", "assets", "intents",
+            # "artificial_titles", "titles",
+            # "industries", "revenues", "companies_size", "geolocations", "bants", "custom_questions", "abms",
+            # "install_base", "fair_trades", "lead_cascades", "nurturings", "nurturing_parameters", "creatives",
+            # "itcurateds",
+            # "teams", "tactics",
+            # "suppression_list",
         )
 
 class CampaignSerializer(serializers.ModelSerializer):
