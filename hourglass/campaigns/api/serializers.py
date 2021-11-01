@@ -498,7 +498,9 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
             "email", "client", "integration_type", "pacing_type", "name", "creatives", "assets",
             "intents", "industries", "revenues", "companies", "geolocations", "bants", "cqs", "abms",
             "ibs", "fair_trades", "lead_cascades", #"nurturings",
-            "nurturing_parameters", "targets", "titles"
+            "nurturing_parameters", "targets", "titles", "guarantees", "note", "details", "customer_information",
+            "order", "contact_name", "end_date", "start_date", "kind", "part_of_the_map", "nurturing_parameters",
+            "abm_look_a_like_state"
             # "itcurateds",
             # "teams", "tactics",
             # "suppression_list",
