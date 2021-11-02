@@ -25,6 +25,7 @@ class TargetSectionCreateSerializer(serializers.ModelSerializer):
         fields = (
             'campaign_pos_type',
             'leads_goal',
+            'grade',
         )
 
 
