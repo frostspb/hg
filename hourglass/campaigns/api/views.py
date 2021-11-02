@@ -22,8 +22,6 @@ from .serializers import CampaignSerializer, AssetsSectionSerializer,\
     NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer,\
     MessageSerializer, CampaignCreateSerializer
 
-
-
 from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
@@ -74,7 +72,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
                       f"Campaign guarantees {guarantees} \n" \
                       f"Campaign details {details} \n" \
                       f"Notes {note} \n"
-                send_status_email.delay(subj='hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
+                send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):

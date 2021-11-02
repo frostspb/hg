@@ -107,9 +107,9 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'PAGE_SIZE': 100,
-    'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S",
-    'DATE_FORMAT': "%d-%m-%Y",
-    'DATE_INPUT_FORMATS': ["%d-%m-%Y"],
+    'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
+    'DATE_FORMAT': "%m/%d/%Y",
+    'DATE_INPUT_FORMATS': ["%m/%d/%Y"],
 
 }
 
