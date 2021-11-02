@@ -55,19 +55,26 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         serializer.save(managed_by=manager, owner=self.request.user)
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
-            obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
+            #obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
+
             email = self.request.user.email
-            order = obj.order if obj.order else ''
-            note = obj.note if obj.note else ''
-            guarantees = obj.guarantees if obj.guarantees else ''
-            details = obj.details if obj.details else ''
-            if obj and email:
-                msg = f"Customer information {obj.customer_information} \n" \
-                      f"Contact name {obj.contact_name} \n" \
-                      f"Campaign name {obj.name} \n" \
-                      f"Campaign start date {obj.start_date} \n" \
-                      f"Campaign end date {obj.end_date} \n" \
-                      f"Campaign type {obj.campaign_type} \n" \
+            order = serializer.data.get('order', '')
+            note = serializer.data.get('note', '')
+            guarantees = serializer.data.get('guarantees', '')
+            details = serializer.data.get('details', '')
+            customer_information = serializer.data.get('customer_information', '')
+            contact_name = serializer.data.get('contact_name', '')
+            name = serializer.data.get('name', '')
+            start_date = serializer.data.get('start_date', '')
+            end_date = serializer.data.get('end_date', '')
+            campaign_type = serializer.data.get('campaign_type', '')
+            if email:
+                msg = f"Customer information {customer_information} \n" \
+                      f"Contact name {contact_name} \n" \
+                      f"Campaign name {name} \n" \
+                      f"Campaign start date {start_date} \n" \
+                      f"Campaign end date {end_date} \n" \
+                      f"Campaign type {campaign_type} \n" \
                       f"Purchase order {order} \n" \
                       f"Campaign guarantees {guarantees} \n" \
                       f"Campaign details {details} \n" \
