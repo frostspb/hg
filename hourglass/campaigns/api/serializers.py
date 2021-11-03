@@ -20,19 +20,22 @@ class CampaignCopySerializer(serializers.Serializer):
 
 
 class TargetSectionCreateSerializer(serializers.ModelSerializer):
+    pos_type_name = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+
     class Meta:
         model = TargetSection
         fields = (
             'campaign_pos_type',
             'leads_goal',
             'grade',
+            'pos_type_name'
         )
 
 
 class TargetSectionSerializer(serializers.ModelSerializer):
     remaining_leads = serializers.SerializerMethodField()
     percent_completion = serializers.SerializerMethodField()
-    type_name = serializers.CharField(source='campaign_pos_type')
+    type_name = serializers.SerializerMethodField()
 
     class Meta:
         model = TargetSection
@@ -46,6 +49,13 @@ class TargetSectionSerializer(serializers.ModelSerializer):
 
     def get_remaining_leads(self, instance):
         return instance.remaining_leads
+
+    def get_type_name(self, instance):
+        if instance.pos_type_name:
+            return instance.pos_type_name
+        else:
+            return instance.campaign_pos_type.name
+
 
 
 class SectionsSettingsSerializer(serializers.ModelSerializer):

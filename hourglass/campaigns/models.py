@@ -426,6 +426,7 @@ class TargetSection(CloneMixin, BaseStateItem):
     velocity = models.PositiveIntegerField("Velocity", default=0)
     grade = models.CharField(max_length=16, choices=CampaignGrade.choices, default=CampaignGrade.TOP)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="targets")
+    pos_type_name = models.CharField(max_length=128, blank=True, null=True)
 
     @property
     def remaining_leads(self):
