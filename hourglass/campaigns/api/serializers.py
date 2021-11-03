@@ -21,7 +21,7 @@ class CampaignCopySerializer(serializers.Serializer):
 
 class TargetSectionCreateSerializer(serializers.ModelSerializer):
     pos_type_name = serializers.CharField(required=False, allow_null=True, allow_blank=True)
-
+    campaign_pos_type = serializers.IntegerField(required=False, allow_null=True)
     class Meta:
         model = TargetSection
         fields = (

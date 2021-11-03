@@ -419,7 +419,7 @@ class TargetSection(CloneMixin, BaseStateItem):
         MIDDLE = 'Middle', 'Middle'
         BOTTOM = 'Bottom', 'Bottom'
 
-    campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE)
+    campaign_pos_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, null=True, blank=True)
 
     leads_goal = models.PositiveIntegerField('Leads goal', default=0)
     leads_generated = models.PositiveIntegerField('Leads Generated', default=0)
