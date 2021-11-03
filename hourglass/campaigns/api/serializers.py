@@ -40,7 +40,7 @@ class TargetSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TargetSection
         fields = (
-            'type_name', 'campaign_pos_type'
+            'type_name', 'campaign_pos_type',
             'leads_goal', 'leads_generated', 'velocity', 'percent_completion', 'remaining_leads', 'grade',
         )
 
