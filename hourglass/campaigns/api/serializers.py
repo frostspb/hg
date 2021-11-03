@@ -40,7 +40,7 @@ class TargetSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TargetSection
         fields = (
-            'type_name',
+            'type_name', 'campaign_pos_type'
             'leads_goal', 'leads_generated', 'velocity', 'percent_completion', 'remaining_leads', 'grade',
         )
 
@@ -511,7 +511,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
             "ibs", "fair_trades", "lead_cascades", #"nurturings",
             "nurturing_parameters", "targets", "titles", "guarantees", "note", "details", "customer_information",
             "order", "contact_name", "end_date", "start_date", "kind", "part_of_the_map", "nurturing_parameters",
-            "abm_look_a_like_state"
+            "abm_look_a_like_state", "intent_feed_goal_percent", "abm_goal_percent"
             # "itcurateds",
             # "teams", "tactics",
             # "suppression_list",
