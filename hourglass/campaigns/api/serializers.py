@@ -4,7 +4,7 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams, Message
-from hourglass.references.models import Tactics
+from hourglass.references.models import Tactics, CampaignTypes
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
@@ -21,7 +21,8 @@ class CampaignCopySerializer(serializers.Serializer):
 
 class TargetSectionCreateSerializer(serializers.ModelSerializer):
     pos_type_name = serializers.CharField(required=False, allow_null=True, allow_blank=True)
-    campaign_pos_type = serializers.IntegerField(required=False, allow_null=True)
+    campaign_pos_type = serializers.PrimaryKeyRelatedField(queryset=CampaignTypes.objects.all(), required=False)
+    #campaign_pos_type = serializers.IntegerField(required=False, allow_null=True)
     class Meta:
         model = TargetSection
         fields = (
