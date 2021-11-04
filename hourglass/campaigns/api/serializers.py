@@ -501,7 +501,7 @@ class TeamsSerializer(serializers.ModelSerializer):
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
 class CampaignCreateSerializer(WritableNestedModelSerializer):
-
+    id = serializers.IntegerField(required=False)
     creatives = CreativesSectionSerializer(many=True, allow_null=True, required=False)
     assets = AssetsCreateSectionSerializer(many=True, allow_null=True, required=False)
     intents = IntentFeedsCreateSectionSerializer(many=True, allow_null=True, required=False)
@@ -527,7 +527,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
             "ibs", "fair_trades", "lead_cascades", #"nurturings",
             "nurturing_parameters", "targets", "titles", "guarantees", "note", "details", "customer_information",
             "order", "contact_name", "end_date", "start_date", "kind", "part_of_the_map", "nurturing_parameters",
-            "abm_look_a_like_state", "intent_feed_goal_percent", "abm_goal_percent"
+            "abm_look_a_like_state", "intent_feed_goal_percent", "abm_goal_percent", "id"
             # "itcurateds",
             # "teams", "tactics",
             # "suppression_list",
