@@ -684,7 +684,7 @@ class BANTQuestionsSection(CloneMixin, models.Model):
     question_txt = models.TextField("Question", null=True, blank=True)
     answer_txt = models.TextField("Answer", null=True, blank=True)
     
-    question = models.ForeignKey(BANTQuestion, on_delete=models.CASCADE)
+    question = models.ForeignKey(BANTQuestion, on_delete=models.CASCADE, null=True,blank=True)
 
     answer = ChainedForeignKey(
         BANTAnswer,
@@ -692,7 +692,7 @@ class BANTQuestionsSection(CloneMixin, models.Model):
         chained_model_field="question",
         show_all=False,
         auto_choose=True,
-        sort=True
+        sort=True, null=True,blank=True
     )
 
     class Meta:
@@ -707,14 +707,14 @@ class CustomQuestionsSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="cqs")
     question_txt = models.TextField("Question", null=True, blank=True)
     answer_txt = models.TextField("Answer", null=True, blank=True)
-    question = models.ForeignKey(CustomQuestion, on_delete=models.CASCADE)
+    question = models.ForeignKey(CustomQuestion, on_delete=models.CASCADE, null=True,blank=True)
     answer = ChainedForeignKey(
         CustomAnswer,
         chained_field="question",
         chained_model_field="question",
         show_all=False,
         auto_choose=True,
-        sort=True
+        sort=True, null=True,blank=True
     )
 
     class Meta:
