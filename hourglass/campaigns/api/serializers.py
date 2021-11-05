@@ -727,7 +727,7 @@ class HourglassSerializer(serializers.ModelSerializer):
             "assets", "intents",  "artificial_titles","titles", "industries", "revenues", "companies_size", "geolocations",
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "itcurateds", "audience_targeted",
-            "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent",
+            "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent", "kind",
             "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list", "part_of_the_map","abm_look_a_like_state",
         )
 
@@ -832,7 +832,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm",
-            "done_abm", "itcurateds",
+            "done_abm", "itcurateds", "kind",
             "suppression_list", "velocity", "state", "part_of_the_map","abm_look_a_like_state",
 
         )
