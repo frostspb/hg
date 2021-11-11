@@ -547,7 +547,7 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Geolocation title", max_length=200)
     user_geolocation = models.CharField("User Geolocation", max_length=200, blank=True, null=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="geolocations")
-    geolocation = models.ForeignKey(Geolocations, on_delete=models.CASCADE)
+    geolocation = models.ForeignKey(Geolocations, on_delete=models.CASCADE, null=True, blank=True)
     goal_per_geo = models.FloatField("Goal per Geo", default=0)
 
     class Meta:
@@ -566,7 +566,7 @@ class RevenueSection(CloneMixin, BaseReportPercentItem):
     user_revenue = models.CharField("User Revenue", max_length=200, blank=True, null=True)
     name = models.CharField("Revenue", max_length=200, blank=True, null=True)
     revenue = models.ForeignKey(Revenue, verbose_name="Revenue Title", on_delete=models.CASCADE, related_name="revens", blank=True, null=True)
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="revenues")
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="revenues", null=True, blank=True)
 
     class Meta:
         verbose_name = "Revenue"
@@ -583,7 +583,7 @@ class RevenueSection(CloneMixin, BaseReportPercentItem):
 class CompanySizeSection(CloneMixin, BaseReportPercentItem):
     user_company_size = models.CharField("User Company Size", max_length=200, blank=True, null=True)
     company_size = models.ForeignKey(CompanySize, verbose_name="Company Size", on_delete=models.CASCADE, related_name="sizes", blank=True, null=True)
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="companies")
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="companies", null=True, blank=True)
 
     class Meta:
         verbose_name = "Company Size"
