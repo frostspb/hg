@@ -20,7 +20,7 @@ from .serializers import CampaignSerializer, AssetsSectionSerializer,\
     JobTitlesSectionSerializer, IntentFeedsSectionSerializer, ABMSectionSerializer,\
     InstallBaseSectionSerializer, FairTradeSectionSerializer,LeadCascadeProgramSectionSerializer,\
     NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer,\
-    MessageSerializer, CampaignCreateSerializer
+    MessageSerializer, CampaignCreateSerializer, NurturingCreateSectionSerializer
 
 from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
@@ -224,6 +224,12 @@ class NurturingSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMix
     serializer_class = NurturingSectionSerializer
     queryset = NurturingSection.objects.all()
     filterset_fields = ('campaign',)
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return NurturingCreateSectionSerializer
+        else:
+            return NurturingSectionSerializer
 
 
 class CreativesSectionViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet,

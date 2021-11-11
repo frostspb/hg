@@ -4,7 +4,7 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams, Message
-from hourglass.references.models import Tactics, CampaignTypes, Geolocations, Revenue, Industry
+from hourglass.references.models import Tactics, CampaignTypes, Geolocations, Revenue, Industry, NurturingStages
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
@@ -392,12 +392,15 @@ class LeadCascadeProgramSectionSerializer(serializers.ModelSerializer):
 
 
 class NurturingCreateSectionSerializer(serializers.ModelSerializer):
-
-    assets = AssetsSectionSerializer(required=False, allow_null=True)
+    campaign = serializers.PrimaryKeyRelatedField(queryset=Campaign.objects.all())
+    assets = serializers.PrimaryKeyRelatedField(queryset=AssetsSection.objects.all())
+    campaign_type = serializers.PrimaryKeyRelatedField(queryset=CampaignTypes.objects.all())
+    nurturing_stages = serializers.PrimaryKeyRelatedField(queryset=NurturingStages.objects.all())
 
     class Meta:
         model = NurturingSection
         fields = (
+            "campaign",
             "campaign_type",
             "assets",
             "link",

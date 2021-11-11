@@ -649,7 +649,8 @@ class NurturingSection(CloneMixin, BaseStateItem):
 
     @property
     def link(self):
-        return self.assets.landing_page.url
+        if self.assets.landing_page:
+            return self.assets.landing_page.url
 
     @property
     def generated_leads(self):
