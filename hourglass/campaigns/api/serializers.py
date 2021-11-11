@@ -4,7 +4,7 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams, Message
-from hourglass.references.models import Tactics, CampaignTypes
+from hourglass.references.models import Tactics, CampaignTypes, Geolocations, Revenue
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
@@ -183,6 +183,7 @@ class IndustriesSectionSerializer(serializers.ModelSerializer):
 class RevenueSectionCreateSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=False)
     user_revenue = serializers.CharField(required=False)
+    revenue = serializers.PrimaryKeyRelatedField(queryset=Revenue.objects.all(), required=False)
 
     class Meta:
         model = RevenueSection
@@ -234,6 +235,7 @@ class CompanySizeSectionSerializer(serializers.ModelSerializer):
 
 
 class GeolocationsCreateSectionSerializer(serializers.ModelSerializer):
+    geolocation = serializers.PrimaryKeyRelatedField(queryset=Geolocations.objects.all(), required=False)
 
     class Meta:
         model = GeolocationsSection
