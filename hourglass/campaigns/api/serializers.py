@@ -247,7 +247,6 @@ class GeolocationsCreateSectionSerializer(serializers.ModelSerializer):
 class GeolocationsSectionSerializer(serializers.ModelSerializer):
     leads_geolocation = serializers.SerializerMethodField(read_only=True)
 
-    name = serializers.CharField(source='geolocation')
     code = serializers.CharField(source='geolocation')
     geolocation = GeolocationsSerializer()
 
@@ -255,7 +254,7 @@ class GeolocationsSectionSerializer(serializers.ModelSerializer):
         model = GeolocationsSection
         fields = (
             "id", "name", "geolocation", "campaign", "goal_per_geo" , "leads_geolocation",
-            "name", "code", "state", "percent", "user_geolocation"
+            "code", "state", "percent", "user_geolocation"
         )
 
     def get_leads_geolocation(self, instance):
