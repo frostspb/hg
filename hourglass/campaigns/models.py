@@ -548,7 +548,7 @@ class GeolocationsSection(CloneMixin, BaseReportPercentItem):
     user_geolocation = models.CharField("User Geolocation", max_length=200, blank=True, null=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="geolocations")
     geolocation = models.ForeignKey(Geolocations, on_delete=models.CASCADE, null=True, blank=True)
-    goal_per_geo = models.FloatField("Goal per Geo", default=0)
+    goal_per_geo = models.FloatField("Goal per Geo",  null=True, blank=True)
 
     class Meta:
         verbose_name = "Geolocation"

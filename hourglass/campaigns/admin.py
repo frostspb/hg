@@ -289,7 +289,7 @@ class CustomQuestionsSectionAdmin(admin.TabularInline):
 class CampaignClientAdmin(CloneModelAdmin):
 
     list_display = [
-        "id", "name_link", "client", "active", "customer_information", "state",
+        "id", "name_link", "client", "active", "owner", "kind", "created",
         "start_date", "end_date",
     ]
     search_fields = ["client__name", "id"]
@@ -345,7 +345,7 @@ class CampaignClientAdmin(CloneModelAdmin):
         "id", "created", "kind","rejected", "delivered", "remaining", "in_validation", "goal_intent_feed",
         "generated_leads", "total_goal",
         "done_intent_feed", "total_intent_feed_bombora", "total_intent_feed_aberdeen", "total_intent_feed_infusemedia",
-        "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent"
+        "total_intent_feed", "goal_abm", "done_abm", "done_abm_percent", "created"
     ]
 
     ordering = ("-created",)

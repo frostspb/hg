@@ -1,6 +1,29 @@
 from django.contrib import admin
 
 from .models import Client, Company
+from hourglass.campaigns.models import Campaign
+
+
+class CampaignAdmin(admin.TabularInline):
+    model = Campaign
+    extra = 0
+    fields = [
+        'name',  'kind','created'
+    ]
+
+    readonly_fields  = [
+        'name', 'kind', 'created'
+    ]
+    classes = ['collapse']
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Client)
@@ -13,6 +36,7 @@ class ClientAdmin(admin.ModelAdmin):
     search_fields = ["name", "id"]
     fields = ["name", "client_type", "owner", "total_campaigns", "leads_generated", "client_since", "active"]
     ordering = ("-created",)
+    inlines = [CampaignAdmin]
 
     def current_campaigns(self, obj):
         return obj.current_campaigns
