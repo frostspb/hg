@@ -54,7 +54,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         manager = choice(Managers.objects.all())
         serializer.save(managed_by=manager, owner=self.request.user)
 
-        if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
+        if serializer.data.get('kind') == Campaign.CampaignKinds.CONTRACT:
             #obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
 
             email = self.request.user.email
@@ -80,6 +80,13 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
                       f"Campaign details {details} \n" \
                       f"Notes {note} \n"
                 send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
+
+        if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
+            email = self.request.user.email
+            if email:
+                msg = f"You have just save the new Campaign. Thank you. Campaign name: {serializer.data.get('name', '')}"
+                send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
+
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):
