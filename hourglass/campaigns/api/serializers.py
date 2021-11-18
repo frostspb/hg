@@ -506,6 +506,13 @@ class TeamsSerializer(serializers.ModelSerializer):
 #TODO 1 serializer
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
+
+class CampaignListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Campaign
+        fields = ["id", "name"]
+
+
 class CampaignCreateSerializer(WritableNestedModelSerializer):
     id = serializers.IntegerField(required=False)
     creatives = CreativesSectionSerializer(many=True, allow_null=True, required=False)
