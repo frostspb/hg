@@ -164,6 +164,7 @@ class IndustriesSectionCreateSerializer(serializers.ModelSerializer):
 
         )
 
+
 class IndustriesSectionSerializer(serializers.ModelSerializer):
     leads_industry = serializers.SerializerMethodField(read_only=True)
     name = serializers.CharField(source='industry')
