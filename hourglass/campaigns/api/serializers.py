@@ -21,7 +21,7 @@ class CampaignCopySerializer(serializers.Serializer):
 
 class TargetSectionCreateSerializer(serializers.ModelSerializer):
     pos_type_name = serializers.CharField(required=False, allow_null=True, allow_blank=True)
-    campaign_pos_type = serializers.PrimaryKeyRelatedField(queryset=CampaignTypes.objects.all(), required=False)
+    campaign_pos_type = serializers.PrimaryKeyRelatedField(queryset=CampaignTypes.objects.all(), required=False, allow_null=True, allow_empty=True)
     #campaign_pos_type = serializers.IntegerField(required=False, allow_null=True)
     class Meta:
         model = TargetSection
@@ -37,7 +37,6 @@ class TargetSectionSerializer(serializers.ModelSerializer):
     remaining_leads = serializers.SerializerMethodField()
     percent_completion = serializers.SerializerMethodField()
     type_name = serializers.SerializerMethodField()
-
     class Meta:
         model = TargetSection
         fields = (
@@ -56,7 +55,6 @@ class TargetSectionSerializer(serializers.ModelSerializer):
             return instance.pos_type_name
         else:
             return instance.campaign_pos_type.name
-
 
 
 class SectionsSettingsSerializer(serializers.ModelSerializer):
