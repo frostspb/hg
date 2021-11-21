@@ -2,6 +2,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.db.models import Q
+
 
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
     CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages, PartOfMap
@@ -42,12 +44,20 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_bant(self, request):
-        return Response(data=BANTQuestionSerializer(BANTQuestion.objects.all().order_by('pos'), many=True).data)
+        return Response(
+            data=BANTQuestionSerializer(
+                BANTQuestion.objects.filter(
+                    Q(owner__isnull=True)| Q(owner=self.request.user)
+                ).order_by('pos'), many=True
+            ).data
+        )
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_custom(self, request):
         return Response(
-            data=CustomQuestionSerializer(CustomQuestion.objects.all(), many=True).data)
+            data=CustomQuestionSerializer(
+                CustomQuestion.objects.filter(Q(owner__isnull=True)| Q(owner=self.request.user)), many=True
+            ).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def managers(self, request):

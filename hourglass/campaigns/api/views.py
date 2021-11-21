@@ -65,13 +65,15 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             customer_information = serializer.data.get('customer_information', '')
             contact_name = serializer.data.get('contact_name', '')
             name = serializer.data.get('name', '')
+            email_field = serializer.data.get('email', '')
             start_date = serializer.data.get('start_date', '')
             end_date = serializer.data.get('end_date', '')
             campaign_type = serializer.data.get('campaign_type', '')
             if email:
                 msg = f"Customer information {customer_information} \n" \
                       f"Contact name {contact_name} \n" \
-                      f"Campaign name {name} \n" \
+                      f"Campaign name {name} \n " \
+                      f"Email {email_field} \n" \
                       f"Campaign start date {start_date} \n" \
                       f"Campaign end date {end_date} \n" \
                       f"Campaign type {campaign_type} \n" \

@@ -382,7 +382,7 @@ class CampaignClientAdmin(CloneModelAdmin):
 
     def get_queryset(self, request):
         qs = super(CampaignClientAdmin, self).get_queryset(request)
-        qs = qs.filter(kind=Campaign.CampaignKinds.USER)
+        qs = qs.filter(kind__in=[Campaign.CampaignKinds.USER,Campaign.CampaignKinds.CONTRACT])
         return qs
 
     def goal_abm(self, obj):

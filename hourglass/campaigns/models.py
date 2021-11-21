@@ -449,7 +449,7 @@ class AssetsSection(CloneMixin, BaseReportPercentItem):
     name = models.CharField("Asset Name", max_length=200)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="assets")
     landing_page = models.FileField("Landing Page", blank=True, null=True)
-    titles = models.ManyToManyField(JobTitles, blank=True, related_name="jt_as")
+    titles = models.ManyToManyField(JobTitles, blank=True, related_name="jt_as", null=True)
     velocity_koeff = models.FloatField(default=1.0)
     _clone_m2m_fields = [
         "titles"

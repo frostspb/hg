@@ -4,11 +4,14 @@ from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, I
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams, Message
-from hourglass.references.models import Tactics, CampaignTypes, Geolocations, Revenue, Industry, NurturingStages
+
+from hourglass.references.models import Tactics, CampaignTypes, Geolocations, Revenue, Industry, NurturingStages, CompanyRef
+
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
     NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer, RevenueSerializer
+
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
 
@@ -77,6 +80,7 @@ class TacticsSerializer(serializers.ModelSerializer):
 
 class AssetsCreateSectionSerializer(serializers.ModelSerializer):
     landing_page = serializers.FileField(required=False, allow_null=True)
+    titles = serializers.IntegerField(required=False, allow_null=True)
 
     class Meta:
         model = AssetsSection
@@ -103,10 +107,11 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
 
 
 class IntentFeedsCreateSectionSerializer(serializers.ModelSerializer):
+    industry = serializers.PrimaryKeyRelatedField(queryset=CompanyRef.objects.all(), required=False)
     class Meta:
         model = IntentFeedsSection
         fields = (
-             "name", "company", "kind",
+             "name", "company", "kind", "percent",
 
         )
 
@@ -132,6 +137,7 @@ class IntentFeedsSectionSerializer(serializers.ModelSerializer):
 
 class JobTitlesCreateSectionSerializer(serializers.ModelSerializer):
     user_job_title = serializers.CharField(required=False)
+
     class Meta:
         model = JobTitlesSection
         fields = (
@@ -157,6 +163,7 @@ class IndustriesSectionCreateSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=False)
     user_industry = serializers.CharField(required=False)
     industry = serializers.PrimaryKeyRelatedField(queryset=Industry.objects.all(), required=False)
+
     class Meta:
         model = IndustriesSection
         fields = (
@@ -539,7 +546,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
             "ibs", "fair_trades", "lead_cascades", #"nurturings",
             "nurturing_parameters", "targets", "titles", "guarantees", "note", "details", "customer_information",
             "order", "contact_name", "end_date", "start_date", "kind", "part_of_the_map", "nurturing_parameters",
-            "abm_look_a_like_state", "intent_feed_goal_percent", "abm_goal_percent", "id"
+            "abm_look_a_like_state", "intent_feed_goal_percent", "intent_feed_done_percent", "abm_goal_percent", "id", "campaign_type",
             # "itcurateds",
             # "teams", "tactics",
             # "suppression_list",

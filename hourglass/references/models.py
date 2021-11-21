@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class CampaignTypes(models.Model):
@@ -117,7 +120,7 @@ class BANTQuestion(models.Model):
     question = models.TextField()
     kind = models.CharField(max_length=16, choices=SectionKind.choices, default=SectionKind.BUDGET)
     pos = models.PositiveSmallIntegerField(default=0)
-
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.question
 
@@ -127,6 +130,7 @@ class BANTAnswer(models.Model):
     question = models.ForeignKey(BANTQuestion, on_delete=models.CASCADE, related_name='answers')
     answer = models.TextField()
     preferred = models.BooleanField(default=False)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.answer
@@ -134,7 +138,7 @@ class BANTAnswer(models.Model):
 
 class CustomQuestion(models.Model):
     question = models.TextField()
-
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.question
 
@@ -144,7 +148,7 @@ class CustomAnswer(models.Model):
     question = models.ForeignKey(CustomQuestion, on_delete=models.CASCADE, related_name='answers')
     answer = models.TextField()
     preferred = models.BooleanField(default=False)
-
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.answer
 
