@@ -12,6 +12,8 @@ from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTit
     ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer,\
     CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer, PacingSerializer, CompanyRefSerializer,\
     NurturingStagesSerializer, PartOfMapSerializer
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
+    DestroyModelMixin
 
 
 class ReferencesViewSet(GenericViewSet):

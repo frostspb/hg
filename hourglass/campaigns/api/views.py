@@ -89,7 +89,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
                 msg = f"You have just save the new Campaign. Thank you. Campaign name: {serializer.data.get('name', '')}"
                 send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
 
-
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def kinds(self, request):
         return Response(data=Campaign.CampaignKinds.choices)

@@ -32,7 +32,7 @@ class TargetSectionCreateSerializer(serializers.ModelSerializer):
             'campaign_pos_type',
             'leads_goal',
             'grade',
-            'pos_type_name'
+            'pos_type_name', "state"
         )
 
 
@@ -85,7 +85,7 @@ class AssetsCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssetsSection
         fields = (
-             "name", "landing_page", "titles",
+             "name", "landing_page", "titles", "state",
         )
 
 
@@ -111,7 +111,7 @@ class IntentFeedsCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = IntentFeedsSection
         fields = (
-             "name", "company", "kind", "percent",
+             "name", "company", "kind", "percent", "state",
 
         )
 
@@ -141,7 +141,7 @@ class JobTitlesCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobTitlesSection
         fields = (
-             "job_title",  "goal", "user_job_title"
+             "job_title",  "goal", "user_job_title", "state",
         )
 
 
@@ -167,7 +167,7 @@ class IndustriesSectionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndustriesSection
         fields = (
-             "industry", "name", "user_industry",
+             "industry", "name", "user_industry", "state",
 
         )
 
@@ -194,7 +194,7 @@ class RevenueSectionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueSection
         fields = (
-             "revenue", "name", "user_revenue",
+             "revenue", "name", "user_revenue", "state"
 
         )
 
@@ -221,7 +221,7 @@ class CompanySizeCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanySizeSection
         fields = (
-            "company_size", "user_company_size",
+            "company_size", "user_company_size", "state"
         )
 
 
@@ -246,7 +246,7 @@ class GeolocationsCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = GeolocationsSection
         fields = (
-            "name", "geolocation", "user_geolocation"
+            "name", "geolocation", "user_geolocation", "state"
         )
 
 
@@ -271,7 +271,7 @@ class BANTQuestionsCreateSectionSerializer(serializers.ModelSerializer):
       class Meta:
         model = BANTQuestionsSection
         fields = (
-            "question", "answer", "question_txt", "answer_txt"
+            "question", "answer", "question_txt", "answer_txt", "state"
         )
 
 
@@ -291,7 +291,7 @@ class CustomQuestionsCreateSectionSerializer(serializers.ModelSerializer):
        class Meta:
         model = CustomQuestionsSection
         fields = (
-            "question", "answer", "question_txt", "answer_txt"
+            "question", "answer", "question_txt", "answer_txt", "state"
         )
 
 
@@ -313,7 +313,7 @@ class ABMSectionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ABMSection
         fields = (
-            "title", "accounts_value", "file"
+            "title", "accounts_value", "file", "state"
         )
 
 class ABMSectionSerializer(serializers.ModelSerializer):
@@ -340,7 +340,7 @@ class InstallBaseCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallBaseSection
         fields = (
-           "name",
+           "name", "state"
         )
 
 
@@ -362,7 +362,7 @@ class FairTradeCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FairTradeSection
         fields = (
-            "name", "value"
+            "name", "value", "state"
         )
 
 
@@ -379,7 +379,7 @@ class LeadCascadeProgramCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeadCascadeProgramSection
         fields = (
-             "name",
+             "name", "state"
         )
 
 
@@ -409,7 +409,7 @@ class NurturingCreateSectionSerializer(serializers.ModelSerializer):
             "campaign_type",
             "assets",
             "link",
-            "nurturing_stages",
+            "nurturing_stages", "state",
         )
 
 
@@ -449,7 +449,7 @@ class CreativesSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreativesSection
         fields = (
-            "id", "subject_line", "email_text", "landing_page", "banners"
+            "id", "subject_line", "email_text", "landing_page", "banners", "strate"
         )
 
     def get_email_text(self, instance):
