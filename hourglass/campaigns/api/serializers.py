@@ -449,7 +449,7 @@ class CreativesSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreativesSection
         fields = (
-            "id", "subject_line", "email_text", "landing_page", "banners", "strate"
+            "id", "subject_line", "email_text", "landing_page", "banners", "state"
         )
 
     def get_email_text(self, instance):
