@@ -6,12 +6,12 @@ from django.db.models import Q
 
 
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
-    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages, PartOfMap
+    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages, PartOfMap, Topics
 
 from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, \
     ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer,\
     CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer, PacingSerializer, CompanyRefSerializer,\
-    NurturingStagesSerializer, PartOfMapSerializer
+    NurturingStagesSerializer, PartOfMapSerializer, TopicSerializer
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
     DestroyModelMixin
 
@@ -88,3 +88,7 @@ class ReferencesViewSet(GenericViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def part_of_map(self, request):
         return Response(data=PartOfMapSerializer(PartOfMap.objects.all(), many=True).data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def topics(self, request):
+        return Response(data=TopicSerializer(Topics.objects.all(), many=True).data)

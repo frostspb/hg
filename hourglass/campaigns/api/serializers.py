@@ -111,7 +111,7 @@ class IntentFeedsCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = IntentFeedsSection
         fields = (
-             "name", "company", "kind", "percent", "state",
+             "name", "company", "kind", "percent", "state", "industry"
 
         )
 
@@ -271,7 +271,7 @@ class BANTQuestionsCreateSectionSerializer(serializers.ModelSerializer):
       class Meta:
         model = BANTQuestionsSection
         fields = (
-            "question", "answer", "question_txt", "answer_txt", "state"
+            "question", "answer", "question_txt", "answer_txt",
         )
 
 
@@ -917,3 +917,8 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ("id", "campaign", "message", "manager")
+
+
+
+
+

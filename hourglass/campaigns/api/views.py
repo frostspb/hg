@@ -115,10 +115,30 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def campaign_list(self, request, *args, **kwargs):
-        print (self.queryset.all())
         srz = CampaignListSerializer(self.queryset, many=True)
         return Response(data=srz.data)
 
+    @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated])
+    def create_cq(self, request, *args, **kwargs):
+        from hourglass.references.api.serializers import CustomQuestionCreateSerializer, CustomQuestionSerializer
+        srz = CustomQuestionCreateSerializer(data=request.data)
+        srz.is_valid()
+        x = srz.save()
+        x.owner = request.user
+        x.save()
+
+        return Response(CustomQuestionSerializer(x).data)
+
+    @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated])
+    def create_bant(self, request, *args, **kwargs):
+        from hourglass.references.api.serializers import BANTQuestionCreateSerializer, BANTQuestionSerializer
+        srz = BANTQuestionCreateSerializer(data=request.data)
+        srz.is_valid()
+        x = srz.save()
+        x.owner = request.user
+        x.save()
+
+        return Response(BANTQuestionSerializer(x).data)
 
 
 class SectionSettingsViewSet(UpdateModelMixin,  RetrieveModelMixin, GenericViewSet):
@@ -289,4 +309,4 @@ class MessageViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gene
         email = self.request.user.email
         if obj and email:
             msg = obj.message
-            send_status_email.delay(subj='hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
+            send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)

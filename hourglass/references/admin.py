@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import CampaignTypes, Geolocations, Tactics, Managers, JobTitles,\
     ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer,\
-    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap
+    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap, Topics
 
 
 @admin.register(PartOfMap)
@@ -12,6 +12,11 @@ class PartOfMapAdmin(admin.ModelAdmin):
     fields = ["name"]
     ordering = ("name",)
 
+
+@admin.register(Topics)
+class TopicsAdmin(admin.ModelAdmin):
+    list_display = ["id", "topic"]
+    fields = ["topic"]
 
 @admin.register(CampaignTypes)
 class CampaignTypesAdmin(admin.ModelAdmin):

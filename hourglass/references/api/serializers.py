@@ -1,9 +1,10 @@
 from rest_framework import serializers
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 from django.conf import settings
 
 from hourglass.references.models import CampaignTypes,  JobTitles, Geolocations,  Managers, \
     ITCurated, Revenue, Industry, CompanySize, CustomAnswer, CustomQuestion, BANTQuestion, BANTAnswer,\
-    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap
+    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap, Topics
 
 
 class AssociatesSerializer(serializers.ModelSerializer):
@@ -118,6 +119,42 @@ class BANTQuestionSerializer(serializers.ModelSerializer):
         )
 
 
+class BANTAnswerCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BANTAnswer
+        fields = (
+            'answer',
+        )
+
+
+class BANTQuestionCreateSerializer(WritableNestedModelSerializer):
+    answers = BANTAnswerCreateSerializer(many=True, allow_null=True)
+
+    class Meta:
+        model = BANTQuestion
+        fields = (
+            'question', 'answers'
+        )
+
+
+class CustomAnswerCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomAnswer
+        fields = (
+            'answer',
+        )
+
+
+class CustomQuestionCreateSerializer(WritableNestedModelSerializer):
+    answers = CustomAnswerCreateSerializer(many=True, allow_null=True)
+
+    class Meta:
+        model = CustomQuestion
+        fields = (
+            'question', 'answers'
+        )
+
+
 class CustomAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomAnswer
@@ -165,4 +202,12 @@ class PartOfMapSerializer(serializers.ModelSerializer):
         model = PartOfMap
         fields = (
             'id', 'name'
+        )
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topics
+        fields = (
+            'id', 'topic'
         )
