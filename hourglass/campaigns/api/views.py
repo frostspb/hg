@@ -20,7 +20,9 @@ from .serializers import CampaignSerializer, AssetsSectionSerializer,\
     JobTitlesSectionSerializer, IntentFeedsSectionSerializer, ABMSectionSerializer,\
     InstallBaseSectionSerializer, FairTradeSectionSerializer,LeadCascadeProgramSectionSerializer,\
     NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer,\
-    MessageSerializer, CampaignCreateSerializer, NurturingCreateSectionSerializer, CampaignListSerializer
+    MessageSerializer, CampaignCreateSerializer, NurturingCreateSectionSerializer, CampaignListSerializer,\
+    ITCuratedUpdateStatusSerializer
+
 
 from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
@@ -140,10 +142,16 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
         return Response(BANTQuestionSerializer(x).data)
 
-    # @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
-    # def update_curated(self, request, *args, **kwargs):
-
-
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
+    def update_curated(self, request, *args, **kwargs):
+        srz = ITCuratedUpdateStatusSerializer(request, many=True)
+        srz.is_valid()
+        data = srz.data
+        for i in data:
+            sec = ITCuratedSection.objects.filter(pk=i.get('id')).first()
+            if sec:
+                sec.status = i.get('status')
+                sec.save(update_fields=['status'])
 
 
 class SectionSettingsViewSet(UpdateModelMixin,  RetrieveModelMixin, GenericViewSet):

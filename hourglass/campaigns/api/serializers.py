@@ -479,6 +479,11 @@ class ITCuratedSectionSerializer(serializers.ModelSerializer):
         )
 
 
+class ITCuratedUpdateStatusSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    status = serializers.CharField()
+
+
 class SuppresionListSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SuppresionListSection
