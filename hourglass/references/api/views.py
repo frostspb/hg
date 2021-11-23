@@ -46,19 +46,21 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_bant(self, request):
+        campaign = request.GET.get('campaign')
         return Response(
             data=BANTQuestionSerializer(
                 BANTQuestion.objects.filter(
-                    Q(owner__isnull=True)| Q(owner=self.request.user)
+                    Q(campaign__isnull=True)| Q(campaign__id=campaign)
                 ).order_by('pos'), many=True
             ).data
         )
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_custom(self, request):
+        campaign = request.GET.get('campaign')
         return Response(
             data=CustomQuestionSerializer(
-                CustomQuestion.objects.filter(Q(owner__isnull=True)| Q(owner=self.request.user)), many=True
+                CustomQuestion.objects.filter(Q(campaign__isnull=True)| Q(campaign__id=campaign)), many=True
             ).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])

@@ -118,27 +118,32 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         srz = CampaignListSerializer(self.queryset, many=True)
         return Response(data=srz.data)
 
-    @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def create_cq(self, request, *args, **kwargs):
         from hourglass.references.api.serializers import CustomQuestionCreateSerializer, CustomQuestionSerializer
         srz = CustomQuestionCreateSerializer(data=request.data)
         srz.is_valid()
         x = srz.save()
-        x.owner = request.user
+        x.campaign = self.get_object()
         x.save()
 
         return Response(CustomQuestionSerializer(x).data)
 
-    @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def create_bant(self, request, *args, **kwargs):
         from hourglass.references.api.serializers import BANTQuestionCreateSerializer, BANTQuestionSerializer
         srz = BANTQuestionCreateSerializer(data=request.data)
         srz.is_valid()
         x = srz.save()
-        x.owner = request.user
+        x.campaign = self.get_object()
         x.save()
 
         return Response(BANTQuestionSerializer(x).data)
+
+    # @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
+    # def update_curated(self, request, *args, **kwargs):
+
+
 
 
 class SectionSettingsViewSet(UpdateModelMixin,  RetrieveModelMixin, GenericViewSet):
