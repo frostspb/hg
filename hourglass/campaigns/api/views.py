@@ -144,7 +144,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def update_curated(self, request, *args, **kwargs):
-        srz = ITCuratedUpdateStatusSerializer(request, many=True)
+        srz = ITCuratedUpdateStatusSerializer(data=request.data, many=True)
         srz.is_valid()
         data = srz.data
         for i in data:
