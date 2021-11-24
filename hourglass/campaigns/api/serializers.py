@@ -10,7 +10,7 @@ from hourglass.references.models import Tactics, CampaignTypes, Geolocations, Re
 from hourglass.references.api.serializers import JobTitlesSerializer, ITCuratedSerializer,\
     BANTQuestionSerializer, BANTAnswerSerializer, CustomQuestionSerializer, CustomAnswerSerializer, ManagersSerializer,\
     IntegrationTypeSerializer, CampaignTypesSerializer, PacingSerializer, AssociatesSerializer, CompanyRefSerializer, \
-    NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer, RevenueSerializer
+    NurturingStagesSerializer, PartOfMapSerializer, GeolocationsSerializer, RevenueSerializer, JobTitles
 
 from hourglass.clients.api.serializers import ClientSerializer, CompanySerializer
 
@@ -80,7 +80,7 @@ class TacticsSerializer(serializers.ModelSerializer):
 
 class AssetsCreateSectionSerializer(serializers.ModelSerializer):
     landing_page = serializers.FileField(required=False, allow_null=True)
-    titles = serializers.IntegerField(required=False, allow_null=True)
+    titles = serializers.PrimaryKeyRelatedField(many=True, required=False, allow_null=True, queryset=JobTitles.objects.all())
 
     class Meta:
         model = AssetsSection
