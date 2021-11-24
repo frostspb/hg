@@ -479,7 +479,7 @@ class ITCuratedSectionSerializer(serializers.ModelSerializer):
         )
 
 
-class ITCuratedUpdateStatusSerializer(serializers.ModelSerializer):
+class ITCuratedUpdateStatusSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     status = serializers.CharField()
 

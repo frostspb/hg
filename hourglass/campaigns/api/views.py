@@ -152,6 +152,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             if sec:
                 sec.status = i.get('status')
                 sec.save(update_fields=['status'])
+        return Response({})
 
 
 class SectionSettingsViewSet(UpdateModelMixin,  RetrieveModelMixin, GenericViewSet):
