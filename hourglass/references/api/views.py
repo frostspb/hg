@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
 
-
+from rest_framework.pagination import PageNumberPagination
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
     CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages, PartOfMap, Topics
 
@@ -19,6 +19,11 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateMode
 class ReferencesViewSet(GenericViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = CampaignTypesSerializer
+    filterset_fields = ('topic',)
+    pagination_class = PageNumberPagination
+    #page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def nurturing_stages(self, request):
@@ -93,4 +98,11 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def topics(self, request):
-        return Response(data=TopicSerializer(Topics.objects.all(), many=True).data)
+        qs = self.filter_queryset(Topics.objects.all())
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = TopicSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = TopicSerializer(qs, many=True)
+        return Response(data=serializer.data)
