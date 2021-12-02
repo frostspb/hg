@@ -3,6 +3,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
+from django_filters import rest_framework as filters
 
 from rest_framework.pagination import PageNumberPagination
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
@@ -15,15 +16,25 @@ from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTit
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
     DestroyModelMixin
 
+class RefFilter(filters.FilterSet):
+    topic = filters.CharFilter(method='search_filter', help_text='Поиск по строке')
+    class Meta:
+        model = Topics
+        fields = ['topic',]
+
+    def search_filter(self, queryset, name, value):
+        return queryset.filter(topic__icontains=value)
 
 class ReferencesViewSet(GenericViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = CampaignTypesSerializer
-    filterset_fields = ('topic',)
+    #filterset_fields = ('topic',)
+
     pagination_class = PageNumberPagination
     #page_size = 100
     page_size_query_param = 'page_size'
     max_page_size = 100
+    filterset_class = RefFilter
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def nurturing_stages(self, request):

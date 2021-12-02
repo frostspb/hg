@@ -521,7 +521,7 @@ class CampaignAdmin(CloneModelAdmin):
         ("Campaign admin settings", {
             "fields": (
                 "name", "start_offset", "end_offset",   "state", "maximum_campaign_completeness",
-                "base_velocity", "base_quality", "tactics", "integration_type",
+                "base_velocity", "base_quality", "tactics", "integration_type", "velocity",
                 "pending",
                 "pacing_type",
                 "part_of_the_map",
