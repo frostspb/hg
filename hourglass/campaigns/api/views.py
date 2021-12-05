@@ -143,6 +143,40 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         return Response(BANTQuestionSerializer(x).data)
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
+    def update_bant(self, request, *args, **kwargs):
+        c = self.get_object()
+        from hourglass.references.api.serializers import BANTQuestionUpdateSerializer
+        srz = BANTQuestionUpdateSerializer(data=request.data, many=True)
+        srz.is_valid()
+        data = srz.data
+
+        for i in data:
+            BANTQuestionsSection.objects.create(
+                campaign=c,
+                question_id=i.get('question'),
+                answer_id=i.get('answer')
+            )
+        return Response({})
+
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
+    def update_cq(self, request, *args, **kwargs):
+        c = self.get_object()
+        from hourglass.references.api.serializers import BANTQuestionUpdateSerializer
+        srz = BANTQuestionUpdateSerializer(data=request.data, many=True)
+        srz.is_valid()
+        data = srz.data
+
+        for i in data:
+            CustomQuestionsSection.objects.create(
+                campaign=c,
+                question_id=i.get('question'),
+                answer_id=i.get('answer')
+            )
+        return Response({})
+
+
+
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def update_curated(self, request, *args, **kwargs):
         srz = ITCuratedUpdateStatusSerializer(data=request.data, many=True)
         srz.is_valid()

@@ -137,6 +137,11 @@ class BANTQuestionCreateSerializer(WritableNestedModelSerializer):
         )
 
 
+class BANTQuestionUpdateSerializer(serializers.Serializer):
+    answer = serializers.IntegerField()
+    question = serializers.IntegerField()
+
+
 class CustomAnswerCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomAnswer
