@@ -646,11 +646,7 @@ class NurturingSection(CloneMixin, BaseStateItem):
     assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
     lead_goal = models.IntegerField(null=True, blank=True)
     nurturing_stages = models.ForeignKey(NurturingStages, on_delete=models.CASCADE)
-
-    @property
-    def link(self):
-        if self.assets.landing_page:
-            return self.assets.landing_page.url
+    link = models.FileField("Creatives", blank=True, null=True)
 
     @property
     def generated_leads(self):

@@ -87,15 +87,14 @@ class NurturingSectionAdmin(admin.TabularInline):
     exclude = ['execution_time', 'started_at']
     fields = ['state', 'campaign_type', 'nurturing_stages', 'assets', 'link', #'generated_leads', 'lead_goal'
               ]
-    readonly_fields = ['generated_leads', 'link']
+    readonly_fields = ['generated_leads']
     classes = ['collapse']
     insert_after = "nurturing_parameters"
 
     def generated_leads(self, obj):
         return obj.generated_leads
 
-    def link(self, obj):
-        return obj.link
+
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
 

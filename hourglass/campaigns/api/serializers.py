@@ -436,7 +436,9 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
         )
 
     def get_link(self, instance):
-        return instance.link
+        if instance.link:
+            photo_url = instance.link.url
+            return f"{settings.STORAGE_ADDR}{photo_url}"
 
     def get_generated_leads(self, instance):
         return instance.generated_leads
