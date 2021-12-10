@@ -133,7 +133,7 @@ class BANTQuestionCreateSerializer(WritableNestedModelSerializer):
     class Meta:
         model = BANTQuestion
         fields = (
-            'question', 'answers', 'pos'
+            'question', 'answers', 'pos', 'kind'
         )
 
 
