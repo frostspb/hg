@@ -486,6 +486,11 @@ class ITCuratedUpdateStatusSerializer(serializers.Serializer):
     status = serializers.CharField()
 
 
+class SettingsUpdateStatusSerializer(serializers.Serializer):
+    slug = serializers.CharField()
+    enabled = serializers.CharField()
+
+
 class SuppresionListSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SuppresionListSection
