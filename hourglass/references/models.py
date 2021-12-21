@@ -140,6 +140,7 @@ class BANTAnswer(models.Model):
 class CustomQuestion(models.Model):
     question = models.TextField()
     campaign = models.ForeignKey('campaigns.Campaign', on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self):
         return self.question
 
@@ -149,6 +150,7 @@ class CustomAnswer(models.Model):
     question = models.ForeignKey(CustomQuestion, on_delete=models.CASCADE, related_name='answers')
     answer = models.TextField()
     preferred = models.BooleanField(default=False)
+
     def __str__(self):
         return self.answer
 

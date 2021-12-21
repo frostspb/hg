@@ -681,7 +681,7 @@ class BANTQuestionsSection(CloneMixin, models.Model):
     question_txt = models.TextField("Question", null=True, blank=True)
     answer_txt = models.TextField("Answer", null=True, blank=True)
     
-    question = models.ForeignKey(BANTQuestion, on_delete=models.CASCADE, null=True,blank=True)
+    question = models.ForeignKey(BANTQuestion, on_delete=models.CASCADE, null=True, blank=True)
 
     answer = ChainedForeignKey(
         BANTAnswer,

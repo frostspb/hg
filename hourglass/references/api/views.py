@@ -16,14 +16,17 @@ from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTit
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
     DestroyModelMixin
 
+
 class RefFilter(filters.FilterSet):
     topic = filters.CharFilter(method='search_filter', help_text='Поиск по строке')
+
     class Meta:
         model = Topics
         fields = ['topic',]
 
     def search_filter(self, queryset, name, value):
         return queryset.filter(topic__icontains=value)
+
 
 class ReferencesViewSet(GenericViewSet):
     permission_classes = [IsAuthenticated]

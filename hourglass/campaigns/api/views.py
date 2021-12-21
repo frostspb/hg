@@ -167,11 +167,12 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         data = srz.data
 
         for i in data:
-            CustomQuestionsSection.objects.create(
-                campaign=c,
-                question_id=i.get('question'),
-                answer_id=i.get('answer')
-            )
+            if i.get('question') and i.get('question'):
+                CustomQuestionsSection.objects.create(
+                    campaign=c,
+                    question_id=i.get('question'),
+                    answer_id=i.get('answer')
+                )
         return Response({})
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
