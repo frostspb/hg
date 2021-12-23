@@ -92,11 +92,13 @@ class AssetsCreateSectionSerializer(serializers.ModelSerializer):
 class AssetsSectionSerializer(serializers.ModelSerializer):
     titles = JobTitlesSerializer(allow_null=True, many=True)
     landing_page = serializers.SerializerMethodField(read_only=True)
+    leads_assets = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = AssetsSection
         fields = (
-            "id", "name", "landing_page",  "percent", "campaign", "titles", "state"
+            "id", "name", "landing_page",  "percent", "campaign", "titles", "state", "leads_assets",
+
         )
 
     def get_landing_page(self, instance):
@@ -104,6 +106,10 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
         if instance.landing_page:
             photo_url = instance.landing_page.url
             return f"{settings.STORAGE_ADDR}{photo_url}"
+
+    def get_leads_assets(self, instance):
+
+        return instance.leads_assets
 
 
 class IntentFeedsCreateSectionSerializer(serializers.ModelSerializer):
