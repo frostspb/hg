@@ -242,11 +242,12 @@ class CompanySizeSectionSerializer(serializers.ModelSerializer):
 
 class GeolocationsCreateSectionSerializer(serializers.ModelSerializer):
     geolocation = serializers.PrimaryKeyRelatedField(queryset=Geolocations.objects.all(), required=False)
+    goal_per_geo = serializers.FloatField(required=False, allow_null=True)
 
     class Meta:
         model = GeolocationsSection
         fields = (
-            "name", "geolocation", "user_geolocation", "state"
+            "name", "geolocation", "user_geolocation", "state", "goal_per_geo"
         )
 
 
@@ -271,7 +272,7 @@ class BANTQuestionsCreateSectionSerializer(serializers.ModelSerializer):
       class Meta:
         model = BANTQuestionsSection
         fields = (
-            "question", "answer", "question_txt", "answer_txt",
+            "question", "answer",
         )
 
 
@@ -282,7 +283,7 @@ class BANTQuestionsSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = BANTQuestionsSection
         fields = (
-            "id", "campaign", "question", "answer", "question_txt", "answer_txt"
+            "id", "campaign", "question", "answer",
         )
 
 
@@ -291,7 +292,7 @@ class CustomQuestionsCreateSectionSerializer(serializers.ModelSerializer):
        class Meta:
         model = CustomQuestionsSection
         fields = (
-            "question", "answer", "question_txt", "answer_txt", "state"
+            "question", "answer",  "state"
         )
 
 
@@ -302,7 +303,7 @@ class CustomQuestionsSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomQuestionsSection
         fields = (
-            "id", "state", "campaign", "question", "answer", "question_txt", "answer_txt"
+            "id", "state", "campaign", "question", "answer",
         )
 
 
