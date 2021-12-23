@@ -85,7 +85,7 @@ class AssetsCreateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssetsSection
         fields = (
-             "name", "landing_page", "titles", "state",
+             "name", "landing_page", "titles", "state", "percent"
         )
 
 
