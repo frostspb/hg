@@ -1,4 +1,5 @@
 from random import choice
+from rest_framework import views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
     DestroyModelMixin
@@ -233,8 +234,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         return Response({})
 
 
-
-
 class SectionSettingsViewSet(UpdateModelMixin,  RetrieveModelMixin, GenericViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = SectionsSettingsSerializer
@@ -404,8 +403,6 @@ class MessageViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gene
         if obj and email:
             msg = obj.message
             send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
-
-from rest_framework import views
 
 
 class CFilesUpload(views.APIView):
