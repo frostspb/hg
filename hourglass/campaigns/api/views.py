@@ -29,12 +29,33 @@ from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSecti
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Message
 
+from django.http import QueryDict
+import json
+from rest_framework import parsers
+
+
+class MultipartJsonParser(parsers.MultiPartParser):
+
+    def parse(self, stream, media_type=None, parser_context=None):
+        result = super().parse(
+            stream,
+            media_type=media_type,
+            parser_context=parser_context
+        )
+        data = {}
+        # find the data field and parse it
+        data = json.loads(result.data["data"])
+        qdict = QueryDict('', mutable=True)
+        qdict.update(data)
+        return parsers.DataAndFiles(qdict, result.files)
+
 
 class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, GenericViewSet, CreateModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = CampaignSerializer
     queryset = Campaign.objects.filter(active=True)
     filterset_fields = ('client',)
+    parser_classes = (MultipartJsonParser, parsers.JSONParser)
 
     # def get_serializer_context(self):
     #     context = super(CampaignViewSet, self).get_serializer_context()
@@ -132,6 +153,17 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         return Response(CustomQuestionSerializer(x).data)
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
+    def load_creatives_files(self, request, *args, **kwargs):
+        from hourglass.references.api.serializers import CustomQuestionCreateSerializer, CustomQuestionSerializer
+        srz = CustomQuestionCreateSerializer(data=request.data)
+        srz.is_valid()
+        x = srz.save()
+        x.campaign = self.get_object()
+        x.save()
+
+        return Response(CustomQuestionSerializer(x).data)
+
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def create_bant(self, request, *args, **kwargs):
         from hourglass.references.api.serializers import BANTQuestionCreateSerializer, BANTQuestionSerializer
         srz = BANTQuestionCreateSerializer(data=request.data)
@@ -199,6 +231,8 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
                 sec.enabled = i.get('enabled')
                 sec.save(update_fields=['enabled'])
         return Response({})
+
+
 
 
 class SectionSettingsViewSet(UpdateModelMixin,  RetrieveModelMixin, GenericViewSet):
@@ -370,3 +404,28 @@ class MessageViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gene
         if obj and email:
             msg = obj.message
             send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
+
+from rest_framework import views
+
+
+class CFilesUpload(views.APIView):
+    def post(self, request):
+        campaign = request.POST.get('campaign')
+        if campaign:
+            cmp = Campaign.objects.filter(id=campaign).first()
+            if not cmp:
+                return Response({})
+
+            for file in request.FILES:
+                _f = request.FILES.get(file)
+                prefix, sect_id = file.split('_')
+                if 'banner' in prefix:
+                    x = CreativesSection.objects.filter(campaign=cmp, id = int(sect_id)).first()
+                    x.banners = _f
+                    x.save()
+
+                if 'landing' in prefix:
+                    x = CreativesSection.objects.filter(campaign=cmp, id=int(sect_id)).first()
+                    x.landing_page = _f
+                    x.save()
+        return Response({})

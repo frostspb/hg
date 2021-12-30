@@ -38,3 +38,5 @@ class CurrentUserView(views.APIView):
     def post(self, request):
         serializer = UserSerializer(request.user)
         return Response({'user': serializer.data})
+
+

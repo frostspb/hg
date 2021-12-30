@@ -451,6 +451,14 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
         return instance.generated_leads
 
 
+class CreativesSectionCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CreativesSection
+        fields = (
+            "subject_line", "email_text", "landing_page", "banners", "state"
+        )
+
+
 class CreativesSectionSerializer(serializers.ModelSerializer):
     landing_page = serializers.SerializerMethodField(read_only=True)
     banners = serializers.SerializerMethodField(read_only=True)
@@ -540,7 +548,7 @@ class CampaignListSerializer(serializers.ModelSerializer):
 
 class CampaignCreateSerializer(WritableNestedModelSerializer):
     id = serializers.IntegerField(required=False)
-    creatives = CreativesSectionSerializer(many=True, allow_null=True, required=False)
+    creatives = CreativesSectionCreateSerializer(many=True, allow_null=True, required=False)
     assets = AssetsCreateSectionSerializer(many=True, allow_null=True, required=False)
     intents = IntentFeedsCreateSectionSerializer(many=True, allow_null=True, required=False)
     industries = IndustriesSectionCreateSerializer(many=True, allow_null=True, required=False)

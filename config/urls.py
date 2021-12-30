@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .auth import CurrentUserView
-
+from hourglass.campaigns.api.views import CFilesUpload
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -36,6 +36,8 @@ urlpatterns = [
     path('api/auth/token/obtain/', TokenObtainPairView.as_view(), ),
     path('api/auth/token/refresh/', TokenRefreshView.as_view()),
     path('api/auth/user/', CurrentUserView.as_view()),
+    path('api/cr_files_upload/', CFilesUpload.as_view()),
+
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
