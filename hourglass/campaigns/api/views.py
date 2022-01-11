@@ -417,7 +417,7 @@ class CFilesUpload(views.APIView):
                 _f = request.FILES.get(file)
                 prefix, sect_id = file.split('_')
                 if 'banner' in prefix:
-                    x = CreativesSection.objects.filter(campaign=cmp, id = int(sect_id)).first()
+                    x = CreativesSection.objects.filter(campaign=cmp, id=int(sect_id)).first()
                     x.banners = _f
                     x.save()
 
