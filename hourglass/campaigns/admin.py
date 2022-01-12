@@ -11,7 +11,7 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, \
-    Teams, CampaignClient
+    Teams, CampaignClient, CreativesBanner, CreativesLandingPage
 
 
 class ComponentInlineFormSet(BaseInlineFormSet):
@@ -113,6 +113,20 @@ class CreativesSectionAdmin(admin.TabularInline):
     model = CreativesSection
     extra = 0
     exclude = ['execution_time', 'started_at', 'state']
+    classes = ['collapse']
+
+
+class CreativesBannersAdmin(admin.TabularInline):
+    model = CreativesBanner
+    extra = 0
+    exclude = []
+    classes = ['collapse']
+
+
+class CreativesLandingPageAdmin(admin.TabularInline):
+    model = CreativesLandingPage
+    extra = 0
+    exclude = []
     classes = ['collapse']
 
 
@@ -371,6 +385,8 @@ class CampaignClientAdmin(CloneModelAdmin):
         NurturingSectionAdmin,
         CreativesSectionAdmin,
         TeamsAdmin,
+        CreativesBannersAdmin,
+        CreativesLandingPageAdmin,
     ]
 
     def has_add_permission(self, request, obj=None):
@@ -604,6 +620,8 @@ class CampaignAdmin(CloneModelAdmin):
         NurturingSectionAdmin,
         CreativesSectionAdmin,
         TeamsAdmin,
+        CreativesBannersAdmin,
+        CreativesLandingPageAdmin,
     ]
 
     def get_form(self, request, obj=None, **kwargs):

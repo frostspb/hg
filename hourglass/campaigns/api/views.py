@@ -28,7 +28,9 @@ from .serializers import CampaignSerializer, AssetsSectionSerializer,\
 from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Message
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Message,\
+    CreativesLandingPage, CreativesBanner
+
 
 from django.http import QueryDict
 import json
@@ -68,11 +70,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         else:
             return CampaignSerializer
 
-    def get_queryset(self):
-        return self.queryset.filter(
-            Q(owner__isnull=True, kind=Campaign.CampaignKinds.STANDARD)
-            | Q(kind__in=[Campaign.CampaignKinds.USER, Campaign.CampaignKinds.CONTRACT], owner=self.request.user)
-        )
+    # def get_queryset(self):
+    #     return self.queryset.filter(
+    #         Q(owner__isnull=True, kind=Campaign.CampaignKinds.STANDARD)
+    #         | Q(kind__in=[Campaign.CampaignKinds.USER, Campaign.CampaignKinds.CONTRACT], owner=self.request.user)
+    #     )
 
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
@@ -144,17 +146,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def create_cq(self, request, *args, **kwargs):
-        from hourglass.references.api.serializers import CustomQuestionCreateSerializer, CustomQuestionSerializer
-        srz = CustomQuestionCreateSerializer(data=request.data)
-        srz.is_valid()
-        x = srz.save()
-        x.campaign = self.get_object()
-        x.save()
-
-        return Response(CustomQuestionSerializer(x).data)
-
-    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
-    def load_creatives_files(self, request, *args, **kwargs):
         from hourglass.references.api.serializers import CustomQuestionCreateSerializer, CustomQuestionSerializer
         srz = CustomQuestionCreateSerializer(data=request.data)
         srz.is_valid()
@@ -417,12 +408,9 @@ class CFilesUpload(views.APIView):
                 _f = request.FILES.get(file)
                 prefix, sect_id = file.split('_')
                 if 'banner' in prefix:
-                    x = CreativesSection.objects.filter(campaign=cmp, id=int(sect_id)).first()
-                    x.banners = _f
-                    x.save()
+                    CreativesBanner.objects.create(campaign=cmp, banner=_f)
 
                 if 'landing' in prefix:
-                    x = CreativesSection.objects.filter(campaign=cmp, id=int(sect_id)).first()
-                    x.landing_page = _f
-                    x.save()
+                    CreativesLandingPage.objects.create(campaign=cmp, landing_page=_f)
+
         return Response({})

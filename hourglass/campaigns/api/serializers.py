@@ -3,7 +3,8 @@ from django.conf import settings
 from ..models import Campaign, TargetSection, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
-    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams, Message
+    LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Teams, Message,\
+    CreativesBanner, CreativesLandingPage
 
 from hourglass.references.models import Tactics, CampaignTypes, Geolocations, Revenue, Industry, NurturingStages, CompanyRef
 
@@ -459,31 +460,60 @@ class CreativesSectionCreateSerializer(serializers.ModelSerializer):
         )
 
 
+class CreativesBannersSerializer(serializers.ModelSerializer):
+    banner = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CreativesBanner
+        fields = (
+            "id", "banner",
+        )
+
+    def get_banner(self, instance):
+        if instance.banners:
+            photo_url = instance.banners.url
+            return f"{settings.STORAGE_ADDR}{photo_url}"
+
+
+class CreativesLandingPageSerializer(serializers.ModelSerializer):
+    landing_page = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CreativesLandingPage
+        fields = (
+            "id", "landing_page",
+        )
+
+    def get_landing_page(self, instance):
+        if instance.landing_page:
+            photo_url = instance.landing_page.url
+            return f"{settings.STORAGE_ADDR}{photo_url}"
+
+
 class CreativesSectionSerializer(serializers.ModelSerializer):
-    landing_page = serializers.SerializerMethodField(read_only=True)
-    banners = serializers.SerializerMethodField(read_only=True)
+
 
     class Meta:
         model = CreativesSection
         fields = (
-            "id", "subject_line", "email_text", "landing_page", "banners", "state"
+            "id", "subject_line", "email_text",  "state"
         )
 
     def get_email_text(self, instance):
         if instance.email_text:
             return instance.email_text
 
-    def get_banners(self, instance):
-        if instance.banners:
-
-            photo_url = instance.banners.url
-            return f"{settings.STORAGE_ADDR}{photo_url}"
-
-    def get_landing_page(self, instance):
-        if instance.landing_page:
-
-            photo_url = instance.landing_page.url
-            return f"{settings.STORAGE_ADDR}{photo_url}"
+    # def get_banners(self, instance):
+    #     if instance.banners:
+    #
+    #         photo_url = instance.banners.url
+    #         return f"{settings.STORAGE_ADDR}{photo_url}"
+    #
+    # def get_landing_page(self, instance):
+    #     if instance.landing_page:
+    #
+    #         photo_url = instance.landing_page.url
+    #         return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
 class ITCuratedSectionSerializer(serializers.ModelSerializer):
@@ -630,6 +660,8 @@ class CampaignSerializer(serializers.ModelSerializer):
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True) #
     part_of_the_map = PartOfMapSerializer(allow_null=True, required=False)
     client_name = serializers.CharField(source='client.name', required=False)
+    banners = CreativesBannersSerializer(many=True, read_only=True)
+    landings = CreativesLandingPageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -646,7 +678,7 @@ class CampaignSerializer(serializers.ModelSerializer):
             "itcurateds",
             "abm_look_a_like", "rejected", "teams", "tactics",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm",
-            "suppression_list", "part_of_the_map"
+            "suppression_list", "part_of_the_map", "landings", "banners"
         )
         read_only_fields = ['client_name']
 
@@ -762,7 +794,8 @@ class HourglassSerializer(serializers.ModelSerializer):
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
     part_of_the_map = PartOfMapSerializer(allow_null=True, required=False)
-
+    banners = CreativesBannersSerializer(many=True, read_only=True)
+    landings = CreativesLandingPageSerializer(many=True, read_only=True)
     class Meta:
         model = Campaign
         fields = (
@@ -773,7 +806,8 @@ class HourglassSerializer(serializers.ModelSerializer):
             "bants", "custom_questions", "abms", "install_base", "fair_trades", "lead_cascades",
             "nurturings", "nurturing_parameters", "creatives", "itcurateds", "audience_targeted",
             "abm_look_a_like", "rejected", "teams", "intent_feed_goal_percent", "kind",
-            "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list", "part_of_the_map","abm_look_a_like_state",
+            "intent_feed_done_percent", "abm_goal_percent", "goal_abm", "done_abm", "suppression_list",
+            "part_of_the_map","abm_look_a_like_state",  "landings", "banners",
         )
 
     def get_goal_abm(self, instance):
@@ -867,6 +901,8 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
     suppression_list = SuppresionListSectionSerializer(source='sups', many=True, read_only=True)
     itcurateds = ITCuratedSectionSerializer(many=True, read_only=True)
     part_of_the_map = PartOfMapSerializer(allow_null=True, required=False)
+    banners = CreativesBannersSerializer(many=True, read_only=True)
+    landings = CreativesLandingPageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -878,7 +914,8 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "nurturings", "nurturing_parameters", "creatives", "abm_look_a_like","rejected", "teams",
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm",
             "done_abm", "itcurateds", "kind",
-            "suppression_list", "velocity", "state", "part_of_the_map","abm_look_a_like_state",
+            "suppression_list", "velocity", "state", "part_of_the_map",
+            "abm_look_a_like_state", "landings", "banners"
 
         )
 

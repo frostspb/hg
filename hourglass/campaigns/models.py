@@ -661,6 +661,16 @@ class CreativesSection(CloneMixin, BaseStateItem):
     banners = models.FileField(blank=True, null=True)
 
 
+class CreativesBanner(CloneMixin, models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="banners")
+    banner = models.FileField(blank=True, null=True)
+
+
+class CreativesLandingPage(CloneMixin, models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="landings")
+    landing_page = models.FileField(blank=True, null=True)
+
+
 class ITCuratedSection(CloneMixin, models.Model):
     class Statuses(models.TextChoices):
         ACTIVE = 'active', 'Active'
