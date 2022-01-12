@@ -470,8 +470,8 @@ class CreativesBannersSerializer(serializers.ModelSerializer):
         )
 
     def get_banner(self, instance):
-        if instance.banners:
-            photo_url = instance.banners.url
+        if instance.banner:
+            photo_url = instance.banner.url
             return f"{settings.STORAGE_ADDR}{photo_url}"
 
 
