@@ -153,7 +153,7 @@ class Campaign(CloneMixin, BaseStateItem):
     _clone_m2o_or_o2m_fields = [
         "bants", "cqs", "geolocations", "companies", "revenues", "industries",
         "intents", "titles", "assets", "targets",  "creatives", "nurturings", #  "itcurateds",
-        "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams",
+        "lead_cascades", "ibs", "fair_trades", "abms", "sups", "teams", "banners", "landings"
     ]
 
     _clone_m2m_fields = ["tactics","job_titles"]
