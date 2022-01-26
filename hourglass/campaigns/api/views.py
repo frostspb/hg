@@ -111,8 +111,12 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
             email = self.request.user.email
+
             if email:
-                msg = f"You have just save the new Campaign. Thank you. Campaign name: {serializer.data.get('name', '')}"
+                msg = f"You have just saved the new Campaign {serializer.data.get('name', '')}. Thank you!" \
+                f" \n \nPlease let  us  know if you  require  our  help to  adjust or delete  the  campaign  " \
+                f"by  responding  to  this email."
+
                 send_status_email.delay(subj='Hourglass', to=[email], msg=msg, addr_from=settings.MAIL_FROM)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])

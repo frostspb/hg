@@ -277,6 +277,8 @@ class Campaign(CloneMixin, BaseStateItem):
             tv = targets_velocity.get('velocity__sum', 0)
             if tv:
                 _velocity += tv
+        if _velocity < 0:
+            _velocity = 0
         return _velocity
 
     @property
@@ -356,6 +358,8 @@ class Campaign(CloneMixin, BaseStateItem):
                 pass
             elif i.name == INDUSTRIES_SLUG:
                 ta += self.industries.count() * i.delta_ta_per_row_value
+        if ta < 0:
+            ta = 0
         return ta
 
     @property
