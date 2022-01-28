@@ -60,10 +60,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     filterset_fields = ('client',)
     parser_classes = (MultipartJsonParser, parsers.JSONParser)
 
-    def get_serializer_context(self):
-        context = super(CampaignViewSet, self).get_serializer_context()
-        context.update({"request": self.request})
-        return context
+    # def get_serializer_context(self):
+    #     context = super(CampaignViewSet, self).get_serializer_context()
+    #     context.update({"request": self.request})
+    #     return context
+
     def get_serializer_class(self):
         if self.action == 'create':
             return CampaignCreateSerializer
@@ -76,10 +77,7 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             | Q(kind__in=[Campaign.CampaignKinds.USER, Campaign.CampaignKinds.CONTRACT], owner=self.request.user)
         )
 
-    def perform_create(self, serializer):
-        manager = choice(Managers.objects.all())
-        cmp = serializer.save(managed_by=manager, owner=self.request.user)
-
+    def _copy_files(self, cmp):
         source_campaign = self.request.data.get('source_campaign')
         source_banners = self.request.data.get('source_banners')
         source_landings = self.request.data.get('source_landings')
@@ -95,7 +93,19 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             for lnd in source_lnd:
                 CreativesLandingPage.objects.create(campaign=cmp, landing_page=lnd.landing_page)
 
-        
+    def _update_curated(self, cmp):
+        source_campaign = self.request.data.get('source_campaign')
+        source_curated = ITCuratedSection.objects.filter(campaign=source_campaign)
+
+        for cr in source_curated:
+            ITCuratedSection.objects.filter(campaign=cmp, curated=cr.curated).update(status=cr.status, pos=cr.pos)
+
+    def perform_create(self, serializer):
+        manager = choice(Managers.objects.all())
+        cmp = serializer.save(managed_by=manager, owner=self.request.user)
+
+        self._copy_files(cmp)
+        self._update_curated(cmp)
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.CONTRACT:
             #obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
