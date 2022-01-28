@@ -60,10 +60,10 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     filterset_fields = ('client',)
     parser_classes = (MultipartJsonParser, parsers.JSONParser)
 
-    # def get_serializer_context(self):
-    #     context = super(CampaignViewSet, self).get_serializer_context()
-    #     context.update({"request": self.request})
-    #     return context
+    def get_serializer_context(self):
+        context = super(CampaignViewSet, self).get_serializer_context()
+        context.update({"request": self.request})
+        return context
     def get_serializer_class(self):
         if self.action == 'create':
             return CampaignCreateSerializer
@@ -78,7 +78,24 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     def perform_create(self, serializer):
         manager = choice(Managers.objects.all())
-        serializer.save(managed_by=manager, owner=self.request.user)
+        cmp = serializer.save(managed_by=manager, owner=self.request.user)
+
+        source_campaign = self.request.data.get('source_campaign')
+        source_banners = self.request.data.get('source_banners')
+        source_landings = self.request.data.get('source_landings')
+        source_cmp = Campaign.objects.filter(id=source_campaign).first()
+
+        if source_banners:
+            source_bnrs = CreativesBanner.objects.filter(campaign=source_cmp, id__in=source_banners)
+            for bnr in source_bnrs:
+                CreativesBanner.objects.create(campaign=cmp, banner=bnr.banner)
+
+        if source_landings:
+            source_lnd = CreativesLandingPage.objects.filter(campaign=source_cmp, id__in=source_landings)
+            for lnd in source_lnd:
+                CreativesLandingPage.objects.create(campaign=cmp, landing_page=lnd.landing_page)
+
+        
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.CONTRACT:
             #obj = Campaign.objects.filter(id=serializer.data.get('id')).first()
@@ -416,12 +433,8 @@ class MessageViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gene
 class CFilesUpload(views.APIView):
     def post(self, request):
         campaign = request.POST.get('campaign')
-        source_campaign = request.POST.get('source_campaign')
-        source_banners = request.POST.get('source_banners')
-        source_landings = request.POST.get('source_landings')
-        import json
-        source_landings = json.loads(source_landings)
-        source_banners = json.loads(source_banners)
+
+
         if campaign:
             cmp = Campaign.objects.filter(id=campaign).first()
 
@@ -436,15 +449,5 @@ class CFilesUpload(views.APIView):
 
                 if 'landing' in prefix:
                     CreativesLandingPage.objects.create(campaign=cmp, landing_page=_f)
-
-            source_cmp = Campaign.objects.filter(id=source_campaign).first()
-            source_bnrs = CreativesBanner.objects.filter(campaign=source_cmp, id__in=source_banners)
-            source_lnd = CreativesLandingPage.objects.filter(campaign=source_cmp, id__in=source_landings)
-
-            for bnr in source_bnrs:
-                CreativesBanner.objects.create(campaign=cmp, banner=bnr.banner)
-
-            for lnd in source_lnd:
-                CreativesLandingPage.objects.create(campaign=cmp, landing_page=lnd.landing_page)
 
         return Response({})

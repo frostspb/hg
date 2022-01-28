@@ -207,7 +207,9 @@ class Campaign(CloneMixin, BaseStateItem):
         for intent in self.intents.filter(kind=IntentFeedsSection.Kinds.BOMBORA):
             res += intent.leads_generated
         return round(res, 2)
-
+    @property
+    def source_campaign(self):
+        return None
     @property
     def total_intent_feed_aberdeen(self):
         res = 0

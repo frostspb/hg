@@ -609,11 +609,12 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
     fair_trades = FairTradeCreateSectionSerializer(many=True, allow_null=True, required=False)
     lead_cascades = LeadCascadeProgramCreateSectionSerializer(many=True, allow_null=True, required=False)
     sups = SuppresionCreateListSectionSerializer(many=True, allow_null=True, required=False)
+
     #nurturings = NurturingCreateSectionSerializer(many=True, allow_null=True, required=False)
 
     class Meta:
         model = Campaign
-        fields = (
+        fields = (#'source_campaign',
             "email", "client", "integration_type", "pacing_type", "name", "creatives", "assets",
             "intents", "industries", "revenues", "companies", "geolocations", "bants", "cqs", "abms",
             "ibs", "fair_trades", "lead_cascades", "sups", #"nurturings",
