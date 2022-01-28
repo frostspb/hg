@@ -132,7 +132,6 @@ class BANTAnswer(models.Model):
     answer = models.TextField()
     preferred = models.BooleanField(default=False)
 
-
     def __str__(self):
         return self.answer
 

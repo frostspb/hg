@@ -182,7 +182,8 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             BANTQuestionsSection.objects.create(
                 campaign=c,
                 question_id=i.get('question'),
-                answer_id=i.get('answer')
+                answer_id=i.get('answer'),
+                state=i.get('state')
             )
         return Response({})
 
@@ -199,7 +200,8 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
                 CustomQuestionsSection.objects.create(
                     campaign=c,
                     question_id=i.get('question'),
-                    answer_id=i.get('answer')
+                    answer_id=i.get('answer'),
+                    state=i.get('state')
                 )
         return Response({})
 

@@ -774,7 +774,7 @@ def create_curated(sender, instance, created, **kwargs):
     if created:
         for_create = [
             ITCuratedSection(
-                campaign=instance, curated=i, pos=i.position
+                campaign=instance, curated=i, pos=i.position,
             ) for i in ITCurated.objects.filter(visible=True)
         ]
         ITCuratedSection.objects.bulk_create(for_create)

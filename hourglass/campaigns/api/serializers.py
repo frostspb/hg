@@ -115,6 +115,7 @@ class AssetsSectionSerializer(serializers.ModelSerializer):
 
 class IntentFeedsCreateSectionSerializer(serializers.ModelSerializer):
     industry = serializers.PrimaryKeyRelatedField(queryset=CompanyRef.objects.all(), required=False)
+
     class Meta:
         model = IntentFeedsSection
         fields = (
@@ -324,8 +325,8 @@ class ABMSectionCreateSerializer(serializers.ModelSerializer):
             "title", "accounts_value", "file", "state"
         )
 
+
 class ABMSectionSerializer(serializers.ModelSerializer):
-    #leads = serializers.SerializerMethodField(read_only=True)
     file = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -334,8 +335,6 @@ class ABMSectionSerializer(serializers.ModelSerializer):
             "id", "campaign", "title", "accounts_value", "file", "state", "percent",
         )
 
-    #def get_leads(self, instance):
-    #    return instance.leads
 
     def get_file(self, instance):
         if instance.file:
@@ -619,6 +618,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
             # "teams", "tactics",
             # "suppression_list",
         )
+
 
 class CampaignSerializer(serializers.ModelSerializer):
     start_date = serializers.SerializerMethodField()
