@@ -544,6 +544,13 @@ class SuppresionListSectionSerializer(serializers.ModelSerializer):
         )
 
 
+class SuppresionCreateListSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SuppresionListSection
+        fields = (
+             "title", "accounts_value", "state",
+        )
+
 class TeamsSerializer(serializers.ModelSerializer):
     team_lead = AssociatesSerializer(read_only=True, many=False)
     team_member1 = AssociatesSerializer(read_only=True, many=False)
@@ -593,6 +600,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
     ibs = InstallBaseCreateSectionSerializer(many=True, allow_null=True, required=False)
     fair_trades = FairTradeCreateSectionSerializer(many=True, allow_null=True, required=False)
     lead_cascades = LeadCascadeProgramCreateSectionSerializer(many=True, allow_null=True, required=False)
+    sups = SuppresionCreateListSectionSerializer(many=True, allow_null=True, required=False)
     #nurturings = NurturingCreateSectionSerializer(many=True, allow_null=True, required=False)
 
     class Meta:
@@ -600,7 +608,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
         fields = (
             "email", "client", "integration_type", "pacing_type", "name", "creatives", "assets",
             "intents", "industries", "revenues", "companies", "geolocations", "bants", "cqs", "abms",
-            "ibs", "fair_trades", "lead_cascades", #"nurturings",
+            "ibs", "fair_trades", "lead_cascades", "sups", #"nurturings",
             "nurturing_parameters", "targets", "titles", "guarantees", "note", "details", "customer_information",
             "order", "contact_name", "end_date", "start_date", "kind", "part_of_the_map", "nurturing_parameters",
             "abm_look_a_like_state", "intent_feed_goal_percent", "intent_feed_done_percent", "abm_goal_percent", "id", "campaign_type",
