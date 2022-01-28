@@ -41,6 +41,7 @@ class TargetSectionSerializer(serializers.ModelSerializer):
     remaining_leads = serializers.SerializerMethodField()
     percent_completion = serializers.SerializerMethodField()
     type_name = serializers.SerializerMethodField()
+
     class Meta:
         model = TargetSection
         fields = (

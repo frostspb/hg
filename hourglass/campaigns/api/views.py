@@ -405,8 +405,15 @@ class MessageViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gene
 class CFilesUpload(views.APIView):
     def post(self, request):
         campaign = request.POST.get('campaign')
+        source_campaign = request.POST.get('source_campaign')
+        source_banners = request.POST.get('source_banners')
+        source_landings = request.POST.get('source_landings')
+        import json
+        source_landings = json.loads(source_landings)
+        source_banners = json.loads(source_banners)
         if campaign:
             cmp = Campaign.objects.filter(id=campaign).first()
+
             if not cmp:
                 return Response({})
 
@@ -418,5 +425,15 @@ class CFilesUpload(views.APIView):
 
                 if 'landing' in prefix:
                     CreativesLandingPage.objects.create(campaign=cmp, landing_page=_f)
+
+            source_cmp = Campaign.objects.filter(id=source_campaign).first()
+            source_bnrs = CreativesBanner.objects.filter(campaign=source_cmp, id__in=source_banners)
+            source_lnd = CreativesLandingPage.objects.filter(campaign=source_cmp, id__in=source_landings)
+
+            for bnr in source_bnrs:
+                CreativesBanner.objects.create(campaign=cmp, banner=bnr.banner)
+
+            for lnd in source_lnd:
+                CreativesLandingPage.objects.create(campaign=cmp, landing_page=lnd.landing_page)
 
         return Response({})
