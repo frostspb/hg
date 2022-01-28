@@ -420,6 +420,15 @@ class NurturingCreateSectionSerializer(serializers.ModelSerializer):
             "nurturing_stages", "state",
         )
 
+class NurturingUpdateSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NurturingSection
+        fields = (
+            "campaign_type",
+            "assets",
+            "link",
+            "nurturing_stages", "state",
+        )
 
 class NurturingSectionSerializer(serializers.ModelSerializer):
 
@@ -491,7 +500,6 @@ class CreativesLandingPageSerializer(serializers.ModelSerializer):
 
 
 class CreativesSectionSerializer(serializers.ModelSerializer):
-
 
     class Meta:
         model = CreativesSection

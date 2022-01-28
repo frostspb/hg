@@ -22,7 +22,7 @@ from .serializers import CampaignSerializer, AssetsSectionSerializer,\
     InstallBaseSectionSerializer, FairTradeSectionSerializer,LeadCascadeProgramSectionSerializer,\
     NurturingSectionSerializer, CreativesSectionSerializer, ITCuratedSectionSerializer, SuppresionListSectionSerializer,\
     MessageSerializer, CampaignCreateSerializer, NurturingCreateSectionSerializer, CampaignListSerializer,\
-    ITCuratedUpdateStatusSerializer, SettingsUpdateStatusSerializer
+    ITCuratedUpdateStatusSerializer, SettingsUpdateStatusSerializer, NurturingCreateSectionSerializer
 
 
 from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSection, JobTitlesSection, \
@@ -158,6 +158,17 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         x.save()
 
         return Response(CustomQuestionSerializer(x).data)
+
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
+    def create_nurturing(self, request, *args, **kwargs):
+
+        srz = NurturingCreateSectionSerializer(data=request.data)
+        srz.is_valid()
+        x = srz.save()
+        x.campaign = self.get_object()
+        x.save()
+
+        return Response(NurturingSectionSerializer(x).data)
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def create_bant(self, request, *args, **kwargs):
