@@ -221,7 +221,6 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
                 campaign=c,
                 question_id=i.get('question'),
                 answer_id=i.get('answer'),
-                state=i.get('state')
             )
         return Response({})
 

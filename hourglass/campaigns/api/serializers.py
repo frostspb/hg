@@ -407,35 +407,36 @@ class LeadCascadeProgramSectionSerializer(serializers.ModelSerializer):
 class NurturingCreateSectionSerializer(serializers.ModelSerializer):
     campaign = serializers.PrimaryKeyRelatedField(queryset=Campaign.objects.all())
     assets = serializers.PrimaryKeyRelatedField(queryset=AssetsSection.objects.all())
-    campaign_type = serializers.PrimaryKeyRelatedField(queryset=CampaignTypes.objects.all())
     nurturing_stages = serializers.PrimaryKeyRelatedField(queryset=NurturingStages.objects.all())
+    link = serializers.FileField(required=False, allow_null=True)
+    lead_goal = serializers.IntegerField(required=False, allow_null=True)
 
     class Meta:
         model = NurturingSection
         fields = (
             "campaign",
-            "campaign_type",
+
             "assets",
             "link",
-            "nurturing_stages", "state",
+            "nurturing_stages", "state", "lead_goal"
         )
+
 
 class NurturingUpdateSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = NurturingSection
         fields = (
-            "campaign_type",
             "assets",
             "link",
-            "nurturing_stages", "state",
+            "nurturing_stages", "state", "lead_goal"
         )
+
 
 class NurturingSectionSerializer(serializers.ModelSerializer):
 
     assets = AssetsSectionSerializer()
     link = serializers.SerializerMethodField(read_only=True)
     generated_leads = serializers.SerializerMethodField(read_only=True)
-    campaign_type = CampaignTypesSerializer()
     nurturing_stages = NurturingStagesSerializer()
 
     class Meta:
@@ -443,7 +444,6 @@ class NurturingSectionSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "campaign",
-            "campaign_type",
             "assets",
             "link",
             "generated_leads",
@@ -609,7 +609,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
     fair_trades = FairTradeCreateSectionSerializer(many=True, allow_null=True, required=False)
     lead_cascades = LeadCascadeProgramCreateSectionSerializer(many=True, allow_null=True, required=False)
     sups = SuppresionCreateListSectionSerializer(many=True, allow_null=True, required=False)
-
+    itcurateds = ITCuratedSectionSerializer(many=True, allow_null=True, required=False, read_only=True)
     #nurturings = NurturingCreateSectionSerializer(many=True, allow_null=True, required=False)
 
     class Meta:
@@ -621,7 +621,7 @@ class CampaignCreateSerializer(WritableNestedModelSerializer):
             "nurturing_parameters", "targets", "titles", "guarantees", "note", "details", "customer_information",
             "order", "contact_name", "end_date", "start_date", "kind", "part_of_the_map", "nurturing_parameters",
             "abm_look_a_like_state", "intent_feed_goal_percent", "intent_feed_done_percent", "abm_goal_percent", "id", "campaign_type",
-            # "itcurateds",
+            "itcurateds",
             # "teams", "tactics",
             # "suppression_list",
             # "client", "abm_look_a_like_state",

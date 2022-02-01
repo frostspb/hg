@@ -648,7 +648,7 @@ class LeadCascadeProgramSection(CloneMixin, BaseReportPercentItem):
 
 class NurturingSection(CloneMixin, BaseStateItem):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="nurturings")
-    campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, verbose_name="Type")
+    campaign_type = models.ForeignKey(CampaignTypes, on_delete=models.CASCADE, verbose_name="Type", null=True, blank=True)
     assets = models.ForeignKey(AssetsSection, on_delete=models.CASCADE)
     lead_goal = models.IntegerField(null=True, blank=True)
     nurturing_stages = models.ForeignKey(NurturingStages, on_delete=models.CASCADE)
