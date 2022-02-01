@@ -140,6 +140,11 @@ class BANTQuestionCreateSerializer(WritableNestedModelSerializer):
 class BANTQuestionUpdateSerializer(serializers.Serializer):
     answer = serializers.IntegerField()
     question = serializers.IntegerField()
+
+
+class CQQuestionUpdateSerializer(serializers.Serializer):
+    answer = serializers.IntegerField()
+    question = serializers.IntegerField()
     state = serializers.CharField()
 
 

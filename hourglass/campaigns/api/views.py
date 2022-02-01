@@ -71,11 +71,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         else:
             return CampaignSerializer
 
-    def get_queryset(self):
-        return self.queryset.filter(
-            Q(owner__isnull=True, kind=Campaign.CampaignKinds.STANDARD)
-            | Q(kind__in=[Campaign.CampaignKinds.USER, Campaign.CampaignKinds.CONTRACT], owner=self.request.user)
-        )
+    # def get_queryset(self):
+    #     return self.queryset.filter(
+    #         Q(owner__isnull=True, kind=Campaign.CampaignKinds.STANDARD)
+    #         | Q(kind__in=[Campaign.CampaignKinds.USER, Campaign.CampaignKinds.CONTRACT], owner=self.request.user)
+    #     )
 
     def _copy_files(self, cmp):
         source_campaign = self.request.data.get('source_campaign')
@@ -188,12 +188,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def create_nurturing(self, request, *args, **kwargs):
-
-        srz = NurturingCreateSectionSerializer(data=request.data)
-        srz.is_valid()
+        dt = request.data
+        dt['campaign'] = self.get_object().id
+        srz = NurturingCreateSectionSerializer(data=dt)
+        srz.is_valid(raise_exception=True)
         x = srz.save()
-        x.campaign = self.get_object()
-        x.save()
 
         return Response(NurturingSectionSerializer(x).data)
 
@@ -227,8 +226,8 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def update_cq(self, request, *args, **kwargs):
         c = self.get_object()
-        from hourglass.references.api.serializers import BANTQuestionUpdateSerializer
-        srz = BANTQuestionUpdateSerializer(data=request.data, many=True)
+        from hourglass.references.api.serializers import CQQuestionUpdateSerializer
+        srz = CQQuestionUpdateSerializer(data=request.data, many=True)
         srz.is_valid()
         data = srz.data
 
@@ -244,11 +243,12 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def update_curated(self, request, *args, **kwargs):
+        c = self.get_object()
         srz = ITCuratedUpdateStatusSerializer(data=request.data, many=True)
         srz.is_valid()
         data = srz.data
         for i in data:
-            sec = ITCuratedSection.objects.filter(pk=i.get('id')).first()
+            sec = ITCuratedSection.objects.filter(campaign=c, curated__slug=i.get('slug')).first()
             if sec:
                 sec.status = i.get('status')
                 sec.save(update_fields=['status'])

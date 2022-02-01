@@ -410,7 +410,7 @@ class NurturingCreateSectionSerializer(serializers.ModelSerializer):
     nurturing_stages = serializers.PrimaryKeyRelatedField(queryset=NurturingStages.objects.all())
     link = serializers.FileField(required=False, allow_null=True)
     lead_goal = serializers.IntegerField(required=False, allow_null=True)
-
+    state = serializers.CharField(required=False, allow_null=True)
     class Meta:
         model = NurturingSection
         fields = (
@@ -418,7 +418,9 @@ class NurturingCreateSectionSerializer(serializers.ModelSerializer):
 
             "assets",
             "link",
-            "nurturing_stages", "state", "lead_goal"
+            "nurturing_stages",
+            "state",
+            "lead_goal"
         )
 
 
@@ -535,7 +537,7 @@ class ITCuratedSectionSerializer(serializers.ModelSerializer):
 
 
 class ITCuratedUpdateStatusSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    slug = serializers.CharField()
     status = serializers.CharField()
 
 
