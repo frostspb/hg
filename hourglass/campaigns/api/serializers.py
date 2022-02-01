@@ -411,6 +411,7 @@ class NurturingCreateSectionSerializer(serializers.ModelSerializer):
     link = serializers.FileField(required=False, allow_null=True)
     lead_goal = serializers.IntegerField(required=False, allow_null=True)
     state = serializers.CharField(required=False, allow_null=True)
+
     class Meta:
         model = NurturingSection
         fields = (
