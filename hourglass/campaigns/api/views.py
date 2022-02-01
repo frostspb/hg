@@ -189,7 +189,9 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated])
     def create_nurturing(self, request, *args, **kwargs):
         dt = request.data
-        dt['campaign'] = self.get_object().id
+        for i in dt:
+            
+            i['campaign'] = self.get_object().id
         srz = NurturingCreateSectionSerializer(data=dt)
         srz.is_valid(raise_exception=True)
         x = srz.save()
