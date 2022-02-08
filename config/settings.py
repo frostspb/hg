@@ -111,6 +111,7 @@ REST_FRAMEWORK = {
     'DATE_FORMAT': "%m/%d/%Y",
     'DATE_INPUT_FORMATS': ["%m/%d/%Y"],
 
+
 }
 
 # Database
@@ -206,6 +207,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=240),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'UPDATE_LAST_LOGIN': True
 }
 
 

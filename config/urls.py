@@ -3,15 +3,17 @@ from django.urls import path
 from django.conf.urls import url, include
 
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
+
     TokenRefreshView,
 )
-from .auth import CurrentUserView
-from hourglass.campaigns.api.views import CFilesUpload
+
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from ajax_select import urls as ajax_select_urls
+
+from hourglass.campaigns.api.views import CFilesUpload
+from .auth import CurrentUserView, ExtendedTokenObtainPairView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -33,7 +35,7 @@ urlpatterns = [
     path("api/", include("config.router")),
     path('api/auth/', include(
         'rest_framework.urls', namespace='rest_framework')),
-    path('api/auth/token/obtain/', TokenObtainPairView.as_view(), ),
+    path('api/auth/token/obtain/', ExtendedTokenObtainPairView.as_view(), ),
     path('api/auth/token/refresh/', TokenRefreshView.as_view()),
     path('api/auth/user/', CurrentUserView.as_view()),
     path('api/cr_files_upload/', CFilesUpload.as_view()),
