@@ -28,5 +28,5 @@ class UserAdmin(auth_admin.UserAdmin):
 
 @admin.register(AuditEntry)
 class AuditEntryAdmin(admin.ModelAdmin):
-    list_display = ['action', 'username', 'ip',]
+    list_display = ['action', 'username', 'ip', 'created']
     list_filter = ['action',]

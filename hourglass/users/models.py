@@ -4,6 +4,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.dispatch import receiver
 
+from django_extensions.db.models import TimeStampedModel
 
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator()
@@ -31,7 +32,7 @@ class User(AbstractUser):
             return self.photo.url
 
 
-class AuditEntry(models.Model):
+class AuditEntry(TimeStampedModel):
 
     action = models.CharField(max_length=64)
     ip = models.GenericIPAddressField(null=True)
