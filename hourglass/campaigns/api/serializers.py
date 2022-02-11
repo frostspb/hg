@@ -936,7 +936,7 @@ class CampaignSettingsSerializer(serializers.ModelSerializer):
             "intent_feed_goal_percent",  "intent_feed_done_percent", "abm_goal_percent","goal_abm",
             "done_abm", "itcurateds", "kind",
             "suppression_list", "velocity", "state", "part_of_the_map",
-            "abm_look_a_like_state", "landings", "banners"
+            "abm_look_a_like_state", "landings", "banners", "managed_by"
 
         )
 
