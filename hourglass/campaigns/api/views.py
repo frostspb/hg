@@ -138,9 +138,12 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
 
         if serializer.data.get('kind') == Campaign.CampaignKinds.USER:
             email = self.request.user.email
-
+            try:
+                cln_name = cmp.client
+            except:
+                cln_name = ''
             if email:
-                msg = f"You have just saved the new Campaign {serializer.data.get('name', '')}. Thank you!" \
+                msg = f"You have just saved the new Campaign {serializer.data.get('name', '')} {cln_name}. Thank you!" \
                 f" \n \nPlease let  us  know if you  require  our  help to  adjust or delete  the  campaign  " \
                 f"by  responding  to  this email."
 
