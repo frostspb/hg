@@ -13,7 +13,7 @@ class AuditEntrySectionAdmin(admin.TabularInline):
     model = AuditUserEntry
     extra = 0
     classes = ['collapse']
-    readonly_fields = ['action', 'ip', 'created']
+    readonly_fields = ['action', 'ip', 'created', ]
 
     def has_add_permission(self, request, obj=None):
         return False
@@ -29,7 +29,7 @@ class AuditEntrySectionAdmin(admin.TabularInline):
 class UserAdmin(auth_admin.UserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
-    readonly_fields = ['last_login', 'date_joined']
+    readonly_fields = ['last_login', 'date_joined', 'login_count']
     fieldsets = auth_admin.UserAdmin.fieldsets + (
 
 
@@ -37,9 +37,12 @@ class UserAdmin(auth_admin.UserAdmin):
             "Personal Info", {"fields": ("note", "phone",)}
         ),
     )
-    list_display = ["username", "is_staff", "is_active", "date_joined", "last_login", "email"]
+    list_display = ["username", "is_staff", "is_active", "date_joined", "last_login", "email", 'login_count']
     search_fields = ["username", "email", "id", ]
     ordering = ('-date_joined',)
     inlines = [AuditEntrySectionAdmin]
+
+    def login_count(self, obj):
+        return obj.login_count
 
 

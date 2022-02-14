@@ -31,12 +31,19 @@ class User(AbstractUser):
         if self.photo:
             return self.photo.url
 
+    @property
+    def login_count(self):
+        res = 0
+        if self.logins.all():
+            res = self.logins.all().count()
+        return res
+
 
 class AuditUserEntry(TimeStampedModel):
 
     action = models.CharField(max_length=64)
     ip = models.GenericIPAddressField(null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="logins")
 
 
     def __unicode__(self):
