@@ -71,11 +71,11 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
         else:
             return CampaignSerializer
 
-    # def get_queryset(self):
-    #     return self.queryset.filter(
-    #         Q(owner__isnull=True, kind=Campaign.CampaignKinds.STANDARD)
-    #         | Q(kind__in=[Campaign.CampaignKinds.USER, Campaign.CampaignKinds.CONTRACT], owner=self.request.user)
-    #     )
+    def get_queryset(self):
+        return self.queryset.filter(
+            Q(owner__isnull=True, kind=Campaign.CampaignKinds.STANDARD)
+            | Q(kind__in=[Campaign.CampaignKinds.USER, Campaign.CampaignKinds.CONTRACT], owner=self.request.user)
+        )
 
     def _copy_files(self, cmp):
         source_campaign = self.request.data.get('source_campaign')
