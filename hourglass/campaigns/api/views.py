@@ -161,6 +161,8 @@ class CampaignViewSet(ListModelMixin, UpdateModelMixin,  RetrieveModelMixin, Gen
             serializer.save()
             return Response({}, status=201)
 
+
+
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def active_count(self, request, *args, **kwargs):
         serializer = HourglassSettingsSerializer(HourglassSettings.get_solo())
