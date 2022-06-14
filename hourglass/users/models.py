@@ -6,6 +6,9 @@ from django.dispatch import receiver
 
 from django_extensions.db.models import TimeStampedModel
 
+from hourglass.references.models import Team
+
+
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator()
     note = models.TextField(max_length=250, null=True, blank=True)
@@ -14,6 +17,7 @@ class User(AbstractUser):
     photo = models.FileField(null=True, blank=True)
     first_name = models.CharField('First name', max_length=30)
     last_name = models.CharField('Last name', max_length=150)
+    team = models.ForeignKey(Team, verbose_name="Team", on_delete=models.SET_NULL, null=True, blank=True)
     email = models.EmailField('Mail to')
     username = models.CharField(
         "Email",

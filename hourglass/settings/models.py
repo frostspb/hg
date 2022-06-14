@@ -8,6 +8,7 @@ class HourglassSettings(SingletonModel):
     base_campaigns_count = models.SmallIntegerField("Base count", default=100)
     min_delta_val = models.SmallIntegerField("Min delta value", default=3)
     max_delta_val = models.SmallIntegerField("Max delta value", default=5)
+    deal_desk_request_email = models.EmailField("DealDesk Request Email", null=True, blank=True)
 
     class Meta:
         verbose_name = "Total Active Campaigns"

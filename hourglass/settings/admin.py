@@ -6,6 +6,6 @@ from .models import HourglassSettings
 
 @admin.register(HourglassSettings)
 class SettingsAdmin(SingletonModelAdmin):
-    list_display = ["base_campaigns_count", "min_delta_val", "max_delta_val"]
+    list_display = ["base_campaigns_count", "min_delta_val", "max_delta_val", "deal_desk_request_email"]
     search_fields = ["name", "id"]
-    fields = ["base_campaigns_count", "min_delta_val", "max_delta_val", ]
+    fields = ["base_campaigns_count", "min_delta_val", "max_delta_val", "deal_desk_request_email",]

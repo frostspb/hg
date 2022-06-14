@@ -2,7 +2,25 @@ from django.contrib import admin
 
 from .models import CampaignTypes, Geolocations, Tactics, Managers, JobTitles,\
     ITCurated, Revenue, Industry, CompanySize, BANTQuestion, BANTAnswer, CustomQuestion, CustomAnswer,\
-    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap, Topics
+    IntegrationType, Pacing, Associates, CompanyRef, NurturingStages, PartOfMap, Topics, Team, Seniority, LeadType
+
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ["id", "team_title", "number_of_team_members"]
+    fields = ["team_title", "number_of_team_members"]
+
+
+@admin.register(LeadType)
+class LeadTypeAdmin(admin.ModelAdmin):
+    list_display = ["id", "lead_type"]
+    fields = ["lead_type"]
+
+
+@admin.register(Seniority)
+class SeniorityAdmin(admin.ModelAdmin):
+    list_display = ["id", "seniority_title"]
+    fields = ["seniority_title", ]
 
 
 @admin.register(PartOfMap)

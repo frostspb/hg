@@ -11,7 +11,7 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, \
-    Teams, CampaignClient, CreativesBanner, CreativesLandingPage
+    Teams, CampaignClient, CreativesBanner, CreativesLandingPage, DealDesk
 
 
 class ComponentInlineFormSet(BaseInlineFormSet):
@@ -753,3 +753,9 @@ class CampaignAdmin(CloneModelAdmin):
                 'css/admin.css',
             )
         }
+
+
+@admin.register(DealDesk)
+class CampaignAdmin(admin.ModelAdmin):
+    exclude = ['id']
+

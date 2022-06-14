@@ -37,7 +37,7 @@ class UserAdmin(auth_admin.UserAdmin):
             "Personal Info", {"fields": ("note", "phone",)}
         ),
     )
-    list_display = ["username", "is_staff", "is_active", "date_joined", "last_login", "email", 'login_count']
+    list_display = ["username", "is_staff", "is_active", "date_joined", "last_login", "email", 'login_count', 'team']
     search_fields = ["username", "email", "id", ]
     ordering = ('-date_joined',)
     inlines = [AuditEntrySectionAdmin]

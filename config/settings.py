@@ -37,7 +37,7 @@ ENDPOINT_DATE_FORMAT = '%m/%d/%Y'
 # Application definition
 
 INSTALLED_APPS = [
-    "hourglass.users.apps.UsersConfig",
+    #"hourglass.users.apps.UsersConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'hourglass.references',
     'hourglass.clients',
     'hourglass.campaigns',
-
+    'hourglass.users',
 
 
 ]

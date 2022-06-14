@@ -22,7 +22,7 @@ from .managers import CampaignsManager
 
 from smart_selects.db_fields import ChainedForeignKey
 from hourglass.references.models import BANTQuestion, BANTAnswer, CustomAnswer, CustomQuestion, IntegrationType,\
-    Associates
+    Associates, LeadType, Seniority
 
 User = get_user_model()
 
@@ -834,3 +834,38 @@ def create_settings(sender, instance, created, **kwargs):
             ) for i in sections
         ]
         SectionSettings.objects.bulk_create(for_create)
+
+
+class DealDesk(models.Model):
+    client = models.CharField('Client', max_length=256, blank=True, null=True)
+    campaign_name = models.CharField(max_length=256, blank=True, null=True)
+    budget = models.CharField(max_length=64, blank=True, null=True)
+    CPL = models.CharField(max_length=64, blank=True, null=True)
+    required_lead_volume = models.IntegerField(blank=True, null=True)
+    lead_type = models.ManyToManyField(LeadType)
+    campaign_duration = models.CharField(max_length=64, blank=True, null=True)
+    job_titles = models.ManyToManyField(JobTitles, blank=True, null=True)
+    user_job_titles = models.CharField(max_length=1024, blank=True, null=True)
+    seniority = models.ManyToManyField(Seniority, blank=True, null=True)
+    user_seniority = models.CharField(max_length=1024, blank=True, null=True)
+    job_area = models.CharField(max_length=256)
+    industries = models.ManyToManyField(Industry, blank=True, null=True)
+    user_industries = models.CharField(max_length=1024, blank=True, null=True)
+    geolocation = models.ManyToManyField(Geolocations, blank=True, null=True)
+    user_geolocation = models.CharField(max_length=1024, blank=True, null=True)
+    company_revenue = models.ManyToManyField(Revenue, blank=True, null=True)
+    user_company_revenue = models.CharField(max_length=1024, blank=True, null=True)
+    company_size = models.ManyToManyField(CompanySize, blank=True, null=True)
+    user_company_size = models.CharField(max_length=1024, blank=True, null=True)
+    abm = models.BooleanField('ABM')
+    lead_cap = models.CharField(max_length=32, blank=True, null=True)
+    suppresion_list = models.BooleanField('Suppresion List', null=True, blank=True)
+    install_base = models.CharField(max_length=1024, blank=True, null=True)
+    custom_questions = models.CharField(max_length=1024, blank=True, null=True)
+    is_renewal = models.BooleanField('It this a renewal?', null=True, blank=True)
+    notes = models.CharField(max_length=1024, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+
+
+

@@ -49,11 +49,19 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def titles(self, request):
-        return Response(data=JobTitlesSerializer(JobTitles.objects.all(), many=True).data)
+        qs = Geolocations.objects.all()
+        title = request.GET.get('title')
+        if title:
+            qs = qs.filter(name__icontains=title)
+        return Response(data=JobTitlesSerializer(qs, many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def geolocations(self, request):
-        return Response(data=GeolocationsSerializer(Geolocations.objects.all(), many=True).data)
+        qs = Geolocations.objects.all()
+        geolocation = request.GET.get('geolocation')
+        if geolocation:
+            qs = qs.filter(name__icontains=geolocation)
+        return Response(data=GeolocationsSerializer(qs, many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def revenue(self, request):
@@ -61,7 +69,11 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def industry(self, request):
-        return Response(data=IndustrySerializer(Industry.objects.filter(active=True), many=True).data)
+        qs = Industry.objects.filter(active=True)
+        industry = request.GET.get('industry')
+        if industry:
+            qs = qs.filter(name__icontains=industry)
+        return Response(data=IndustrySerializer(qs, many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def questions_bant(self, request):
