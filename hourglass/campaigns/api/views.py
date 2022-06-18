@@ -515,8 +515,7 @@ class DealDeskView(views.APIView):
             Email: {request.user.email}
             Client: {serializer.data.get("client")}
             Campaign Name:{serializer.data.get("campaign_name")}
-            Budget:{serializer.data.get("budget")}
-            CPL:{serializer.data.get("CPL")}
+            Budget / CPL:{serializer.data.get("budget")}
             Required Lead Volume:{serializer.data.get("required_lead_volume")}
             Lead Type:{lt}
             Campaign Duration:{serializer.data.get("campaign_duration")}

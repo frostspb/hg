@@ -34,7 +34,7 @@ class UserAdmin(auth_admin.UserAdmin):
 
 
         (
-            "Personal Info", {"fields": ("note", "phone",)}
+            "Personal Info", {"fields": ("note", "phone", "team")}
         ),
     )
     list_display = ["username", "is_staff", "is_active", "date_joined", "last_login", "email", 'login_count', 'team']

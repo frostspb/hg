@@ -236,7 +236,7 @@ class Topics(models.Model):
 
 class Team(models.Model):
     team_title = models.CharField(max_length=250)
-    number_of_team_members = models.IntegerField()
+    number_of_team_members = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.team_title
@@ -245,6 +245,20 @@ class Team(models.Model):
 class Seniority(models.Model):
     seniority_title = models.CharField(max_length=250)
 
+    class Meta:
+        verbose_name = "Seniority"
+        verbose_name_plural = "Seniority"
+
+    def __str__(self):
+        return self.seniority_title
+
 
 class LeadType(models.Model):
     lead_type = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "Lead Type"
+        verbose_name_plural = "Lead Types"
+
+    def __str__(self):
+        return self.lead_type
