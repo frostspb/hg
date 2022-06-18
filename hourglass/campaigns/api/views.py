@@ -472,7 +472,7 @@ class DealDeskView(views.APIView):
     def post(self, request):
         serializer = DealDeskCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
+        deal = serializer.save(user=request.user)
 
         user_email = request.user.email
         from hourglass.settings.models import HourglassSettings
@@ -540,4 +540,4 @@ class DealDeskView(views.APIView):
                 msg=msg,
                 addr_from=settings.MAIL_FROM
             )
-        return Response({})
+        return Response({'id': deal.id})
