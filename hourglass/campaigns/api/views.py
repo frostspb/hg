@@ -30,7 +30,7 @@ from ..models import Campaign, SectionSettings,  AssetsSection, IntentFeedsSecti
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, Message,\
-    CreativesLandingPage, CreativesBanner
+    CreativesLandingPage, CreativesBanner, DealDeskFiles, DealDesk
 
 
 from django.http import QueryDict
@@ -541,3 +541,18 @@ class DealDeskView(views.APIView):
                 addr_from=settings.MAIL_FROM
             )
         return Response({'id': deal.id})
+
+
+class DealDeskFilesUpload(views.APIView):
+    def post(self, request):
+        deal_desk = request.POST.get('deal_desk')
+        if deal_desk:
+            deal = DealDesk.objects.filter(id=deal_desk).first()
+
+            if not deal:
+                return Response({})
+
+            for file in request.FILES:
+                _f = request.FILES.get(file)
+                DealDeskFiles.objects.create(deal_desk=deal, file=_f)
+        return Response({})

@@ -12,7 +12,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from ajax_select import urls as ajax_select_urls
 
-from hourglass.campaigns.api.views import CFilesUpload, DealDeskView
+from hourglass.campaigns.api.views import CFilesUpload, DealDeskView, DealDeskFilesUpload
 from .auth import CurrentUserView, ExtendedTokenObtainPairView
 
 schema_view = get_schema_view(
@@ -40,6 +40,7 @@ urlpatterns = [
     path('api/auth/user/', CurrentUserView.as_view()),
     path('api/cr_files_upload/', CFilesUpload.as_view()),
     path('api/deal_desk/', DealDeskView.as_view()),
+    path('api/deal_desk/files/', DealDeskFilesUpload.as_view()),
 
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

@@ -11,7 +11,7 @@ from .models import Campaign, TargetSection, AssetsSection, IntentFeedsSection, 
     IndustriesSection, RevenueSection, CompanySizeSection, GeolocationsSection, BANTQuestionsSection, \
     CustomQuestionsSection, SectionSettings, ABMSection, InstallBaseSection, FairTradeSection, \
     LeadCascadeProgramSection, NurturingSection, CreativesSection, ITCuratedSection, SuppresionListSection, \
-    Teams, CampaignClient, CreativesBanner, CreativesLandingPage, DealDesk
+    Teams, CampaignClient, CreativesBanner, CreativesLandingPage, DealDesk, DealDeskFiles
 
 
 class ComponentInlineFormSet(BaseInlineFormSet):
@@ -755,7 +755,16 @@ class CampaignAdmin(CloneModelAdmin):
         }
 
 
+class DealDeskFilesAdmin(admin.TabularInline):
+    model = DealDeskFiles
+    extra = 0
+    fields = [
+        'file',
+    ]
+
+
 @admin.register(DealDesk)
-class CampaignAdmin(admin.ModelAdmin):
+class DealDeskAdmin(admin.ModelAdmin):
     exclude = ['id']
+    inlines = [DealDeskFilesAdmin]
 
