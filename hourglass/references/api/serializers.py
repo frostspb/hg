@@ -34,7 +34,7 @@ class SenioritySerializer(serializers.ModelSerializer):
     class Meta:
         model = Seniority
         fields = (
-            'id', 'seniority_title'
+            'id', 'name'
         )
 
 
@@ -42,7 +42,7 @@ class LeadTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeadType
         fields = (
-            'lead_type', 'id'
+            'name', 'id'
         )
 
 class CompanyRefSerializer(serializers.ModelSerializer):

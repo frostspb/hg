@@ -243,22 +243,22 @@ class Team(models.Model):
 
 
 class Seniority(models.Model):
-    seniority_title = models.CharField(max_length=250)
+    name = models.CharField(max_length=250)
 
     class Meta:
         verbose_name = "Seniority"
         verbose_name_plural = "Seniority"
 
     def __str__(self):
-        return self.seniority_title
+        return self.name
 
 
 class LeadType(models.Model):
-    lead_type = models.CharField(max_length=250)
+    name = models.CharField(max_length=250)
 
     class Meta:
         verbose_name = "Lead Type"
         verbose_name_plural = "Lead Types"
 
     def __str__(self):
-        return self.lead_type
+        return self.name

@@ -13,14 +13,14 @@ class TeamAdmin(admin.ModelAdmin):
 
 @admin.register(LeadType)
 class LeadTypeAdmin(admin.ModelAdmin):
-    list_display = ["id", "lead_type"]
-    fields = ["lead_type"]
+    list_display = ["id", "name"]
+    fields = ["name"]
 
 
 @admin.register(Seniority)
 class SeniorityAdmin(admin.ModelAdmin):
-    list_display = ["id", "seniority_title"]
-    fields = ["seniority_title", ]
+    list_display = ["id", "name"]
+    fields = ["name", ]
 
 
 @admin.register(PartOfMap)
