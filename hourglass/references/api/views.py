@@ -44,7 +44,7 @@ class ReferencesViewSet(GenericViewSet):
         return Response(data=SenioritySerializer(Seniority.objects.filter(), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
-    def nurturing_stages(self, request):
+    def lead_types(self, request):
         return Response(data=LeadTypeSerializer(LeadType.objects.filter(), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
