@@ -7,12 +7,12 @@ from django_filters import rest_framework as filters
 
 from rest_framework.pagination import PageNumberPagination
 from ..models import CampaignTypes, JobTitles, Geolocations, Managers, ITCurated, Revenue, Industry,\
-    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages, PartOfMap, Topics
+    CompanySize, BANTQuestion, CustomQuestion, IntegrationType, Pacing, CompanyRef, NurturingStages, PartOfMap, Topics, Seniority, LeadType
 
 from .serializers import CampaignTypesSerializer, GeolocationsSerializer, JobTitlesSerializer, \
     ManagersSerializer, ITCuratedSerializer, CompanySizeSerializer, RevenueSerializer, IndustrySerializer,\
     CustomQuestionSerializer, BANTQuestionSerializer, IntegrationTypeSerializer, PacingSerializer, CompanyRefSerializer,\
-    NurturingStagesSerializer, PartOfMapSerializer, TopicSerializer
+    NurturingStagesSerializer, PartOfMapSerializer, TopicSerializer, SenioritySerializer, LeadTypeSerializer
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,\
     DestroyModelMixin
 
@@ -38,6 +38,14 @@ class ReferencesViewSet(GenericViewSet):
     page_size_query_param = 'page_size'
     max_page_size = 100
     filterset_class = RefFilter
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def seniority(self, request):
+        return Response(data=SenioritySerializer(Seniority.objects.filter(), many=True).data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def nurturing_stages(self, request):
+        return Response(data=LeadTypeSerializer(LeadType.objects.filter(), many=True).data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def nurturing_stages(self, request):
