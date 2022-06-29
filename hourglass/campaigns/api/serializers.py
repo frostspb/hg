@@ -1009,7 +1009,7 @@ class DealDeskCreateSerializer(serializers.ModelSerializer):
         model = DealDesk
         fields = [
             'client', 'campaign_name', 'budget', 'CPL', 'required_lead_volume', 'lead_type', 'campaign_duration',
-            'job_titles', 'user_job_titles', 'seniority', 'user_seniority', 'job_area', 'industries', 'user_industries',
+            'job_titles', 'user_job_titles', 'user_lead_type', 'seniority', 'user_seniority', 'job_area', 'industries', 'user_industries',
             'geolocation', 'user_geolocation', 'company_revenue', 'user_company_revenue', 'company_size', 'user_company_size',
             'abm', 'lead_cap', 'suppresion_list', 'install_base', 'custom_questions', 'is_renewal', 'notes',
 
