@@ -1005,7 +1005,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class DealDeskCreateSerializer(serializers.ModelSerializer):
-    required_lead_volume = serializers.CharField(required=False)
+    required_lead_volume = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     class Meta:
         model = DealDesk
         fields = [

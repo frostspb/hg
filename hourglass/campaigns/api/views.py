@@ -556,8 +556,6 @@ class DealDeskFilesUpload(views.APIView):
 
             if not deal:
                 return Response({})
-            print(']]]]]]]]]]]]', request)
-            print('--------------', request.FILES)
             for file in request.FILES:
                 _f = request.FILES.get(file)
                 DealDeskFiles.objects.create(deal_desk=deal, file=_f)
