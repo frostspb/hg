@@ -841,7 +841,7 @@ class DealDesk(models.Model):
     campaign_name = models.CharField(max_length=256, blank=True, null=True)
     budget = models.CharField(max_length=64, blank=True, null=True)
     CPL = models.CharField(max_length=64, blank=True, null=True)
-    required_lead_volume = models.IntegerField(blank=True, null=True)
+    required_lead_volume = models.CharField(blank=True, null=True, max_length=512)
     lead_type = models.ManyToManyField(LeadType)
     user_lead_type = models.CharField(max_length=1024, blank=True, null=True)
     campaign_duration = models.CharField(max_length=64, blank=True, null=True)
