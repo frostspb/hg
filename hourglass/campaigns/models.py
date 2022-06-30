@@ -868,6 +868,7 @@ class DealDesk(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 
+
 class DealDeskFiles(models.Model):
     deal_desk = models.ForeignKey(DealDesk, on_delete=models.CASCADE)
     file = models.FileField()
