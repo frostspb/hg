@@ -57,7 +57,7 @@ class ReferencesViewSet(GenericViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def titles(self, request):
-        qs = Geolocations.objects.all()
+        qs = JobTitles.objects.all()
         title = request.GET.get('title')
         if title:
             qs = qs.filter(name__icontains=title)
