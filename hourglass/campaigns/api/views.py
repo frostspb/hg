@@ -488,7 +488,7 @@ class DealDeskView(views.APIView):
             if serializer.data.get("user_lead_type"):
                 lt = serializer.data.get("user_lead_type")
             else:
-                lt = ','.join([item.lead_type for item in LeadType.objects.filter(id__in=serializer.data.get("lead_type"))])
+                lt = ','.join([item.name for item in LeadType.objects.filter(id__in=serializer.data.get("lead_type"))])
 
             if serializer.data.get("user_industries"):
                 ind = serializer.data.get("user_industries")
@@ -513,7 +513,7 @@ class DealDeskView(views.APIView):
             if serializer.data.get("user_seniority"):
                 sen = serializer.data.get("user_seniority")
             else:
-                sen = ','.join([item.seniority_title for item in Seniority.objects.filter(id__in=serializer.data.get("seniority"))])
+                sen = ','.join([item.name for item in Seniority.objects.filter(id__in=serializer.data.get("seniority"))])
 
             msg = f'''User Name: {request.user.first_name} {request.user.last_name}
             Team: {request.user.team}
