@@ -25,7 +25,7 @@ def send_email_deal_desk(self, deal_desk_id):
     if deal.user_job_titles:
         jt = deal.user_job_titles
     else:
-        jt = ','.join([item.name for item in deal.user_job_titles.all()])
+        jt = ','.join([item.name for item in deal.job_titles.all()])
 
     if deal.user_lead_type:
         lt = deal.user_lead_type
