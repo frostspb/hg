@@ -103,7 +103,7 @@ class Campaign(CloneMixin, BaseStateItem):
     # admin
     managed_by = models.ForeignKey(Managers, on_delete=models.CASCADE, null=True)
     start_offset = models.PositiveIntegerField("Start Date offset in days", default=0)
-    end_offset = models.PositiveIntegerField("End Date offset in days", default=0)
+    end_offset = models.IntegerField("End Date offset in days", default=0)
     audience_targeted = models.IntegerField("Base Target Audience", default=0)
     integration_type = models.ForeignKey(
         IntegrationType, on_delete=models.CASCADE, verbose_name="Integration", blank=True, null=True)
@@ -866,7 +866,6 @@ class DealDesk(models.Model):
     is_renewal = models.BooleanField('It this a renewal?', null=True, blank=True)
     notes = models.CharField(max_length=1024, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-
 
 
 class DealDeskFiles(models.Model):
