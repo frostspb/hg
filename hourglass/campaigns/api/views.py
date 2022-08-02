@@ -487,5 +487,5 @@ class DealDeskFilesUpload(views.APIView):
             for file in request.FILES:
                 _f = request.FILES.get(file)
                 DealDeskFiles.objects.create(deal_desk=deal, file=_f)
-        send_email_deal_desk.apply_async([deal_desk])
+        send_email_deal_desk.delay(deal_desk_id=deal_desk)
         return Response({})

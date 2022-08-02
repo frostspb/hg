@@ -10,7 +10,7 @@ def send_status_email(self, subj, to, msg, addr_from):
 
 
 @app.task(bind=True)
-def send_email_deal_desk(deal_desk_id):
+def send_email_deal_desk(self, deal_desk_id):
     from hourglass.campaigns.models import DealDesk, DealDeskFiles
     from hourglass.settings.models import HourglassSettings
     deal = DealDesk.objects.filter(id=deal_desk_id).first()
